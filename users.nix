@@ -14,6 +14,21 @@
     ];
   };
 
+  environment.gnome.excludePackages = with pkgs; [
+    gnome-tour
+    epiphany
+    gnome-contacts
+    gnome-weather
+    gnome-maps
+    gnome-characters
+    gnome-connections
+    gnome-font-viewer
+    yelp
+    snapshot
+    gnome-music
+    gnome-text-editor
+  ];
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
