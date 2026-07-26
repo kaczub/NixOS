@@ -11,6 +11,7 @@
       nixd
       discord
       darktable
+      spotify
     ];
   };
 
@@ -29,6 +30,11 @@
     gnome-text-editor
   ];
 
+  # Remove xterm, since we are using GNOME Terminal.
+  environment.excludePackages = [
+    pkgs.xterm
+  ];
+  
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 

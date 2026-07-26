@@ -24,8 +24,11 @@
   services.desktopManager.gnome.enable = true;
   services.displayManager.gdm.enable = true;
 
-  # Disable xterm, since we are using GNOME Terminal.
+  # Remove xterm, since we are using GNOME Terminal.
   services.xserver.desktopManager.xterm.enable = false;
+  environment.excludePackages = [
+    pkgs.xterm
+  ];
 
   # Configure keymap in X11
   services.xserver.xkb = {
