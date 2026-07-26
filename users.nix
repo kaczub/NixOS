@@ -3,6 +3,7 @@
   users.users."kamil" = {
     isNormalUser = true;
     description = "Kamil";
+    shell = pkgs.fish;
     extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
       vscode

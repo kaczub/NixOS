@@ -7,14 +7,13 @@
     fishPlugins.hydro
   ];
 
-  # 3. Inteligentna nawigacja zoxide
   programs.zoxide = {
     enable = true;
     enableFishIntegration = true;
   };
 
-  # 4. Wyszukiwarka fzf
   programs.fzf = {
+    enable = true;
     fuzzyCompletion = true;
     keybindings = true;
   };
