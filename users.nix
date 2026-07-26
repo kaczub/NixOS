@@ -28,11 +28,7 @@
     snapshot
     gnome-music
     gnome-text-editor
-  ];
-
-  # Remove xterm, since we are using GNOME Terminal.
-  environment.exclude.defaultPackages = [
-    pkgs.xterm
+    xterm
   ];
   
   # Allow unfree packages
