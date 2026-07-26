@@ -29,7 +29,6 @@
     snapshot
     gnome-music
     gnome-text-editor
-    xterm
   ];
   
   # Allow unfree packages
