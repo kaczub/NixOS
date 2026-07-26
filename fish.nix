@@ -5,6 +5,7 @@
 
   environment.systemPackages = with pkgs; [
     fishPlugins.hydro
+    fzf
   ];
 
   programs.zoxide = {
@@ -13,7 +14,6 @@
   };
 
   programs.fzf = {
-    enable = true;
     fuzzyCompletion = true;
     keybindings = true;
   };
