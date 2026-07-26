@@ -6,6 +6,7 @@
     ./system.nix
     ./users.nix
     ./hardware.nix
+    ./fish.nix
   ];
 
   system.stateVersion = "26.05";
