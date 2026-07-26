@@ -3,7 +3,6 @@
   users.users."kamil" = {
     isNormalUser = true;
     description = "Kamil";
-    shell = pkgs.fish;
     extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
       vscode
@@ -16,7 +15,7 @@
     ];
   };
 
-  environment.excludePackages = with pkgs; [
+  environment.gnome.excludePackages = with pkgs; [
     gnome-tour
     epiphany
     gnome-contacts
@@ -29,9 +28,13 @@
     snapshot
     gnome-music
     gnome-text-editor
-    xterm
   ];
 
+  # Remove xterm, since we are using GNOME Terminal.
+  environment.excludePackages = [
+    pkgs.xterm
+  ];
+  
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -42,6 +45,5 @@
     htop
     fastfetch
     vim
-    fzf
   ];
 }
