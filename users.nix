@@ -31,7 +31,7 @@
   ];
 
   # Remove xterm, since we are using GNOME Terminal.
-  environment.excludePackages = [
+  environment.exclude.defaultPackages = [
     pkgs.xterm
   ];
   
