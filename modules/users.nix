@@ -13,6 +13,7 @@
       discord
       darktable
       spotify
+      ghostty
     ];
   };
 
@@ -30,7 +31,7 @@
     gnome-music
     gnome-text-editor
   ];
-  
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -41,5 +42,10 @@
     htop
     fastfetch
     vim
+
+    gnomeExtensions.blur-my-shell
+    gnomeExtensions.live-lock-screen
+    gnomeExtensions.GsConnect
+    gnomeExtensions.clipboard-indicator
   ];
 }
