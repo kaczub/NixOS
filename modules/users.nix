@@ -29,7 +29,7 @@
     yelp
     snapshot
     gnome-music
-    gnome-text-editor
+    gnome-terminal
   ];
 
   # Allow unfree packages
@@ -45,7 +45,7 @@
 
     gnomeExtensions.blur-my-shell
     gnomeExtensions.live-lock-screen
-    gnomeExtensions.GsConnect
+    gnomeExtensions.gsconnect
     gnomeExtensions.clipboard-indicator
   ];
 }
