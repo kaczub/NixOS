@@ -29,7 +29,7 @@
     yelp
     snapshot
     gnome-music
-    gnome-terminal
+    gnome-console
   ];
 
   # Allow unfree packages
