@@ -45,5 +45,6 @@
     spotify
     ghostty
     home-manager
+    opencode
   ];
 }
