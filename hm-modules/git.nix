@@ -1,7 +1,7 @@
 {...}: {
   programs.git = {
     enable = true;
-    userName = "kaczub";
-    userEmail = "170130290+kaczub@users.noreply.github.com";
+    settings.user.name = "kaczub";
+    settings.user.email = "170130290+kaczub@users.noreply.github.com";
   };
 }
