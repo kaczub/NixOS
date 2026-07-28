@@ -7,7 +7,7 @@
     ./hm-modules/git.nix
     ./hm-modules/fish.nix
     ./hm-modules/ghostty.nix
-    ./hm-modules/vscode.nix
+    ./hm-modules/brave.nix
   ];
 
   home = {
@@ -32,6 +32,9 @@
       fastfetch
       opencode
       home-manager
+
+      # Edytory kodu i IDE
+      vscode
 
       # Czcionki
       nerd.fonts.jetbrains-mono
