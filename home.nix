@@ -3,6 +3,8 @@
   pkgs,
   ...
 }: {
+  nixpkgs.config.allowUnfree = true;
+
   imports = [
     ./hm-modules/git.nix
     ./hm-modules/fish.nix
