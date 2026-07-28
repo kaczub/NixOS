@@ -5,8 +5,6 @@
     description = "Kamil";
     shell = pkgs.fish;
     extraGroups = ["networkmanager" "wheel"];
-    packages = with pkgs; [
-    ];
   };
 
   environment.gnome.excludePackages = with pkgs; [
