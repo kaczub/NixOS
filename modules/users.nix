@@ -6,14 +6,6 @@
     shell = pkgs.fish;
     extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
-      vscode
-      brave
-      alejandra
-      nixd
-      discord
-      darktable
-      spotify
-      ghostty
     ];
   };
 
@@ -44,5 +36,14 @@
     gnomeExtensions.live-lock-screen
     gnomeExtensions.gsconnect
     gnomeExtensions.clipboard-indicator
+    vscode
+    brave
+    alejandra
+    nixd
+    discord
+    darktable
+    spotify
+    ghostty
+    home-manager
   ];
 }
