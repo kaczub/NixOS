@@ -46,5 +46,6 @@
     ghostty
     home-manager
     opencode
+    make
   ];
 }
