@@ -1,11 +1,4 @@
 {pkgs, ...}: {
-  programs.fish = {
-    enable = true;
-    interactiveShellInit = ''
-      set fish_greeting
-    '';
-  };
-
   environment.systemPackages = with pkgs; [
     fishPlugins.hydro
     fzf

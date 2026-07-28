@@ -4,7 +4,7 @@
     isNormalUser = true;
     description = "Kamil";
     shell = pkgs.fish;
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["networkmanager" "wheel" "adbusers"];
   };
 
   environment.gnome.excludePackages = with pkgs; [
@@ -22,28 +22,29 @@
     gnome-console
   ];
 
+  services.xserver.excludePackages = [pkgs.xterm];
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  programs.steam.enable = true;
+
+  programs.adb.enable = true;
+
   environment.systemPackages = with pkgs; [
-    git
-    wget
+    # Narzędzia podstawowe / Budowanie
     curl
-    fastfetch
+    wget
+    gnumake
+
+    # Formatowanie i Language Server dla Nixa
+    alejandra
+    nixd
+
+    # Rozszerzenia GNOME
     gnomeExtensions.blur-my-shell
     gnomeExtensions.live-lock-screen
     gnomeExtensions.gsconnect
     gnomeExtensions.clipboard-indicator
-    vscode
-    brave
-    alejandra
-    nixd
-    discord
-    darktable
-    spotify
-    ghostty
-    home-manager
-    opencode
-    gnumake
   ];
 }
