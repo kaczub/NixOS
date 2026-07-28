@@ -6,7 +6,6 @@
     ./modules/system.nix
     ./modules/users.nix
     ./modules/hardware.nix
-    ./modules/fish.nix
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
