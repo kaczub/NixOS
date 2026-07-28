@@ -2,14 +2,6 @@
   programs.vscode = {
     enable = true;
 
-    extensions = with pkgs.vscode-extensions; [
-      mkhl.direnv
-      jnoortheen.nix-ide
-      vscode-icons-team.vscode-icons
-      ms-vscode.makefile-tools
-      ritwickdey.liveserver
-    ];
-
     userSettings = {
       "workbench.editor.empty.hint" = "hidden";
       "chat.viewSessions.orientation" = "stacked";
