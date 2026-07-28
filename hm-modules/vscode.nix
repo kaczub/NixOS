@@ -8,7 +8,6 @@
       vscode-icons-team.vscode-icons
       ms-vscode.makefile-tools
       ritwickdey.liveserver
-      petersmith.google-html-formatter
     ];
 
     userSettings = {
