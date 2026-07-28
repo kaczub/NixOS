@@ -32,12 +32,12 @@
 
       # Narzędzia CLI
       fastfetch
-      opencode
       home-manager
       android-tools
 
       # Edytory kodu i IDE
       vscode
+      neovim
 
       # Czcionki
       nerd-fonts.jetbrains-mono
