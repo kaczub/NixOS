@@ -34,6 +34,7 @@
       fastfetch
       opencode
       home-manager
+      android-tools
 
       # Edytory kodu i IDE
       vscode

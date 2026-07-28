@@ -10,4 +10,7 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+
+  # Enable fish shell system-wide (required for users.users.kamil.shell)
+  programs.fish.enable = true;
 }

@@ -29,8 +29,6 @@
 
   programs.steam.enable = true;
 
-  programs.adb.enable = true;
-
   environment.systemPackages = with pkgs; [
     # Narzędzia podstawowe / Budowanie
     curl
