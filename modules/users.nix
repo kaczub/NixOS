@@ -46,6 +46,6 @@
     ghostty
     home-manager
     opencode
-    make
+    gnumake
   ];
 }
