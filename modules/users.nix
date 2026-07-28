@@ -39,10 +39,7 @@
     git
     wget
     curl
-    htop
     fastfetch
-    vim
-
     gnomeExtensions.blur-my-shell
     gnomeExtensions.live-lock-screen
     gnomeExtensions.gsconnect
