@@ -1,7 +1,10 @@
-{ ... }: {
+{...}: {
   programs.brave = {
     enable = true;
+  };
 
+  programs.chromium = {
+    enable = true;
     extraPolicies = {
       MemorySaverModeSavings = 1;
       TranslateEnabled = false;
@@ -19,7 +22,7 @@
       QuicAllowed = false;
       BackgroundModeEnabled = false;
 
-      # Wyłączenie bajerów Brave (Crypto, VPN, AI)
+      # Wyłączenie bajerów Brave
       BraveRewardsDisabled = true;
       BraveWalletDisabled = true;
       BraveVPNDisabled = 1;
@@ -45,7 +48,6 @@
       ReportUserIDData = false;
       ReportVersionData = false;
 
-      # Autofill & Hasła
       AutofillAddressEnabled = false;
       AutofillCreditCardEnabled = false;
       AutofillPredictionSettings = 2;
@@ -58,7 +60,6 @@
       PromotionsEnabled = false;
       HelpMeWriteSettings = 2;
 
-      # Privacy Sandbox / Śledzenie
       PrivacySandboxAdTopicsEnabled = false;
       PrivacySandboxSiteEnabledAdsEnabled = false;
       PrivacySandboxAdMeasurementEnabled = false;
