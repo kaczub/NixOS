@@ -6,7 +6,7 @@
     settings = {
       theme = "Batman";
       font-family = "JetBrainsMono Nerd Font";
-      font-size = "12px";
+      font-size = "12";
     };
   };
 }
