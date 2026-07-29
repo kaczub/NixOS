@@ -10,6 +10,7 @@
     ./hm-modules/fish.nix
     ./hm-modules/ghostty.nix
     ./hm-modules/brave.nix
+    ./hm-modules/firefox.nix
   ];
 
   home = {
