@@ -10,7 +10,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs: let
+  outputs = { self, nixpkgs, home-manager, ... }: let
     system = "x86_64-linux";
   in {
     formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
