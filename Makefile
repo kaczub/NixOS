@@ -1,7 +1,13 @@
-.PHONY: update
+.PHONY: update update-system clean news
+
 update:
 	home-manager switch --flake .#kamil
 
-.PHONY: clean
+update-system:
+	sudo nixos-rebuild switch --flake .#thinkpad
+
 clean:
 	nix-collect-garbage -d
+
+news:
+	home-manager news --flake .

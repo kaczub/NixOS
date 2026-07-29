@@ -1,9 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
-  nixpkgs.config.allowUnfree = true;
+{ pkgs, ... }: {
 
   imports = [
     ./hm-modules/git.nix
@@ -33,7 +28,6 @@
 
       # Narzędzia CLI
       fastfetch
-      home-manager
       android-tools
 
       # Edytory kodu i IDE

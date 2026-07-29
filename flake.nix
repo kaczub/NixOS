@@ -10,30 +10,23 @@
     };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    ...
-  } @ inputs: let
-    lib = nixpkgs.lib;
+  outputs = { self, nixpkgs, home-manager, ... } @ inputs: let
     system = "x86_64-linux";
-    pkgs = import nixpkgs {inherit system;};
   in {
+    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+
     nixosConfigurations = {
       thinkpad = nixpkgs.lib.nixosSystem {
-        inherit system;
+        system = system;
         modules = [
-          ./configuration.nix
-        ];
-      };
-    };
+          ./nixos/configuration.nix
 
-    homeConfigurations = {
-      kamil = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          ./home.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.kamil = import ./home.nix;
+          }
         ];
       };
     };
