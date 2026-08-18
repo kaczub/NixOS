@@ -5,6 +5,7 @@
     ./hm-modules/ghostty.nix
     ./hm-modules/brave.nix
     ./hm-modules/firefox.nix
+    ./neovim.nix
   ];
 
   home = {
@@ -31,7 +32,6 @@
 
       # Edytory kodu i IDE
       vscode
-      neovim
 
       # Czcionki
       nerd-fonts.jetbrains-mono
