@@ -10,5 +10,7 @@
     music = "${config.home.homeDirectory}/Muzyka";
     templates = null;
     publicShare = null;
+
+    xdg.configFile."user-dirs.dirs".force = true;
   };
 }
