@@ -22,15 +22,7 @@
 
   # Enable the GNOME Desktop Environment.
   services.desktopManager.gnome.enable = true;
-  services.displayManager.gdm.enable = false;
-
-  
-  # Enable the COSMIC login manager
-  services.displayManager.cosmic-greeter.enable = true;
-
-  # Enable the COSMIC desktop environment
-  services.desktopManager.cosmic.enable = true;
-
+  services.displayManager.gdm.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
