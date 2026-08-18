@@ -24,6 +24,14 @@
   services.desktopManager.gnome.enable = true;
   services.displayManager.gdm.enable = true;
 
+  
+  # Enable the COSMIC login manager
+  services.displayManager.cosmic-greeter.enable = false;
+
+  # Enable the COSMIC desktop environment
+  services.desktopManager.cosmic.enable = true;
+
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "pl";
