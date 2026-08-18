@@ -5,7 +5,7 @@
     ./hm-modules/ghostty.nix
     ./hm-modules/brave.nix
     ./hm-modules/firefox.nix
-    ./neovim.nix
+    ./hm-modules/neovim.nix
   ];
 
   home = {
