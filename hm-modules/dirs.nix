@@ -8,5 +8,7 @@
     pictures = "${config.home.homeDirectory}/Obrazy";
     videos = "${config.home.homeDirectory}/Filmy";
     music = "${config.home.homeDirectory}/Muzyka";
+    templates = null;
+    publicShare = null;
   };
 }

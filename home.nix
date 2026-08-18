@@ -37,9 +37,5 @@
       # Czcionki
       nerd-fonts.jetbrains-mono
     ];
-
-    xdg = {
-      enable = true;
-    };
   };
 }
