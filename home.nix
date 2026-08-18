@@ -1,5 +1,4 @@
-{ pkgs, ... }: {
-
+{pkgs, ...}: {
   imports = [
     ./hm-modules/git.nix
     ./hm-modules/fish.nix
