@@ -6,6 +6,7 @@
     ./hm-modules/brave.nix
     ./hm-modules/firefox.nix
     ./hm-modules/neovim.nix
+    ./hm-modules/dirs.nix
   ];
 
   home = {
@@ -36,5 +37,9 @@
       # Czcionki
       nerd-fonts.jetbrains-mono
     ];
+
+    xdg = {
+      enable = true;
+    };
   };
 }
