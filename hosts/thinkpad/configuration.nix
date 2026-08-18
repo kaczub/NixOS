@@ -1,13 +1,14 @@
 {...}: {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./modules/desktop.nix
-    ./modules/system.nix
-    ./modules/users.nix
-    ./modules/hardware.nix
+    ../shared/desktop.nix
+    ../shared/system.nix
+    ../shared/users.nix
+    ./hardware.nix
   ];
 
+  networking.hostName = "thinkpad";
+  
   nix.settings.experimental-features = ["nix-command" "flakes"];
   system.stateVersion = "26.05";
 }

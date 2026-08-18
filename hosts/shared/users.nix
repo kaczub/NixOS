@@ -41,8 +41,6 @@
 
     # Rozszerzenia GNOME
     gnomeExtensions.blur-my-shell
-    gnomeExtensions.live-lock-screen
-    gnomeExtensions.gsconnect
     gnomeExtensions.clipboard-indicator
   ];
 }

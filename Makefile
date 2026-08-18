@@ -1,9 +1,6 @@
-.PHONY: update update-system clean news
+.PHONY: update clean news
 
 update:
-	home-manager switch --flake .#kamil
-
-update-system:
 	sudo nixos-rebuild switch --flake .#thinkpad
 
 clean:

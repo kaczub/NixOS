@@ -10,16 +10,38 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }: let
-    system = "x86_64-linux";
-  in {
-    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  }: {
+    formatter = nixpkgs.lib.genAttrs
+      [
+        "x86_64-linux"
+        "aarch64-linux"
+      ]
+      (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     nixosConfigurations = {
       thinkpad = nixpkgs.lib.nixosSystem {
-        system = system;
+        system = "x86_64-linux";
         modules = [
-          ./nixos/configuration.nix
+          ./hosts/thinkpad/configuration.nix
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.kamil = import ./home.nix;
+          }
+        ];
+      };
+
+      vm-arm = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          ./hosts/vm-arm/configuration.nix
 
           home-manager.nixosModules.home-manager
           {

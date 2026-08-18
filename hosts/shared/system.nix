@@ -6,8 +6,6 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "thinkpad";
-
   # Enable networking
   networking.networkmanager.enable = true;
 
