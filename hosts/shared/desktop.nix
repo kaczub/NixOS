@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   # Set your time zone.
   time.timeZone = "Europe/Warsaw";
 
@@ -48,6 +48,6 @@
     enable = true;
     xdgOpenUsePortal = true;
     config.common.default = "*";
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    extraPortals = [xdg-desktop-portal-gtk];
   };
 }
