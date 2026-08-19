@@ -1,5 +1,6 @@
-{pkgs, ...}: {
+{pkgs, nix-colors, ...}: {
   imports = [
+    nix-colors.homeManagerModules.default
     ./hm-modules/git.nix
     ./hm-modules/fish.nix
     ./hm-modules/ghostty.nix
@@ -7,6 +8,8 @@
     ./hm-modules/firefox.nix
     ./hm-modules/neovim.nix
     ./hm-modules/dirs.nix
+    ./hm-modules/niri/niri.nix
+    ./hm-modules/niri/color-scheme.nix
   ];
 
   home = {
