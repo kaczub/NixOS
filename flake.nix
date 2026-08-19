@@ -42,6 +42,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit nix-colors; };
             home-manager.users.kamil = import ./home.nix;
           }
         ];
@@ -57,6 +58,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit nix-colors; };
             home-manager.users.kamil = import ./home.nix;
           }
         ];
