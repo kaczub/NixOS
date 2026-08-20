@@ -12,6 +12,8 @@
     ./hm-modules/desktop/niri.nix
     ./hm-modules/desktop/fuzzel.nix
     ./hm-modules/desktop/color-scheme.nix
+    ./hm-modules/desktop/waybar.nix
+    ./hm-modules/desktop/swaync.nix
   ];
 
   home = {
