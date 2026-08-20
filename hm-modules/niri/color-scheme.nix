@@ -1,4 +1,4 @@
 { nix-colors, ... }:
 {
-  colorScheme = nix-colors.colorSchemes.black-metal-bathory;
+  colorScheme = nix-colors.colorSchemes.gruvbox-dark-medium;
 }
