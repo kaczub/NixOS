@@ -9,7 +9,8 @@
     ./hm-modules/firefox.nix
     ./hm-modules/neovim.nix
     ./hm-modules/dirs.nix
-    ./hm-modules/niri/niri.nix
+    ./hm-modules/desktop/niri.nix
+    ./hm-modules/desktop/fuzzel.nix
     ./hm-modules/niri/color-scheme.nix
   ];
 

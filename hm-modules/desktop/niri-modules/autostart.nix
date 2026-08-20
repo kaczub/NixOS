@@ -1,0 +1,4 @@
+[
+  { command = [ "waybar" ]; }
+  { command = [ "swaync" ]; }
+]
