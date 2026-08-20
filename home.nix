@@ -1,6 +1,7 @@
-{pkgs, nix-colors, ...}: {
+{pkgs, nix-colors, niri, ...}: {
   imports = [
     nix-colors.homeManagerModules.default
+    niri.homeModules.niri
     ./hm-modules/git.nix
     ./hm-modules/fish.nix
     ./hm-modules/ghostty.nix

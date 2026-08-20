@@ -42,7 +42,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit nix-colors; };
+            home-manager.extraSpecialArgs = { inherit nix-colors niri; };
             home-manager.users.kamil = import ./home.nix;
           }
         ];
@@ -50,7 +50,7 @@
 
       vm-arm = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
-        specialArgs = { inherit nix-colors;};
+        specialArgs = { inherit nix-colors niri; };
         modules = [
           ./hosts/vm-arm/configuration.nix
 
@@ -58,7 +58,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit nix-colors; };
+            home-manager.extraSpecialArgs = { inherit nix-colors niri; };
             home-manager.users.kamil = import ./home.nix;
           }
         ];
