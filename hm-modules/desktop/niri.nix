@@ -7,7 +7,7 @@
       binds = import ./niri-modules/binds.nix;
       layout = import ./niri-modules/layout.nix {inherit config;};
       input = import ./niri-modules/input.nix;
-      spawn-at-startup = import ./modules/autostart.nix;
+      spawn-at-startup = import ./niri-modules/autostart.nix;
     };
   };
 }
