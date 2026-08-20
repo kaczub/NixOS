@@ -11,7 +11,7 @@
     ./hm-modules/dirs.nix
     ./hm-modules/desktop/niri.nix
     ./hm-modules/desktop/fuzzel.nix
-    ./hm-modules/niri/color-scheme.nix
+    ./hm-modules/desktop/color-scheme.nix
   ];
 
   home = {
