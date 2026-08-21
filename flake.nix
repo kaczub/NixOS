@@ -8,10 +8,6 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-colors.url = "github:misterio77/nix-colors";
   };
 
@@ -19,7 +15,6 @@
     self,
     nixpkgs,
     home-manager,
-    niri,
     nix-colors,
     ...
   }: {
@@ -42,7 +37,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit nix-colors niri; };
+            home-manager.extraSpecialArgs = { inherit nix-colors; };
             home-manager.users.kamil = import ./home.nix;
           }
         ];
@@ -50,7 +45,7 @@
 
       vm-arm = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
-        specialArgs = { inherit nix-colors niri; };
+        specialArgs = { inherit nix-colors; };
         modules = [
           ./hosts/vm-arm/configuration.nix
 
@@ -58,7 +53,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit nix-colors niri; };
+            home-manager.extraSpecialArgs = { inherit nix-colors; };
             home-manager.users.kamil = import ./home.nix;
           }
         ];

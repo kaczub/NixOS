@@ -1,7 +1,10 @@
-{pkgs, nix-colors, niri, ...}: {
+{
+  pkgs,
+  nix-colors,
+  ...
+}: {
   imports = [
     nix-colors.homeManagerModules.default
-    niri.homeModules.niri
     ./hm-modules/git.nix
     ./hm-modules/fish.nix
     ./hm-modules/ghostty.nix
@@ -9,11 +12,7 @@
     ./hm-modules/firefox.nix
     ./hm-modules/neovim.nix
     ./hm-modules/dirs.nix
-    ./hm-modules/desktop/niri.nix
-    ./hm-modules/desktop/fuzzel.nix
     ./hm-modules/desktop/color-scheme.nix
-    ./hm-modules/desktop/waybar.nix
-    ./hm-modules/desktop/swaync.nix
   ];
 
   home = {
@@ -43,6 +42,11 @@
 
       # Czcionki
       nerd-fonts.jetbrains-mono
+
+      # lua
+      lua
+      lua-language-server 
+      stylua
     ];
   };
 }
