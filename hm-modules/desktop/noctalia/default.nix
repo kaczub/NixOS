@@ -1,0 +1,5 @@
+{...}: {
+  noctalia = {
+    enable = true;
+  };
+}

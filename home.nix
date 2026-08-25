@@ -1,18 +1,12 @@
 {
   pkgs,
-  nix-colors,
+  inputs,
   ...
 }: {
   imports = [
-    nix-colors.homeManagerModules.default
-    ./hm-modules/git.nix
-    ./hm-modules/fish.nix
-    ./hm-modules/ghostty.nix
-    ./hm-modules/brave.nix
-    ./hm-modules/firefox.nix
-    ./hm-modules/neovim.nix
-    ./hm-modules/dirs.nix
-    ./hm-modules/desktop/color-scheme.nix
+    inputs.noctalia.homeModules.default
+    inputs.stylix.homeModules.stylix
+    ./hm-modules
   ];
 
   home = {
@@ -45,8 +39,15 @@
 
       # lua
       lua
-      lua-language-server 
+      lua-language-server
       stylua
+
+      # fonts
+
+      noto-fonts
+      noto-fonts-emoji 
+      nerd-fonts.jetbrains-mono
     ];
+    fonts.fontconfig.enable = true;
   };
 }

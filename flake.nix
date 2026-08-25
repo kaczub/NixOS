@@ -8,56 +8,65 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-colors.url = "github:misterio77/nix-colors";
+
+    noctalia = {
+      url = "github:noctalia-dev/noctalia";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
-    self,
     nixpkgs,
     home-manager,
-    nix-colors,
+    noctalia,
+    stylix,
     ...
-  }: {
-    formatter =
-      nixpkgs.lib.genAttrs
-      [
-        "x86_64-linux"
-        "aarch64-linux"
-      ]
-      (system: nixpkgs.legacyPackages.${system}.alejandra);
+  }@inputs: {
+      formatter =
+        nixpkgs.lib.genAttrs
+        [
+          "x86_64-linux"
+          "aarch64-linux"
+        ]
+        (system: nixpkgs.legacyPackages.${system}.alejandra);
 
-    nixosConfigurations = {
-      thinkpad = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit nix-colors;};
-        modules = [
-          ./hosts/thinkpad/configuration.nix
+      nixosConfigurations = {
+        thinkpad = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {inherit inputs;};
+          modules = [
+            ./hosts/thinkpad/configuration.nix
 
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit nix-colors; };
-            home-manager.users.kamil = import ./home.nix;
-          }
-        ];
-      };
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = {inherit inputs;};
+              home-manager.users.kamil = import ./home.nix;
+            }
+          ];
+        };
 
-      vm-arm = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        specialArgs = { inherit nix-colors; };
-        modules = [
-          ./hosts/vm-arm/configuration.nix
+        vm-arm = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = {inherit inputs;};
+          modules = [
+            ./hosts/vm-arm/configuration.nix
 
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit nix-colors; };
-            home-manager.users.kamil = import ./home.nix;
-          }
-        ];
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = {inherit inputs;};
+              home-manager.users.kamil = import ./home.nix;
+            }
+          ];
+        };
       };
     };
-  };
 }
