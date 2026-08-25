@@ -48,6 +48,7 @@
       noto-fonts-emoji 
       nerd-fonts.jetbrains-mono
     ];
-    fonts.fontconfig.enable = true;
   };
+
+  fonts.fontconfig.enable = true;
 }
