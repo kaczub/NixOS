@@ -22,13 +22,7 @@
 
   # Enable the GNOME Desktop Environment.
   services.desktopManager.gnome.enable = true;
-  services.displayManager.gdm.enable = false;
-
-  # Enable hyprland
-  programs.hyprland.enable = true;
-
-  # Enable ly login manager
-  services.displayManager.ly.enable = true;
+  services.displayManager.gdm.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {

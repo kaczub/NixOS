@@ -1,11 +1,8 @@
 {
   pkgs,
-  inputs,
   ...
 }: {
   imports = [
-    inputs.noctalia.homeModules.default
-    inputs.stylix.homeModules.stylix
     ./hm-modules
   ];
 
@@ -36,21 +33,6 @@
 
       # Czcionki
       nerd-fonts.jetbrains-mono
-
-      # lua
-      lua
-      lua-language-server
-      stylua
-
-      # fonts
-
-      noto-fonts
-      noto-fonts-color-emoji 
-      nerd-fonts.jetbrains-mono
-
-      kitty
     ];
   };
-
-  fonts.fontconfig.enable = true;
 }
