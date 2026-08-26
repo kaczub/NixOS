@@ -7,7 +7,5 @@
 
     ./apps/ghostty.nix
     ./apps/brave.nix
-
-    ./desktop
   ];
 }
