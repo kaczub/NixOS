@@ -3,7 +3,7 @@ local mainMod = "SUPER"
 -- Aplikacje
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd("kitty"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("nautilus"))
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("firefox"))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("brave"))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("discord"))
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("spotify"))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
