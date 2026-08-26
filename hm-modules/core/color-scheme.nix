@@ -1,5 +1,5 @@
 {inputs, ...}: {
   imports = [
-    inputs.nix-colors.colorSchemes.tokyo-night-dark
+    inputs.nix-colors.colorSchemes.gruvbox-medium-dark
   ];
 }
