@@ -7,7 +7,6 @@
 
     ./apps/ghostty.nix
     ./apps/brave.nix
-    ./apps/firefox.nix
 
     ./desktop
   ];
