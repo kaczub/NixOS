@@ -1,4 +1,4 @@
-{config, ...}: {
+{config, lib, ...}: {
   programs.noctalia = {
     enable = true;
     systemd.enable = true;
@@ -11,7 +11,7 @@
       };
 
       shell = {
-        font_family = "JetBrains Mono";
+        font_family = lib.mkForce "JetBrains Mono";
         settings_show_advanced = true;
 
         animation = {
