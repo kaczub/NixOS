@@ -7,7 +7,7 @@
       theme = {
         mode = "light";
         source = "custom";
-        custom_palette = "Stylix";
+        custom_palette = "stylix";
       };
 
       shell = {
@@ -57,7 +57,7 @@
       };
     };
 
-    customPalettes.Stylix = {
+    customPalettes.stylix = {
       dark = {
         mPrimary = "#${config.lib.stylix.colors.base0D}";
         mOnPrimary = "#${config.lib.stylix.colors.base00}";
