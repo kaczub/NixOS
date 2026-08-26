@@ -42,5 +42,7 @@
     # Rozszerzenia GNOME
     gnomeExtensions.blur-my-shell
     gnomeExtensions.clipboard-indicator
+    # Wymagane przez stylix.targets.gnome (user-theme@gnome-shell-extensions.gcampax.gnome.org)
+    gnomeExtensions.user-theme
   ];
 }
