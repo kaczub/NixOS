@@ -81,10 +81,5 @@ hl.config({
       range = 15,
       render_power = 3,
     },
-  },
-
-  dwindle = {
-    pseudotile = true,
-    preserve_split = true,
-  },
+  }
 })

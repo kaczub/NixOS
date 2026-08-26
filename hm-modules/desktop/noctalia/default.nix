@@ -5,7 +5,7 @@
 
     settings = {
       theme = {
-        mode = "light";
+        mode = "dark";
         source = "custom";
         custom_palette = "stylix";
       };
