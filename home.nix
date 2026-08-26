@@ -32,9 +32,6 @@
 
       # Edytory kodu i IDE
       vscode
-
-      # Czcionki
-      nerd-fonts.jetbrains-mono
     ];
   };
 }

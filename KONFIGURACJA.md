@@ -1,61 +1,95 @@
-# NixOS — pełna konfiguracja
+# Konfiguracja NixOS — kompletny przegląd
 
-Przegląd wszystkich plików konfiguracyjnych projektu `/home/kamil/nixos`.
-Stan na 2026-08-26 (z usuniętym firefoxem).
+Ten dokument zawiera **całą konfigurację** repozytorium NixOS (flake + home-manager) w jednym pliku, wraz z **rozmieszczeniem** (strukturą katalogów) i opisem, jak poszczególne moduły są ze sobą powiązane.
 
-## Drzewo plików
+---
 
-```text
-NIXOS FLAKE — /home/kamil/nixos
-================================
+## 1. Przegląd architektury
 
-[Drzewo plików]
-├── flake.nix
-├── flake.lock               (auto-generowany, pominięty)
-├── home.nix
-├── Makefile
-├── hm-modules/
-│   ├── default.nix
-│   ├── apps/
-│   │   ├── ghostty.nix
-│   │   └── brave.nix
-│   ├── core/
-│   │   ├── fish.nix
-│   │   ├── git.nix
-│   │   ├── dirs.nix
-│   │   └── neovim.nix
-│   └── desktop/
-│       ├── default.nix
-│       ├── cherry-blossom.png      (obrazek dla stylix)
-│       ├── stylix/default.nix
-│       ├── noctalia/default.nix
-│       └── hyprland/
-│           ├── default.nix
-│           ├── hyprland.lua
-│           └── lua/
-│               ├── autostart.lua
-│               ├── general.lua
-│               ├── input.lua
-│               ├── keybinds.lua
-│               ├── monitors.lua
-│               ├── rules.lua
-│               └── touchpad.lua
-└── hosts/
-    ├── shared/
-    │   ├── desktop.nix
-    │   ├── system.nix
-    │   └── users.nix
-    ├── thinkpad/
-    │   ├── configuration.nix
-    │   ├── hardware-configuration.nix
-    │   └── hardware.nix
-    └── vm-arm/
-        └── configuration.nix
+- **Flake** (`flake.nix`) definiuje dwie konfiguracje NixOS: `thinkpad` (x86_64-linux) i `vm-arm` (aarch64-linux).
+- Konfiguracja **systemowa** (NixOS) znajduje się w katalogu `hosts/` — podzielona na:
+  - `shared/` — wspólne moduły używane przez oba hosty,
+  - `thinkpad/` — konfiguracja specyficzna dla laptopa (w tym sprzęt),
+  - `vm-arm/` — konfiguracja dla maszyny wirtualnej ARM.
+- Konfiguracja **użytkownika** (home-manager) znajduje się w `home.nix` oraz w modułach w `hm-modules/` (katalog `apps/` i `core/`).
+- **home-manager** jest zarządzany przez NixOS (`home-manager.nixosModules.home-manager`), a użytkownik `kamil` korzysta z `./home.nix`.
+- **Inputy flake**: `nixpkgs` (nixos-unstable), `home-manager` (master, follows nixpkgs), `nix-colors`.
+- **Formatter**: `alejandra` (wsparcie dla `nix fmt`).
+
+### Zależności między modułami
+
+```mermaid
+graph TD
+    F[flake.nix] --> TC[hosts/thinkpad/configuration.nix]
+    F --> VC[hosts/vm-arm/configuration.nix]
+    F -->|home-manager.nixosModules| H[home.nix]
+
+    TC --> HW[thinkpad/hardware-configuration.nix]
+    TC --> HWN[thinkpad/hardware.nix]
+    TC --> D[shared/desktop.nix]
+    TC --> S[shared/system.nix]
+    TC --> U[shared/users.nix]
+
+    VC --> D
+    VC --> S
+    VC --> U
+
+    H -->|inputs.nix-colors.homeManagerModules.default| NC[nix-colors]
+    H --> HM[hm-modules/default.nix]
+
+    HM --> FSH[core/fish.nix]
+    HM --> GIT[core/git.nix]
+    HM --> DIR[core/dirs.nix]
+    HM --> NV[core/neovim.nix]
+    HM --> CS[core/color-scheme.nix]
+    HM --> GH[apps/ghostty.nix]
+    HM --> BR[apps/brave.nix]
+
+    CS -->|inputs.nix-colors.colorSchemes.tokyo-night-dark| NC
+    FSH -->|config.colorScheme.palette| CS
+    NV -->|config.colorScheme.palette| CS
+    GH -->|config.colorScheme.palette| CS
 ```
 
-## Katalog główny
+---
 
-### `flake.nix`
+## 2. Rozmieszczenie plików (struktura katalogów)
+
+```
+nixos/
+├── flake.nix                          # Wejście: definicje hostów, inputy, formatter
+├── flake.lock                         # Zablokowane wersje inputów (wygenerowane)
+├── home.nix                           # Konfiguracja home-manager dla użytkownika kamil
+├── Makefile                           # Skróty: update, clean, news
+├── hosts/                             # Konfiguracja systemowa NixOS
+│   ├── shared/                        #   Moduły wspólne dla wszystkich hostów
+│   │   ├── desktop.nix                #     Środowisko graficzne (GNOME, GDM, X11, dźwięk)
+│   │   ├── system.nix                 #     Bootloader, kernel, sieć, GC, optymalizacja
+│   │   └── users.nix                  #     Użytkownik kamil, pakiety systemowe, Steam
+│   ├── thinkpad/                      #   Host: ThinkPad
+│   │   ├── configuration.nix          #     Główny plik hosta (importy, hostname, stateVersion)
+│   │   ├── hardware-configuration.nix #     Wygenerowany: dyski, moduły jądra, platforma
+│   │   └── hardware.nix               #     Sprzęt: GPU Intel, zram, fprint, fstrim
+│   └── vm-arm/                        #   Host: maszyna wirtualna ARM
+│       └── configuration.nix          #     Główny plik hosta (importy, hostname, stateVersion)
+└── hm-modules/                        # Moduły home-manager
+    ├── default.nix                    #   Agregacja importów wszystkich modułów
+    ├── apps/                          #   Aplikacje
+    │   ├── brave.nix                  #     Przeglądarka Brave
+    │   └── ghostty.nix                #     Terminal Ghostty (z paletą kolorów)
+    └── core/                          #   Rdzeń środowiska użytkownika
+        ├── color-scheme.nix           #     Motyw kolorów (nix-colors: tokyo-night-dark)
+        ├── dirs.nix                   #     Katalogi użytkownika (xdg.userDirs, PL)
+        ├── fish.nix                   #     Powłoka fish + zoxide + fzf
+        ├── git.nix                    #     Konfiguracja git
+        └── neovim.nix                 #     Edytor neovim (kolory z motywu)
+```
+
+---
+
+## 3. Zawartość plików
+
+### 3.1 `flake.nix`
 
 ```nix
 {
@@ -68,23 +102,13 @@ NIXOS FLAKE — /home/kamil/nixos
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    noctalia = {
-      url = "github:noctalia-dev/noctalia";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-colors.url = "github:misterio77/nix-colors";
   };
 
   outputs = {
     nixpkgs,
     home-manager,
-    noctalia,
-    stylix,
+    nix-colors,
     ...
   }@inputs: {
       formatter =
@@ -132,7 +156,16 @@ NIXOS FLAKE — /home/kamil/nixos
 }
 ```
 
-### `home.nix`
+**Opis:**
+- `nixpkgs` z gałęzi `nixos-unstable`.
+- `home-manager` z `master`, z `nixpkgs.follows` (współdzieli nixpkgs).
+- `nix-colors` — motywy kolorów.
+- `formatter` ustawiony na `alejandra` dla `x86_64-linux` i `aarch64-linux`.
+- Oba hosty (`thinkpad`, `vm-arm`) korzystają z tego samego `home.nix` i przekazują `inputs` przez `specialArgs` / `extraSpecialArgs`.
+
+---
+
+### 3.2 `home.nix`
 
 ```nix
 {
@@ -141,8 +174,7 @@ NIXOS FLAKE — /home/kamil/nixos
   ...
 }: {
   imports = [
-    inputs.noctalia.homeModules.default
-    inputs.stylix.homeModules.stylix
+    inputs.nix-colors.homeManagerModules.default
     ./hm-modules
   ];
 
@@ -173,28 +205,21 @@ NIXOS FLAKE — /home/kamil/nixos
 
       # Czcionki
       nerd-fonts.jetbrains-mono
-
-      # lua
-      lua
-      lua-language-server
-      stylua
-
-      # fonts
-      noto-fonts
-      noto-fonts-color-emoji
-      nerd-fonts.jetbrains-mono
-
-      kitty
     ];
   };
-
-  fonts.fontconfig.enable = true;
 }
 ```
 
-### `Makefile`
+**Opis:**
+- Importuje moduł nix-colors dla home-manager oraz cały katalog `hm-modules/` (agregowany przez `hm-modules/default.nix`).
+- Użytkownik: `kamil`, katalog domowy `/home/kamil`, `stateVersion = "26.05"`.
+- Pakiety: Discord, Darktable, Spotify, Lutris, Prism Launcher, qBittorrent, Fastfetch, android-tools, VS Code, JetBrains Mono Nerd Font.
 
-```make
+---
+
+### 3.3 `Makefile`
+
+```makefile
 .PHONY: update clean news
 
 update:
@@ -207,532 +232,128 @@ news:
 	home-manager news --flake .
 ```
 
-## `hm-modules/`
+**Opis:**
+- `make update` — przebudowa systemu ThinkPad,
+- `make clean` — czyszczenie śmieci w store Nixa,
+- `make news` — informacje o zmianach w home-manager.
 
-### `hm-modules/default.nix`
+---
+
+### 3.4 `hosts/thinkpad/configuration.nix`
 
 ```nix
 {...}: {
   imports = [
-    ./core/fish.nix
-    ./core/git.nix
-    ./core/dirs.nix
-    ./core/neovim.nix
-
-    ./apps/ghostty.nix
-    ./apps/brave.nix
-
-    ./desktop
+    ./hardware-configuration.nix
+    ../shared/desktop.nix
+    ../shared/system.nix
+    ../shared/users.nix
+    ./hardware.nix
   ];
+
+  networking.hostName = "thinkpad";
+
+  nix.settings.experimental-features = ["nix-command" "flakes"];
+  system.stateVersion = "26.05";
 }
 ```
 
-### `hm-modules/apps/ghostty.nix`
+**Opis:**
+- Główny plik hosta `thinkpad`.
+- Importuje wygenerowaną konfigurację sprzętu, moduły wspólne oraz własny `hardware.nix`.
+- Włącza eksperymentalne funkcje Nix (`nix-command`, `flakes`).
+
+---
+
+### 3.5 `hosts/thinkpad/hardware-configuration.nix`
 
 ```nix
-{...}: {
-  programs.ghostty = {
-    enable = true;
-    enableFishIntegration = true;
+{ config, lib, modulesPath, ... }:
 
-    settings = {
-      font-family = "JetBrainsMono Nerd Font";
-      font-size = 12;
-    };
-  };
-}
-```
-
-### `hm-modules/apps/brave.nix`
-
-```nix
-{...}: {
-  programs.brave.enable = true;
-}
-```
-
-### `hm-modules/core/fish.nix`
-
-```nix
-{ pkgs, ... }: {
-  programs.fish = {
-    enable = true;
-    interactiveShellInit = ''
-      set fish_greeting
-    '';
-    plugins = [
-      {
-        name = "hydro";
-        src = pkgs.fishPlugins.hydro.src;
-      }
+{
+  imports =
+    [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
-  };
 
-  programs.zoxide = {
-    enable = true;
-    enableFishIntegration = true;
-  };
+  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
 
-  programs.fzf = {
-    enable = true;
-    enableFishIntegration = true;
-  };
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/deca6886-1e4c-4dbc-9af0-ddcff085e46c";
+      fsType = "btrfs";
+    };
+
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/deca6886-1e4c-4dbc-9af0-ddcff085e46c";
+      fsType = "btrfs";
+      options = [ "subvol=home" ];
+    };
+
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/deca6886-1e4c-4dbc-9af0-ddcff085e46c";
+      fsType = "btrfs";
+      options = [ "subvol=nix" ];
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/F844-AD21";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
+
+  swapDevices = [ ];
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
 ```
 
-### `hm-modules/core/git.nix`
+**Opis:**
+- Wygenerowany plik (`nixos-generate-config`).
+- System plików **btrfs** z subwoluminami `/home` i `/nix` na jednej partycji + `/boot` (vfat/EFI).
+- Brak swapu (swap odbywa się przez `zramSwap` w `hardware.nix`).
+- Moduły jądra dla Intel (w tym `kvm-intel`).
+- Automatyczna aktualizacja mikrokodu CPU Intel.
 
-```nix
-{...}: {
-  programs.git = {
-    enable = true;
-    settings.user.name = "kaczub";
-    settings.user.email = "170130290+kaczub@users.noreply.github.com";
-  };
-}
-```
+---
 
-### `hm-modules/core/dirs.nix`
-
-```nix
-{config, ...}: {
-  xdg.userDirs = {
-    enable = true;
-    createDirectories = true;
-
-    download = "${config.home.homeDirectory}/Pobrane";
-    documents = "${config.home.homeDirectory}/Dokumenty";
-    pictures = "${config.home.homeDirectory}/Obrazy";
-    videos = "${config.home.homeDirectory}/Filmy";
-    music = "${config.home.homeDirectory}/Muzyka";
-    templates = null;
-    publicShare = null;
-  };
-
-  xdg.configFile."user-dirs.dirs".force = true;
-}
-```
-
-### `hm-modules/core/neovim.nix`
-
-```nix
-{...}: {
-  programs.neovim = {
-    enable = true;
-
-    extraConfig = ''
-      set background=dark
-    '';
-  };
-}
-```
-
-## `hm-modules/desktop/`
-
-### `hm-modules/desktop/default.nix`
-
-```nix
-{...}: {
-  imports = [
-    ./hyprland
-    ./noctalia
-    ./stylix
-  ];
-}
-```
-
-### `hm-modules/desktop/stylix/default.nix`
+### 3.6 `hosts/thinkpad/hardware.nix`
 
 ```nix
 {pkgs, ...}: {
-  stylix = {
+  # Hardware & Wydajność
+  hardware.graphics = {
     enable = true;
-    image = ../cherry-blossom.png;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
-    polarity = "dark";
+    extraPackages = with pkgs; [
+      intel-media-driver # VA-API → sprzętowe kodowanie wideo
+      intel-vaapi-driver # backup VA-API
+      intel-compute-runtime-legacy1 # OpenCL/Level Zero dla Darktable
+    ];
+    extraPackages32 = with pkgs; [
+      intel-media-driver
+      intel-compute-runtime-legacy1
+    ];
   };
+  zramSwap.enable = true;
+  services.fprintd.enable = true;
+  services.fprintd.tod.enable = true;
+  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 
-  # Stylix writes qt5ct/qt6ct theme files; allow overwriting existing ones
-  # instead of failing activation with "would be clobbered".
-  xdg.configFile."qt5ct/qt5ct.conf".force = true;
-  xdg.configFile."qt6ct/qt6ct.conf".force = true;
+  services.fstrim.enable = true;
 }
 ```
 
-### `hm-modules/desktop/noctalia/default.nix`
+**Opis:**
+- Sprzętowe kodowanie wideo **VA-API** (Intel) + OpenCL dla Darktable.
+- **zramSwap** — swap w RAM (stąd brak swapDevices).
+- **fprintd** z driverem Goodix (czytnik linii papilarnych).
+- **fstrim** — TRIM dla dysków SSD.
 
-```nix
-{lib, ...}: {
-  programs.noctalia = {
-    enable = true;
+---
 
-    settings = {
-      theme = {
-        mode = "dark";
-        source = "custom";
-        custom_palette = "stylix";
-      };
-
-      shell = {
-        font_family = lib.mkForce "JetBrains Mono";
-        settings_show_advanced = true;
-
-        animation = {
-          enabled = true;
-          speed = 1.0;
-        };
-
-        panel = {
-          transparency_mode = "soft";
-          borders = true;
-          shadow = true;
-          launcher_placement = "floating";
-          launcher_position = "center";
-          control_center_placement = "attached";
-        };
-      };
-
-      bar.default = {
-        position = "top";
-        enabled = true;
-        reserve_space = true;
-        thickness = 34;
-        background_opacity = 0.92;
-
-        start = [
-          "launcher"
-          "workspaces"
-        ];
-
-        center = [
-          "clock"
-        ];
-
-        end = [
-          "network"
-          "bluetooth"
-          "volume"
-          "battery"
-          "tray"
-          "control-center"
-          "session"
-        ];
-      };
-    };
-  };
-}
-```
-
-## `hm-modules/desktop/hyprland/`
-
-### `hm-modules/desktop/hyprland/default.nix`
-
-```nix
-{config, ...}: {
-  wayland.windowManager.hyprland = {
-    enable = true;
-    # Use the Hyprland and XDPH packages from the NixOS module
-    # (programs.hyprland.enable) instead of installing duplicates via HM.
-    package = null;
-    portalPackage = null;
-  };
-
-  xdg.configFile = {
-    "hypr/hyprland.lua".source = ./hyprland.lua;
-    "hypr/lua/monitors.lua".source = ./lua/monitors.lua;
-    "hypr/lua/autostart.lua".source = ./lua/autostart.lua;
-    "hypr/lua/general.lua".source = ./lua/general.lua;
-    "hypr/lua/input.lua".source = ./lua/input.lua;
-    "hypr/lua/touchpad.lua".source = ./lua/touchpad.lua;
-    "hypr/lua/rules.lua".source = ./lua/rules.lua;
-    "hypr/lua/keybinds.lua".source = ./lua/keybinds.lua;
-    "hypr/lua/colors.lua".text = ''
-      return {
-        base00 = "${config.lib.stylix.colors.base00}",
-        base01 = "${config.lib.stylix.colors.base01}",
-        base03 = "${config.lib.stylix.colors.base03}",
-        base05 = "${config.lib.stylix.colors.base05}",
-        base07 = "${config.lib.stylix.colors.base07}",
-        base08 = "${config.lib.stylix.colors.base08}",
-        base0A = "${config.lib.stylix.colors.base0A}",
-        base0B = "${config.lib.stylix.colors.base0B}",
-        base0C = "${config.lib.stylix.colors.base0C}",
-        base0D = "${config.lib.stylix.colors.base0D}",
-        base0E = "${config.lib.stylix.colors.base0E}",
-        base0F = "${config.lib.stylix.colors.base0F}",
-      }
-    '';
-  };
-}
-```
-
-### `hm-modules/desktop/hyprland/hyprland.lua`
-
-```lua
-require("lua.monitors")
-require("lua.autostart")
-require("lua.general")
-require("lua.input")
-require("lua.touchpad")
-require("lua.rules")
-require("lua.keybinds")
-```
-
-### `hm-modules/desktop/hyprland/lua/autostart.lua`
-
-```lua
--- (pusty)
-```
-
-### `hm-modules/desktop/hyprland/lua/input.lua`
-
-```lua
--- (pusty)
-```
-
-### `hm-modules/desktop/hyprland/lua/monitors.lua`
-
-```lua
-hl.monitor({
-    output = "",
-    mode = "preferred",
-    position = "auto",
-    scale = 1,
-})
-```
-
-### `hm-modules/desktop/hyprland/lua/general.lua`
-
-```lua
-local colors = require("lua.colors")
-
-hl.config({
-  animations = {
-    enabled = true,
-  },
-})
-
-hl.curve("easeOutQuint", {
-  type = "bezier",
-  points = { { 0.23, 1 }, { 0.32, 1 } },
-})
-
-hl.curve("easeInOutCubic", {
-  type = "bezier",
-  points = { { 0.65, 0.05 }, { 0.36, 1 } },
-})
-
-hl.animation({
-  leaf = "windows",
-  enabled = true,
-  speed = 4,
-  bezier = "easeOutQuint",
-})
-
-hl.animation({
-  leaf = "windowsIn",
-  enabled = true,
-  speed = 4,
-  bezier = "easeOutQuint",
-  style = "popin 80%",
-})
-
-hl.animation({
-  leaf = "windowsOut",
-  enabled = true,
-  speed = 3,
-  bezier = "easeInOutCubic",
-  style = "popin 80%",
-})
-
-hl.animation({
-  leaf = "fade",
-  enabled = true,
-  speed = 3,
-  bezier = "easeOutQuint",
-})
-
-hl.animation({
-  leaf = "workspaces",
-  enabled = true,
-  speed = 4,
-  bezier = "easeInOutCubic",
-  style = "fade",
-})
-
-hl.config({
-  general = {
-    gaps_in = 6,
-    gaps_out = 12,
-    border_size = 1,
-    layout = "dwindle",
-    ["col.active_border"] = "rgb(" .. colors.base0D .. ")",
-    ["col.inactive_border"] = "rgb(" .. colors.base03 .. ")",
-  },
-
-  decoration = {
-    rounding = 8,
-    active_opacity = 0.95,
-    inactive_opacity = 0.85,
-
-    blur = {
-      enabled = true,
-      size = 5,
-      passes = 2,
-    },
-
-    shadow = {
-      enabled = true,
-      color = "rgba(" .. colors.base00 .. "99)",
-      range = 15,
-      render_power = 3,
-    },
-  }
-})
-```
-
-### `hm-modules/desktop/hyprland/lua/touchpad.lua`
-
-```lua
-hl.config({
-  input = {
-    touchpad = {
-      natural_scroll = true,
-      tap_to_click = true,
-      clickfinger_behavior = true,
-      disable_while_typing = true,
-      scroll_factor = 0.5,
-    },
-  },
-})
-
-hl.gesture({
-  fingers = 3,
-  direction = "horizontal",
-  action = "workspace",
-})
-```
-
-### `hm-modules/desktop/hyprland/lua/rules.lua`
-
-```lua
--- 1. Smart Gaps (brak ramek i odstępów, gdy na pulpicie jest tylko 1 okno)
-hl.workspace_rule({ workspace = "w[tv1]s[false]", gaps_out = 0, gaps_in = 0 })
-hl.workspace_rule({ workspace = "f[1]s[false]", gaps_out = 0, gaps_in = 0 })
-
-hl.window_rule({ match = { float = false, workspace = "w[tv1]s[false]" }, border_size = 0, rounding = 0 })
-hl.window_rule({ match = { float = false, workspace = "f[1]s[false]" }, border_size = 0, rounding = 0 })
-
--- 2. Trwałe pulpity (1-5 zawsze widoczne na pasku)
-for i = 1, 5 do
-    hl.workspace_rule({ workspace = tostring(i), persistent = true })
-end
-
--- 3. Okna pływające dla narzędzi i okien dialogowych
-hl.window_rule({ match = { modal = true }, float = true, center = true })
-hl.window_rule({ match = { class = "blueman-manager" }, float = true, center = true })
-hl.window_rule({ match = { class = "pavucontrol" }, float = true, center = true })
-hl.window_rule({ match = { class = "org.gnome.Nautilus" }, float = true, center = true, size = { 900, 600 } })
-hl.window_rule({ match = { class = "nm-connection-editor" }, float = true, center = true })
-
--- 4. Przypisywanie aplikacji do pulpitów
-hl.window_rule({ match = { class = "^firefox$" }, workspace = "1" })
-hl.window_rule({ match = { class = "^discord$" }, workspace = "4" })
-hl.window_rule({ match = { class = "^Spotify$" }, workspace = "5" })
-
--- 5. Zapobieganie wygaszaniu ekranu w trybie pełnoekranowym (odtwarzanie wideo/prezentacje)
-hl.window_rule({ match = { fullscreen = true }, idle_inhibit = "fullscreen" })
-```
-
-### `hm-modules/desktop/hyprland/lua/keybinds.lua`
-
-```lua
-local mainMod = "SUPER"
-
--- Aplikacje
-hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd("kitty"))
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("nautilus"))
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("firefox"))
-hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("discord"))
-hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("spotify"))
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
-
--- Okna i sesja
-hl.bind(mainMod .. " + C", hl.dsp.window.close())
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + M", hl.dsp.exit())
-
--- Nawigacja (Vim)
-hl.bind(mainMod .. " + h", hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + l", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + k", hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + j", hl.dsp.focus({ direction = "down" }))
-
--- Nawigacja (Strzałki)
-hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
-
--- Przesuwanie (Vim)
-hl.bind(mainMod .. " + SHIFT + h", hl.dsp.window.move({ direction = "left" }))
-hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.move({ direction = "right" }))
-hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ direction = "up" }))
-hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ direction = "down" }))
-
--- Przesuwanie (Strzałki)
-hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.move({ direction = "left" }))
-hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
-hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ direction = "up" }))
-hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.move({ direction = "down" }))
-
--- Workspace'y (1-10)
-for i = 1, 10 do
-    local key = tostring(i % 10)
-    hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
-    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
-end
-
--- Mysz
-hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
-hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
-
--- Multimedia
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"), { repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { repeating = true })
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true })
-hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
-hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
-
--- Dedykowane klawisze ThinkPad T490
-hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true })
-hl.bind("XF86Display", hl.dsp.exec_cmd("hyprctl keyword monitor 'eDP-1, disable'"), { locked = true })
-hl.bind("XF86WLAN", hl.dsp.exec_cmd("rfkill toggle wifi"), { locked = true })
-hl.bind("XF86Bluetooth", hl.dsp.exec_cmd("blueman-manager"))
-hl.bind("XF86Favorites", hl.dsp.exec_cmd("kitty -e btop"))
-
--- Submap: Resize
-hl.bind(mainMod .. " + R", hl.dsp.submap("resize"))
-hl.define_submap("resize", function()
-    hl.bind("right", hl.dsp.window.resize({ x = 20, y = 0, relative = true }), { repeating = true })
-    hl.bind("left", hl.dsp.window.resize({ x = -20, y = 0, relative = true }), { repeating = true })
-    hl.bind("up", hl.dsp.window.resize({ x = 0, y = -20, relative = true }), { repeating = true })
-    hl.bind("down", hl.dsp.window.resize({ x = 0, y = 20, relative = true }), { repeating = true })
-    hl.bind("l", hl.dsp.window.resize({ x = 20, y = 0, relative = true }), { repeating = true })
-    hl.bind("h", hl.dsp.window.resize({ x = -20, y = 0, relative = true }), { repeating = true })
-    hl.bind("k", hl.dsp.window.resize({ x = 0, y = -20, relative = true }), { repeating = true })
-    hl.bind("j", hl.dsp.window.resize({ x = 0, y = 20, relative = true }), { repeating = true })
-    hl.bind("escape", hl.dsp.submap("reset"))
-end)
-```
-
-## `hosts/`
-
-### `hosts/shared/desktop.nix`
+### 3.7 `hosts/shared/desktop.nix`
 
 ```nix
 {...}: {
@@ -759,13 +380,7 @@ end)
 
   # Enable the GNOME Desktop Environment.
   services.desktopManager.gnome.enable = true;
-  services.displayManager.gdm.enable = false;
-
-  # Enable hyprland
-  programs.hyprland.enable = true;
-
-  # Enable ly login manager
-  services.displayManager.ly.enable = true;
+  services.displayManager.gdm.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -789,7 +404,14 @@ end)
 }
 ```
 
-### `hosts/shared/system.nix`
+**Opis:**
+- Strefa czasowa `Europe/Warsaw`, locale `pl_PL.UTF-8` (wszystkie kategorie LC).
+- **GNOME** + **GDM** na X11, układ klawiatury `pl`, konsola `pl2`.
+- **CUPS** (drukowanie) oraz **PipeWire** (dźwięk z ALSA + PulseAudio).
+
+---
+
+### 3.8 `hosts/shared/system.nix`
 
 ```nix
 {pkgs, ...}: {
@@ -821,7 +443,16 @@ end)
 }
 ```
 
-### `hosts/shared/users.nix`
+**Opis:**
+- Bootloader **systemd-boot** (EFI), limit 4 generacji.
+- Najnowsze jądro Linuxa (`linuxPackages_latest`).
+- **NetworkManager** do sieci.
+- **fish** jako powłoka systemowa (wymagane dla `users.users.kamil.shell`).
+- Automatyczny **GC** (co tydzień, usuwa generacje starsze niż 7 dni) i optymalizacja store.
+
+---
+
+### 3.9 `hosts/shared/users.nix`
 
 ```nix
 {pkgs, ...}: {
@@ -868,103 +499,19 @@ end)
     # Rozszerzenia GNOME
     gnomeExtensions.blur-my-shell
     gnomeExtensions.clipboard-indicator
-    # Wymagane przez stylix.targets.gnome (user-theme@gnome-shell-extensions.gcampax.gnome.org)
-    gnomeExtensions.user-themes
   ];
 }
 ```
 
-### `hosts/thinkpad/configuration.nix`
+**Opis:**
+- Użytkownik `kamil`: normalny, powłoka fish, grupy `networkmanager`, `wheel`, `adbusers`.
+- Usunięte domyślne aplikacje GNOME (Epiphany, Kontakty, Pogoda, Mapy, Music, Yelp, Snapshot itd.).
+- `allowUnfree = true`, **Steam** włączony.
+- Pakiety systemowe: curl, wget, gnumake, alejandra, nixd, rozszerzenia GNOME (blur-my-shell, clipboard-indicator).
 
-```nix
-{...}: {
-  imports = [
-    ./hardware-configuration.nix
-    ../shared/desktop.nix
-    ../shared/system.nix
-    ../shared/users.nix
-    ./hardware.nix
-  ];
+---
 
-  networking.hostName = "thinkpad";
-
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  system.stateVersion = "26.05";
-}
-```
-
-### `hosts/thinkpad/hardware-configuration.nix`
-
-```nix
-{ config, lib, modulesPath, ... }:
-
-{
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
-
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
-
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/deca6886-1e4c-4dbc-9af0-ddcff085e46c";
-      fsType = "btrfs";
-    };
-
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/deca6886-1e4c-4dbc-9af0-ddcff085e46c";
-      fsType = "btrfs";
-      options = [ "subvol=home" ];
-    };
-
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/deca6886-1e4c-4dbc-9af0-ddcff085e46c";
-      fsType = "btrfs";
-      options = [ "subvol=nix" ];
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/F844-AD21";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
-
-  swapDevices = [ ];
-
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-}
-```
-
-### `hosts/thinkpad/hardware.nix`
-
-```nix
-{pkgs, ...}: {
-  # Hardware & Wydajność
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      intel-media-driver # VA-API → sprzętowe kodowanie wideo
-      intel-vaapi-driver # backup VA-API
-      intel-compute-runtime-legacy1 # OpenCL/Level Zero dla Darktable
-    ];
-    extraPackages32 = with pkgs; [
-      intel-media-driver
-      intel-compute-runtime-legacy1
-    ];
-  };
-  zramSwap.enable = true;
-  services.fprintd.enable = true;
-  services.fprintd.tod.enable = true;
-  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
-
-  services.fstrim.enable = true;
-}
-```
-
-### `hosts/vm-arm/configuration.nix`
+### 3.10 `hosts/vm-arm/configuration.nix`
 
 ```nix
 {...}: {
@@ -980,3 +527,246 @@ end)
   system.stateVersion = "uzupełnij";
 }
 ```
+
+**Opis:**
+- Host `vm-arm` — maszyna wirtualna **aarch64-linux**.
+- Korzysta wyłącznie z modułów wspólnych (`shared/`), bez własnej konfiguracji sprzętu.
+- ⚠️ `system.stateVersion = "uzupełnij"` — **placeholder do uzupełnienia** (np. `"26.05"`); w obecnej formie przebudowa zakończy się błędem.
+
+---
+
+### 3.11 `hm-modules/default.nix`
+
+```nix
+{...}: {
+  imports = [
+    ./core/fish.nix
+    ./core/git.nix
+    ./core/dirs.nix
+    ./core/neovim.nix
+    ./core/color-scheme.nix
+
+    ./apps/ghostty.nix
+    ./apps/brave.nix
+  ];
+}
+```
+
+**Opis:**
+- Agregator wszystkich modułów home-manager — importowany jako `./hm-modules` z `home.nix`.
+
+---
+
+### 3.12 `hm-modules/core/color-scheme.nix`
+
+```nix
+{inputs, ...}: {
+  colorScheme = inputs.nix-colors.colorSchemes.tokyo-night-dark;
+}
+```
+
+**Opis:**
+- Ustawia motyw kolorów **Tokyo Night Dark** z nix-colors.
+- Wymaga `inputs` przekazanego przez `extraSpecialArgs` w `flake.nix`.
+- Paleta (`.palette.*`) jest konsumowana przez `fish.nix`, `neovim.nix` i `ghostty.nix`.
+
+---
+
+### 3.13 `hm-modules/core/fish.nix`
+
+```nix
+{config, pkgs, ... }: {
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      set fish_greeting
+      set fish_color_command "#${config.colorScheme.palette.base0D}"
+      set fish_color_error "#${config.colorScheme.palette.base08}"
+      set fish_color_param "#${config.colorScheme.palette.base0A}"
+      set fish_color_quote "#${config.colorScheme.palette.base0B}"
+      set fish_color_operator "#${config.colorScheme.palette.base0E}"
+      set fish_color_autosuggestion "#${config.colorScheme.palette.base03}"
+      set fish_color_selection "--background=#${config.colorScheme.palette.base04}"
+      set fish_color_search_match "--background=#${config.colorScheme.palette.base04}"
+    '';
+
+    plugins = [
+      {
+        name = "hydro";
+        src = pkgs.fishPlugins.hydro.src;
+      }
+    ];
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+}
+```
+
+**Opis:**
+- Powłoka **fish** z koloryzacją z palety motywu (Tokyo Night), plugin **hydro** (prompt).
+- **zoxide** (smarter `cd`) i **fzf** (fuzzy finder) z integracją fish.
+
+---
+
+### 3.14 `hm-modules/core/git.nix`
+
+```nix
+{...}: {
+  programs.git = {
+    enable = true;
+    settings.user.name = "kaczub";
+    settings.user.email = "170130290+kaczub@users.noreply.github.com";
+  };
+}
+```
+
+**Opis:**
+- Konfiguracja **git**: nazwa `kaczub`, e-mail GitHub (noreply).
+
+---
+
+### 3.15 `hm-modules/core/dirs.nix`
+
+```nix
+{config, ...}: {
+  xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+
+    download = "${config.home.homeDirectory}/Pobrane";
+    documents = "${config.home.homeDirectory}/Dokumenty";
+    pictures = "${config.home.homeDirectory}/Obrazy";
+    videos = "${config.home.homeDirectory}/Filmy";
+    music = "${config.home.homeDirectory}/Muzyka";
+    templates = null;
+    publicShare = null;
+  };
+
+  xdg.configFile."user-dirs.dirs".force = true;
+}
+```
+
+**Opis:**
+- Katalogi użytkownika zgodne z polskimi nazwami (Pobrane, Dokumenty, Obrazy, Filmy, Muzyka).
+- `templates` i `publicShare` wyłączone; wymuszenie zapisu `user-dirs.dirs`.
+
+---
+
+### 3.16 `hm-modules/core/neovim.nix`
+
+```nix
+{config, ...}: {
+  programs.neovim = {
+    enable = true;
+
+    extraConfig = ''
+      set background=dark
+      highlight Normal guibg=#${config.colorScheme.palette.base00} guifg=#${config.colorScheme.palette.base05}
+      highlight NormalNC guibg=#${config.colorScheme.palette.base01}
+      highlight Comment guifg=#${config.colorScheme.palette.base03}
+      highlight String guifg=#${config.colorScheme.palette.base0B}
+      highlight Function guifg=#${config.colorScheme.palette.base0D}
+      highlight Keyword guifg=#${config.colorScheme.palette.base0E}
+      highlight Type guifg=#${config.colorScheme.palette.base0A}
+      highlight Number guifg=#${config.colorScheme.palette.base09}
+      highlight LineNr guifg=#${config.colorScheme.palette.base03}
+      highlight CursorLineNr guifg=#${config.colorScheme.palette.base0D}
+      highlight Visual guibg=#${config.colorScheme.palette.base04}
+      highlight StatusLine guibg=#${config.colorScheme.palette.base01} guifg=#${config.colorScheme.palette.base05}
+      highlight Pmenu guibg=#${config.colorScheme.palette.base01} guifg=#${config.colorScheme.palette.base05}
+    '';
+  };
+}
+```
+
+**Opis:**
+- **Neovim** z ręcznie ustawionymi highlightami (kolory pobierane z palety motywu).
+- Wymaga parametru `{config, ...}` — bez niego `config` byłby niezdefiniowany.
+
+---
+
+### 3.17 `hm-modules/apps/ghostty.nix`
+
+```nix
+{config, ...}: {
+  programs.ghostty = {
+    enable = true;
+    enableFishIntegration = true;
+
+    settings = {
+      font-family = "JetBrainsMono Nerd Font";
+      font-size = 12;
+
+      background = "#${config.colorScheme.palette.base00}";
+      foreground = "#${config.colorScheme.palette.base05}";
+      cursor-color = "#${config.colorScheme.palette.base0D}";
+      selection-background = "#${config.colorScheme.palette.base02}";
+
+      palette = [
+        "0=#${config.colorScheme.palette.base00}"
+        "1=#${config.colorScheme.palette.base08}"
+        "2=#${config.colorScheme.palette.base0B}"
+        "3=#${config.colorScheme.palette.base0A}"
+        "4=#${config.colorScheme.palette.base0D}"
+        "5=#${config.colorScheme.palette.base0E}"
+        "6=#${config.colorScheme.palette.base0C}"
+        "7=#${config.colorScheme.palette.base05}"
+        "8=#${config.colorScheme.palette.base03}"
+        "9=#${config.colorScheme.palette.base08}"
+        "10=#${config.colorScheme.palette.base0B}"
+        "11=#${config.colorScheme.palette.base0A}"
+        "12=#${config.colorScheme.palette.base0D}"
+        "13=#${config.colorScheme.palette.base0E}"
+        "14=#${config.colorScheme.palette.base0C}"
+        "15=#${config.colorScheme.palette.base07}"
+      ];
+    };
+  };
+}
+```
+
+**Opis:**
+- Terminal **Ghostty** z integracją fish.
+- Czcionka JetBrainsMono Nerd Font, rozmiar `12` (liczba, nie string).
+- Kolory tła, tekstu, kursora i pełna 16-kolorowa paleta z motywu Tokyo Night.
+
+---
+
+### 3.18 `hm-modules/apps/brave.nix`
+
+```nix
+{...}: {
+  programs.brave.enable = true;
+}
+```
+
+**Opis:**
+- Włącza przeglądarkę **Brave**.
+
+---
+
+## 4. Uwagi i znane problemy
+
+> Na podstawie wcześniejszego przeglądu repozytorium (notatki w `/memories/repo/nixos-review.md`).
+
+- ⚠️ **`hosts/vm-arm/configuration.nix`**: `system.stateVersion = "uzupełnij"` — placeholder do uzupełnienia; przebudowa `vm-arm` zakończy się błędem.
+- ⚠️ **`hosts/thinkpad/hardware.nix`**: `libfprint-2-tod1-goodix` został usunięty z nixpkgs — rozważ `libfprint-2-tod1-goodix-oss`.
+- ⚠️ **`hosts/thinkpad/hardware.nix`**: `intel-compute-runtime-legacy1` w `extraPackages32` może nie istnieć dla 32-bitów.
+- ⚠️ **Brak `inputs` w funkcjach modułów**, które go używają, powoduje błąd — dotyczy to m.in. modułów odwołujących się do `config.colorScheme.palette.*` (muszą mieć sygnaturę `{config, ...}:`).
+
+## 5. Komendy
+
+| Komenda | Opis |
+|---|---|
+| `make update` | Przebudowa systemu ThinkPad (`sudo nixos-rebuild switch --flake .#thinkpad`) |
+| `make clean` | Czyszczenie śmieci (`nix-collect-garbage -d`) |
+| `make news` | Informacje home-manager (`home-manager news --flake .`) |
+| `nix fmt` | Formatowanie całego repo formatterem (alejandra) |

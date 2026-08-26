@@ -14,6 +14,7 @@
   outputs = {
     nixpkgs,
     home-manager,
+    nix-colors,
     ...
   }@inputs: {
       formatter =
