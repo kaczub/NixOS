@@ -1,6 +1,10 @@
 {config, ...}: {
   wayland.windowManager.hyprland = {
     enable = true;
+    # Use the Hyprland and XDPH packages from the NixOS module
+    # (programs.hyprland.enable) instead of installing duplicates via HM.
+    package = null;
+    portalPackage = null;
   };
 
   xdg.configFile = {

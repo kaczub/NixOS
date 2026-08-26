@@ -1,4 +1,4 @@
-{config, lib, ...}: {
+{lib, ...}: {
   programs.noctalia = {
     enable = true;
     systemd.enable = true;
@@ -54,46 +54,6 @@
           "control-center"
           "session"
         ];
-      };
-    };
-
-    customPalettes.stylix = {
-      dark = {
-        mPrimary = "#${config.lib.stylix.colors.base0D}";
-        mOnPrimary = "#${config.lib.stylix.colors.base00}";
-        mSecondary = "#${config.lib.stylix.colors.base0C}";
-        mOnSecondary = "#${config.lib.stylix.colors.base00}";
-        mTertiary = "#${config.lib.stylix.colors.base0A}";
-        mOnTertiary = "#${config.lib.stylix.colors.base00}";
-        mError = "#${config.lib.stylix.colors.base08}";
-        mOnError = "#${config.lib.stylix.colors.base07}";
-        mSurface = "#${config.lib.stylix.colors.base00}";
-        mOnSurface = "#${config.lib.stylix.colors.base05}";
-        mSurfaceVariant = "#${config.lib.stylix.colors.base01}";
-        mOnSurfaceVariant = "#${config.lib.stylix.colors.base04}";
-        mOutline = "#${config.lib.stylix.colors.base03}";
-        mShadow = "#${config.lib.stylix.colors.base00}";
-        mHover = "#${config.lib.stylix.colors.base01}";
-        mOnHover = "#${config.lib.stylix.colors.base05}";
-      };
-
-      light = {
-        mPrimary = "#${config.lib.stylix.colors.base0D}";
-        mOnPrimary = "#${config.lib.stylix.colors.base07}";
-        mSecondary = "#${config.lib.stylix.colors.base0C}";
-        mOnSecondary = "#${config.lib.stylix.colors.base07}";
-        mTertiary = "#${config.lib.stylix.colors.base0A}";
-        mOnTertiary = "#${config.lib.stylix.colors.base00}";
-        mError = "#${config.lib.stylix.colors.base08}";
-        mOnError = "#${config.lib.stylix.colors.base07}";
-        mSurface = "#${config.lib.stylix.colors.base07}";
-        mOnSurface = "#${config.lib.stylix.colors.base00}";
-        mSurfaceVariant = "#${config.lib.stylix.colors.base06}";
-        mOnSurfaceVariant = "#${config.lib.stylix.colors.base03}";
-        mOutline = "#${config.lib.stylix.colors.base03}";
-        mShadow = "#${config.lib.stylix.colors.base00}";
-        mHover = "#${config.lib.stylix.colors.base06}";
-        mOnHover = "#${config.lib.stylix.colors.base00}";
       };
     };
   };
