@@ -1,8 +1,8 @@
 {pkgs, ...}: {
   stylix = {
     enable = true;
-    image = ../cherry-blossom.png;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+    image = ../undefined - Imgur.jpg;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
     polarity = "dark";
   };
 
