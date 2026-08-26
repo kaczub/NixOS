@@ -1,0 +1,7 @@
+require("lua.monitors")
+require("lua.autostart")
+require("lua.general")
+require("lua.input")
+require("lua.touchpad")
+require("lua.rules")
+require("lua.keybinds")
