@@ -1,7 +1,6 @@
 {lib, ...}: {
   programs.noctalia = {
     enable = true;
-    systemd.enable = true;
 
     settings = {
       theme = {
