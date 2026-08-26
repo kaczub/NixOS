@@ -63,7 +63,6 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true })
 hl.bind("XF86Display", hl.dsp.exec_cmd("hyprctl keyword monitor 'eDP-1, disable'"), { locked = true })
 hl.bind("XF86WLAN", hl.dsp.exec_cmd("rfkill toggle wifi"), { locked = true })
-hl.bind("XF86Notification", hl.dsp.exec_cmd("noctalia msg panel-toggle control-center"))
 hl.bind("XF86Bluetooth", hl.dsp.exec_cmd("blueman-manager"))
 hl.bind("XF86Favorites", hl.dsp.exec_cmd("kitty -e btop"))
 
