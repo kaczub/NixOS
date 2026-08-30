@@ -1,8 +1,9 @@
 {
-  # Opcja A: disko zarządza montowaniem i odblokowaniem LUKS.
-  # fileSystems oraz boot.initrd.luks.devices są generowane z tego configu
-  # (disko.enableConfig = true domyślnie), więc hardware-configuration.nix
-  # nie definiuje już tych wpisów.
+  # disko tylko formatuje przy instalacji (--mode disko).
+  # Montowanie i odblokowanie LUKS robi hardware-configuration.nix (UUID),
+  # dlatego wyłączamy generowanie fileSystems / boot.initrd.luks.devices.
+  disko.enableConfig = false;
+
   disko.devices = {
     disk = {
       main = {
