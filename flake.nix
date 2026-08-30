@@ -38,7 +38,7 @@
         specialArgs = {inherit inputs;};
         modules = [
           disko.nixosModules.disko
-          ./hosts/thinkpad/disko-config.nix
+          ./hosts/thinkpad/disko.nix
           ./hosts/thinkpad/configuration.nix
 
           home-manager.nixosModules.home-manager

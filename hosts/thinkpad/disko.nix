@@ -1,4 +1,8 @@
 {
+  # Opcja A: disko zarządza montowaniem i odblokowaniem LUKS.
+  # fileSystems oraz boot.initrd.luks.devices są generowane z tego configu
+  # (disko.enableConfig = true domyślnie), więc hardware-configuration.nix
+  # nie definiuje już tych wpisów.
   disko.devices = {
     disk = {
       main = {
