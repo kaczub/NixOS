@@ -32,9 +32,6 @@
 
       # Edytory kodu i IDE
       vscode
-
-      cdrtools
-      brasero
     ];
   };
 }

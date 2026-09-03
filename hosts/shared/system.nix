@@ -12,14 +12,6 @@
   # Enable fish shell system-wide (required for users.users.kamil.shell)
   programs.fish.enable = true;
 
-  # K3b — nagrywanie płyt CD/DVD (wraz z wrapperami cdrecord w /run/wrappers)
-  programs.k3b.enable = true;
-
-  # Dostęp do napędu optycznego dla użytkowników z grupy cdrom
-  services.udev.extraRules = ''
-    KERNEL=="sr[0-9]*", GROUP="cdrom", MODE="0660"
-  '';
-
   # Limit the number of generations to keep
   boot.loader.systemd-boot.configurationLimit = 4;
 

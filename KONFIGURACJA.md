@@ -9,11 +9,11 @@ Ten dokument zawiera **całą konfigurację** repozytorium NixOS (flake + home-m
 - **Flake** (`flake.nix`) definiuje dwie konfiguracje NixOS: `thinkpad` (x86_64-linux) i `vm-arm` (aarch64-linux).
 - Konfiguracja **systemowa** (NixOS) znajduje się w katalogu `hosts/` — podzielona na:
   - `shared/` — wspólne moduły używane przez oba hosty,
-  - `thinkpad/` — konfiguracja specyficzna dla laptopa (w tym sprzęt),
+  - `thinkpad/` — konfiguracja specyficzna dla laptopa (w tym sprzęt i partycjonowanie disko),
   - `vm-arm/` — konfiguracja dla maszyny wirtualnej ARM.
 - Konfiguracja **użytkownika** (home-manager) znajduje się w `home.nix` oraz w modułach w `hm-modules/` (katalog `apps/` i `core/`).
 - **home-manager** jest zarządzany przez NixOS (`home-manager.nixosModules.home-manager`), a użytkownik `kamil` korzysta z `./home.nix`.
-- **Inputy flake**: `nixpkgs` (nixos-unstable), `home-manager` (master, follows nixpkgs), `nix-colors`.
+- **Inputy flake**: `nixpkgs` (nixos-unstable), `home-manager` (master, follows nixpkgs), `disko` (follows nixpkgs), `nix-colors`.
 - **Formatter**: `alejandra` (wsparcie dla `nix fmt`).
 
 ### Zależności między modułami
@@ -22,6 +22,7 @@ Ten dokument zawiera **całą konfigurację** repozytorium NixOS (flake + home-m
 graph TD
     F[flake.nix] --> TC[hosts/thinkpad/configuration.nix]
     F --> VC[hosts/vm-arm/configuration.nix]
+    F -->|disko.nixosModules + disko.nix| DK[thinkpad/disko.nix]
     F -->|home-manager.nixosModules| H[home.nix]
 
     TC --> HW[thinkpad/hardware-configuration.nix]
@@ -68,6 +69,7 @@ nixos/
 │   │   └── users.nix                  #     Użytkownik kamil, pakiety systemowe, Steam
 │   ├── thinkpad/                      #   Host: ThinkPad
 │   │   ├── configuration.nix          #     Główny plik hosta (importy, hostname, stateVersion)
+│   │   ├── disko.nix                  #     Partycjonowanie: GPT/LUKS/btrfs (tylko instalacja, enableConfig=false)
 │   │   ├── hardware-configuration.nix #     Wygenerowany: dyski, moduły jądra, platforma
 │   │   └── hardware.nix               #     Sprzęt: GPU Intel, zram, fprint, fstrim
 │   └── vm-arm/                        #   Host: maszyna wirtualna ARM
@@ -102,6 +104,12 @@ nixos/
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-colors.url = "github:misterio77/nix-colors";
   };
 
@@ -109,59 +117,64 @@ nixos/
     nixpkgs,
     home-manager,
     nix-colors,
+    disko,
     ...
-  }@inputs: {
-      formatter =
-        nixpkgs.lib.genAttrs
-        [
-          "x86_64-linux"
-          "aarch64-linux"
-        ]
-        (system: nixpkgs.legacyPackages.${system}.alejandra);
+  } @ inputs: {
+    formatter =
+      nixpkgs.lib.genAttrs
+      [
+        "x86_64-linux"
+        "aarch64-linux"
+      ]
+      (system: nixpkgs.legacyPackages.${system}.alejandra);
 
-      nixosConfigurations = {
-        thinkpad = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {inherit inputs;};
-          modules = [
-            ./hosts/thinkpad/configuration.nix
+    nixosConfigurations = {
+      thinkpad = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs;};
+        modules = [
+          disko.nixosModules.disko
+          ./hosts/thinkpad/disko.nix
+          ./hosts/thinkpad/configuration.nix
 
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {inherit inputs;};
-              home-manager.users.kamil = import ./home.nix;
-            }
-          ];
-        };
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = {inherit inputs;};
+            home-manager.users.kamil = import ./home.nix;
+          }
+        ];
+      };
 
-        vm-arm = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
-          specialArgs = {inherit inputs;};
-          modules = [
-            ./hosts/vm-arm/configuration.nix
+      vm-arm = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        specialArgs = {inherit inputs;};
+        modules = [
+          ./hosts/vm-arm/configuration.nix
 
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {inherit inputs;};
-              home-manager.users.kamil = import ./home.nix;
-            }
-          ];
-        };
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = {inherit inputs;};
+            home-manager.users.kamil = import ./home.nix;
+          }
+        ];
       };
     };
+  };
 }
 ```
 
 **Opis:**
 - `nixpkgs` z gałęzi `nixos-unstable`.
 - `home-manager` z `master`, z `nixpkgs.follows` (współdzieli nixpkgs).
+- `disko` — partycjonowanie/formatowanie dysku przy instalacji, z `nixpkgs.follows`.
 - `nix-colors` — motywy kolorów.
 - `formatter` ustawiony na `alejandra` dla `x86_64-linux` i `aarch64-linux`.
 - Oba hosty (`thinkpad`, `vm-arm`) korzystają z tego samego `home.nix` i przekazują `inputs` przez `specialArgs` / `extraSpecialArgs`.
+- Host `thinkpad` dodatkowo importuje moduł `disko.nixosModules.disko` oraz plik `./hosts/thinkpad/disko.nix`.
 
 ---
 
@@ -202,9 +215,6 @@ nixos/
 
       # Edytory kodu i IDE
       vscode
-
-      # Czcionki
-      nerd-fonts.jetbrains-mono
     ];
   };
 }
@@ -213,7 +223,7 @@ nixos/
 **Opis:**
 - Importuje moduł nix-colors dla home-manager oraz cały katalog `hm-modules/` (agregowany przez `hm-modules/default.nix`).
 - Użytkownik: `kamil`, katalog domowy `/home/kamil`, `stateVersion = "26.05"`.
-- Pakiety: Discord, Darktable, Spotify, Lutris, Prism Launcher, qBittorrent, Fastfetch, android-tools, VS Code, JetBrains Mono Nerd Font.
+- Pakiety: Discord, Darktable, Spotify, Lutris, Prism Launcher, qBittorrent, Fastfetch, android-tools, VS Code.
 
 ---
 
@@ -353,7 +363,78 @@ news:
 
 ---
 
-### 3.7 `hosts/shared/desktop.nix`
+### 3.7 `hosts/thinkpad/disko.nix`
+
+```nix
+{
+  # disko tylko formatuje przy instalacji (--mode disko).
+  # Montowanie i odblokowanie LUKS robi hardware-configuration.nix (UUID),
+  # dlatego wyłączamy generowanie fileSystems / boot.initrd.luks.devices.
+  disko.enableConfig = false;
+
+  disko.devices = {
+    disk = {
+      main = {
+        type = "disk";
+        device = "/dev/nvme0n1"; # Twój dysk z wyjścia findmnt
+        content = {
+          type = "gpt";
+          partitions = {
+            ESP = {
+              size = "1G";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = ["fmask=0077" "dmask=0077"]; # Spójne z obecnym bootloaderem
+              };
+            };
+            luks = {
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "crypted";
+                settings = {
+                  allowDiscards = true; # TRIM dla NVMe
+                };
+                content = {
+                  type = "btrfs";
+                  extraArgs = ["-f"];
+                  subvolumes = {
+                    # Dokładny root: subvol=/
+                    "" = {
+                      mountpoint = "/";
+                    };
+                    # Subwolumen /home (subvol=/home)
+                    "home" = {
+                      mountpoint = "/home";
+                    };
+                    # Subwolumen /nix (subvol=/nix)
+                    "nix" = {
+                      mountpoint = "/nix";
+                    };
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+}
+```
+
+**Opis:**
+- Definiuje układ dysku **NVMe** (`/dev/nvme0n1`): GPT → ESP 1G (vfat, `/boot`) + LUKS `crypted` (z `allowDiscards`) z systemem **btrfs** i subwoluminami `/`, `home`, `nix`.
+- `disko.enableConfig = false` — disko **nie generuje** `fileSystems` ani `boot.initrd.luks.devices`; po sformatowaniu system montuje dysk według `hardware-configuration.nix` (UUID).
+- Układ jest spójny z `hardware-configuration.nix` (UUID btrfs `deca6886-…`, ESP `F844-AD21`). Brak swapu celowo (`zramSwap`).
+- Używany tylko podczas instalacji (`nix run … disko -- --mode disko`).
+
+---
+
+### 3.8 `hosts/shared/desktop.nix`
 
 ```nix
 {...}: {
@@ -411,7 +492,7 @@ news:
 
 ---
 
-### 3.8 `hosts/shared/system.nix`
+### 3.9 `hosts/shared/system.nix`
 
 ```nix
 {pkgs, ...}: {
@@ -452,7 +533,7 @@ news:
 
 ---
 
-### 3.9 `hosts/shared/users.nix`
+### 3.10 `hosts/shared/users.nix`
 
 ```nix
 {pkgs, ...}: {
@@ -492,6 +573,9 @@ news:
     wget
     gnumake
 
+    # Nagrywanie płyt (K3b): cdrecord, mkisofs, readcd...
+    cdrtools
+
     # Formatowanie i Language Server dla Nixa
     alejandra
     nixd
@@ -507,11 +591,11 @@ news:
 - Użytkownik `kamil`: normalny, powłoka fish, grupy `networkmanager`, `wheel`, `adbusers`.
 - Usunięte domyślne aplikacje GNOME (Epiphany, Kontakty, Pogoda, Mapy, Music, Yelp, Snapshot itd.).
 - `allowUnfree = true`, **Steam** włączony.
-- Pakiety systemowe: curl, wget, gnumake, alejandra, nixd, rozszerzenia GNOME (blur-my-shell, clipboard-indicator).
+- Pakiety systemowe: curl, wget, gnumake, cdrtools (K3b), alejandra, nixd, rozszerzenia GNOME (blur-my-shell, clipboard-indicator).
 
 ---
 
-### 3.10 `hosts/vm-arm/configuration.nix`
+### 3.11 `hosts/vm-arm/configuration.nix`
 
 ```nix
 {...}: {
@@ -535,7 +619,7 @@ news:
 
 ---
 
-### 3.11 `hm-modules/default.nix`
+### 3.12 `hm-modules/default.nix`
 
 ```nix
 {...}: {
@@ -557,7 +641,7 @@ news:
 
 ---
 
-### 3.12 `hm-modules/core/color-scheme.nix`
+### 3.13 `hm-modules/core/color-scheme.nix`
 
 ```nix
 {inputs, ...}: {
@@ -572,7 +656,7 @@ news:
 
 ---
 
-### 3.13 `hm-modules/core/fish.nix`
+### 3.14 `hm-modules/core/fish.nix`
 
 ```nix
 {config, pkgs, ... }: {
@@ -616,7 +700,7 @@ news:
 
 ---
 
-### 3.14 `hm-modules/core/git.nix`
+### 3.15 `hm-modules/core/git.nix`
 
 ```nix
 {...}: {
@@ -633,7 +717,7 @@ news:
 
 ---
 
-### 3.15 `hm-modules/core/dirs.nix`
+### 3.16 `hm-modules/core/dirs.nix`
 
 ```nix
 {config, ...}: {
@@ -660,7 +744,7 @@ news:
 
 ---
 
-### 3.16 `hm-modules/core/neovim.nix`
+### 3.17 `hm-modules/core/neovim.nix`
 
 ```nix
 {config, ...}: {
@@ -693,7 +777,7 @@ news:
 
 ---
 
-### 3.17 `hm-modules/apps/ghostty.nix`
+### 3.18 `hm-modules/apps/ghostty.nix`
 
 ```nix
 {config, ...}: {
@@ -740,7 +824,7 @@ news:
 
 ---
 
-### 3.18 `hm-modules/apps/brave.nix`
+### 3.19 `hm-modules/apps/brave.nix`
 
 ```nix
 {...}: {
@@ -761,6 +845,7 @@ news:
 - ⚠️ **`hosts/thinkpad/hardware.nix`**: `libfprint-2-tod1-goodix` został usunięty z nixpkgs — rozważ `libfprint-2-tod1-goodix-oss`.
 - ⚠️ **`hosts/thinkpad/hardware.nix`**: `intel-compute-runtime-legacy1` w `extraPackages32` może nie istnieć dla 32-bitów.
 - ⚠️ **Brak `inputs` w funkcjach modułów**, które go używają, powoduje błąd — dotyczy to m.in. modułów odwołujących się do `config.colorScheme.palette.*` (muszą mieć sygnaturę `{config, ...}:`).
+- ℹ️ **Disko a montowanie**: `disko.nix` działa tylko przy instalacji (`--mode disko`) i ma `disko.enableConfig = false` — system montuje dysk wg `hardware-configuration.nix` (UUID). Po reinstalacji UUID btrfs/ESP się zmienią → należy zregenerować `hardware-configuration.nix` (`nixos-generate-config`) lub ręcznie podmienić UUID.
 
 ## 5. Komendy
 
@@ -770,3 +855,5 @@ news:
 | `make clean` | Czyszczenie śmieci (`nix-collect-garbage -d`) |
 | `make news` | Informacje home-manager (`home-manager news --flake .`) |
 | `nix fmt` | Formatowanie całego repo formatterem (alejandra) |
+| `nix run github:nix-community/disko/latest -- --mode disko ./hosts/thinkpad/disko.nix` | Partycjonowanie + LUKS + btrfs przy reinstalacji ThinkPada |
+| `nix flake update` | Aktualizacja inputów flake (`flake.lock`) |
