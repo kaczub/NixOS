@@ -35,8 +35,7 @@
     wget
     gnumake
 
-    # Nagrywanie płyt (K3b): cdrecord, mkisofs, readcd...
-    cdrtools
+    rapid-photo-downloader
 
     # Formatowanie i Language Server dla Nixa
     alejandra

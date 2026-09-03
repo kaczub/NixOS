@@ -20,7 +20,6 @@
       # Multimedia i Grafika
       darktable
       spotify
-      rapid-photo-downloader
 
       # Gry i Narzędzia
       lutris

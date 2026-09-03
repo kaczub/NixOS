@@ -17,6 +17,7 @@
   services.fprintd.tod.enable = true;
   services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
   services.desktopManager.gnome.sessionPath = [ pkgs.gdm ];
+  
 
   services.fstrim.enable = true;
 }
