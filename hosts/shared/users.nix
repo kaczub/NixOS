@@ -4,7 +4,7 @@
     isNormalUser = true;
     description = "Kamil";
     shell = pkgs.fish;
-    extraGroups = ["networkmanager" "wheel" "adbusers"];
+    extraGroups = ["networkmanager" "wheel" "adbusers" "input"];
   };
 
   environment.gnome.excludePackages = with pkgs; [
