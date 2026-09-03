@@ -37,6 +37,26 @@
 
     rapid-photo-downloader
 
+    # Workaround: rapid-photo-downloader 0.9.37 (Hatch) nie eksportuje .desktop
+    # ani ikony do $out/share — pliki lądują w lib/python*/site-packages, przez co
+    # GNOME nie pokazuje aplikacji. Dodajemy własny wpis .desktop i wyciągamy
+    # ikonę (rapid-photo-downloader.svg) do motywu hicolor.
+    (makeDesktopItem {
+      name = "rapid-photo-downloader";
+      desktopName = "Rapid Photo Downloader";
+      genericName = "Photo Downloader";
+      comment = "Photo and video importer for cameras, phones, and memory cards";
+      exec = "rapid-photo-downloader %U";
+      icon = "rapid-photo-downloader";
+      categories = [ "Graphics" "Photography" ];
+      startupNotify = false;
+    })
+    (pkgs.runCommand "rapid-photo-downloader-icon" { } ''
+      mkdir -p $out/share/icons/hicolor/scalable/apps
+      cp "$(find ${pkgs.rapid-photo-downloader} -name rapid-photo-downloader.svg | head -n1)" \
+        $out/share/icons/hicolor/scalable/apps/rapid-photo-downloader.svg
+    '')
+
     # Formatowanie i Language Server dla Nixa
     alejandra
     nixd
