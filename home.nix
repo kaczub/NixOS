@@ -20,6 +20,7 @@
       # Multimedia i Grafika
       darktable
       spotify
+      rapidraw
 
       # Gry i Narzędzia
       lutris
