@@ -21,6 +21,7 @@
       darktable
       spotify
       rapidraw
+      geeqie
 
       # Gry i Narzędzia
       lutris
