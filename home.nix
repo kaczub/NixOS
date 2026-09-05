@@ -34,6 +34,7 @@
 
       # Edytory kodu i IDE
       vscode
+      localsend
     ];
   };
 }
