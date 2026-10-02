@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    inputs.nix-colors.homeManagerModules.default
+    inputs.noctalia.homeModules.default
     ./hm-modules
   ];
 
@@ -34,6 +34,7 @@
       # Edytory kodu i IDE
       vscode
       localsend
+      kitty
     ];
   };
 }
