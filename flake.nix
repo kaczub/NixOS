@@ -23,8 +23,8 @@
   outputs = {
     nixpkgs,
     home-manager,
-    nix-colors,
     disko,
+    noctalia,
     ...
   } @ inputs: {
     formatter =
