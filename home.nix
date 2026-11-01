@@ -35,7 +35,7 @@
 
       nerd-fonts.jetbrains-mono
       bibata-cursors
-      playerctl
+      papirus-icon-theme
     ];
   };
 }

@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ config, lib, ... }:
 let
   settings = lib.recursiveUpdate
     (import ./input.nix)
@@ -26,6 +26,10 @@ in {
     match namespace="^noctalia-"
     background-effect { xray false; }
   }
+
+  # Kolory borderów/focus-ringu z aktywnej palety Noctalii.
+  # Plik jest generowany w runtime, więc include musi być optional.
+  include optional=true "${config.xdg.configHome}/niri/noctalia.kdl"
 '';
   };
 }

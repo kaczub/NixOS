@@ -27,9 +27,9 @@
       spawn = ["noctalia" "msg" "brightness-down"];
     };
 
-    "XF86AudioPlay".spawn = ["playerctl" "play-pause"];
-    "XF86AudioNext".spawn = ["playerctl" "next"];
-    "XF86AudioPrev".spawn = ["playerctl" "previous"];
+    "XF86AudioPlay".spawn = ["noctalia" "msg" "media" "toggle"];
+    "XF86AudioNext".spawn = ["noctalia" "msg" "media" "next"];
+    "XF86AudioPrev".spawn = ["noctalia" "msg" "media" "previous"];
 
     "Mod+Shift+Slash".show-hotkey-overlay = {};
     "Mod+Shift+E".quit = {};

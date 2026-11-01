@@ -24,6 +24,9 @@
   services.desktopManager.gnome.enable = true;
   services.displayManager.gdm.enable = true;
 
+  # dconf: ikony/kursor/GTK4
+  programs.dconf.enable = true;
+
   # Enable niri
 programs.niri.enable = true;
 
