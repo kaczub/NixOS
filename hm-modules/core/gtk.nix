@@ -8,6 +8,7 @@
   };
 
   home.pointerCursor = {
+    enable = true;
     name = "Bibata-Material-Noir-Light";
     package = pkgs.bibata-cursors;
     size = 24;
