@@ -9,6 +9,9 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  services.openssh.enable = true;
+  networking.firewall.allowedTCPPorts = [ 22 ];
+
   # Enable fish shell system-wide (required for users.users.kamil.shell)
   programs.fish.enable = true;
 
