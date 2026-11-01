@@ -16,11 +16,10 @@
     packages = with pkgs; [
       # Przeglądarka i Komunikacja
       discord
+      brave
 
       # Multimedia i Grafika
-      darktable
       spotify
-      geeqie
 
       # Gry i Narzędzia
       lutris

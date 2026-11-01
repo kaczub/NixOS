@@ -6,9 +6,5 @@
     ./core/neovim.nix
 
     ./apps/ghostty.nix
-    ./apps/brave.nix
-
-    ./desktop/noctalia
-    ./desktop/hypr
   ];
 }
