@@ -13,7 +13,6 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    };
   };
 
   outputs = {
@@ -49,21 +48,6 @@
         ];
       };
 
-      vm-arm = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        specialArgs = {inherit inputs;};
-        modules = [
-          ./hosts/vm-arm/configuration.nix
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = {inherit inputs;};
-            home-manager.users.kamil = import ./home.nix;
-          }
-        ];
-      };
     };
   };
 }
