@@ -6,5 +6,8 @@
     ./core/neovim.nix
 
     ./apps/ghostty.nix
+
+    ./desktop/niri
+    ./desktop/noctalia
   ];
 }

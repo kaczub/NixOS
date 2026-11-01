@@ -24,9 +24,14 @@
   services.desktopManager.gnome.enable = true;
   services.displayManager.gdm.enable = true;
 
+  # Enable niri
+programs.niri.enable = true;
+
   # Enable noctalia 
-  programs.noctalia.enable = true;
-  recomendedServices.enable = true;
+ programs.noctalia = {
+    enable = true;
+    recommendedServices.enable = true;
+  };
 
   # Configure keymap in X11
   services.xserver.xkb = {
