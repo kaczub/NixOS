@@ -32,6 +32,10 @@
       vscode
       localsend
       kitty
+
+      nerd-fonts.jetbrains-mono
+      bibata-cursors
+      playerctl
     ];
   };
 }

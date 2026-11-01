@@ -8,23 +8,23 @@
     
     "XF86AudioRaiseVolume" = {
       _props = { allow-when-locked = true; };
-      spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+" "-l" "1.0"];
+      spawn = ["noctalia" "msg" "volume-up"];
     };
     "XF86AudioLowerVolume" = {
       _props = { allow-when-locked = true; };
-      spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"];
+      spawn = ["noctalia" "msg" "volume-down"];
     };
     "XF86AudioMute" = {
       _props = { allow-when-locked = true; };
-      spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];
+      spawn = ["noctalia" "msg" "volume-mute"];
     };
     "XF86MonBrightnessUp" = {
       _props = { allow-when-locked = true; };
-      spawn = ["brightnessctl" "set" "5%+"];
+      spawn = ["noctalia" "msg" "brightness-up"];
     };
     "XF86MonBrightnessDown" = {
       _props = { allow-when-locked = true; };
-      spawn = ["brightnessctl" "set" "5%-"];
+      spawn = ["noctalia" "msg" "brightness-down"];
     };
 
     "XF86AudioPlay".spawn = ["playerctl" "play-pause"];
