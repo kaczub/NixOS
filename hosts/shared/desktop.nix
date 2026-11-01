@@ -24,6 +24,10 @@
   services.desktopManager.gnome.enable = true;
   services.displayManager.gdm.enable = true;
 
+  # Enable noctalia 
+  programs.noctalia.enable = true;
+  recomendedServices.enable = true;
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "pl";
