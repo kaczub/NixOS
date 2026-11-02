@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   # Set your time zone.
   time.timeZone = "Europe/Warsaw";
 
@@ -36,6 +41,7 @@
     settings = {
       keyboard.layout = "pl";
       cursor.size = 24;
+      appearance.hide_logo = true;
     };
     cursorTheme = {
       package = pkgs.bibata-cursors;
@@ -43,7 +49,42 @@
     };
   };
 
-  # Configure console keymapm
+  # Greeter: password-only PAM auth, so a correct password is checked
+  # immediately instead of waiting for pam_fprintd. The `login` service is
+  # left untouched, so the lockscreen keeps fingerprint support.
+  security.pam.services.greetd.rules.auth = lib.mkForce {
+    unix-early = {
+      control = "optional";
+      modulePath = "${config.security.pam.package}/lib/security/pam_unix.so";
+      settings = {
+        likeauth = true;
+        nullok = true;
+      };
+      order = 100;
+    };
+    gnome-keyring = {
+      control = "optional";
+      modulePath = "${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so";
+      order = 200;
+    };
+    unix = {
+      control = "sufficient";
+      modulePath = "${config.security.pam.package}/lib/security/pam_unix.so";
+      settings = {
+        likeauth = true;
+        nullok = true;
+        try_first_pass = true;
+      };
+      order = 300;
+    };
+    deny = {
+      control = "required";
+      modulePath = "${config.security.pam.package}/lib/security/pam_deny.so";
+      order = 400;
+    };
+  };
+
+  # Configure console keymap
   console.keyMap = "pl2";
 
   # Keep X11/XWayland apps on the same layout as niri and the greeter
