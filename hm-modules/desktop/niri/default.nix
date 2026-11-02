@@ -16,10 +16,10 @@ in {
     extraConfig = ''
           spawn-at-startup "noctalia"
       blur {
-        passes 2
-        offset 3.0
+        passes 3
+        offset 5.0
         noise 0.02
-        saturation 1.0
+        saturation 0.6
       }
 
       // Blur tylko za wybranymi oknami (app-id do weryfikacji przez `niri msg pick-window`).
