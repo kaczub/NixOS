@@ -56,6 +56,12 @@
     # Move column between monitors
     "Mod+Shift+Ctrl+Left".move-column-to-monitor-left = {};
     "Mod+Shift+Ctrl+Right".move-column-to-monitor-right = {};
+    "Mod+Shift+Ctrl+Up".move-column-to-monitor-up = {};
+    "Mod+Shift+Ctrl+Down".move-column-to-monitor-down = {};
+    "Mod+Shift+Ctrl+H".move-column-to-monitor-left = {};
+    "Mod+Shift+Ctrl+J".move-column-to-monitor-down = {};
+    "Mod+Shift+Ctrl+K".move-column-to-monitor-up = {};
+    "Mod+Shift+Ctrl+L".move-column-to-monitor-right = {};
 
     # Workspaces 1-9
     "Mod+1".focus-workspace = 1;
@@ -82,11 +88,47 @@
     "Mod+I".focus-workspace-up = {};
     "Mod+Ctrl+U".move-column-to-workspace-down = {};
     "Mod+Ctrl+I".move-column-to-workspace-up = {};
+    "Mod+Shift+U".move-workspace-down = {};
+    "Mod+Shift+I".move-workspace-up = {};
+    "Mod+Page_Down".focus-workspace-down = {};
+    "Mod+Page_Up".focus-workspace-up = {};
+    "Mod+Ctrl+Page_Down".move-column-to-workspace-down = {};
+    "Mod+Ctrl+Page_Up".move-column-to-workspace-up = {};
+    "Mod+Shift+Page_Down".move-workspace-down = {};
+    "Mod+Shift+Page_Up".move-workspace-up = {};
 
     # Maximize / fullscreen / floating
     "Mod+F".maximize-column = {};
     "Mod+Shift+F".fullscreen-window = {};
     "Mod+Shift+Space".toggle-window-floating = {};
+
+    # Window sizing
+    "Mod+R".switch-preset-column-width = {};
+    "Mod+Shift+R".switch-preset-column-width-back = {};
+    "Mod+Ctrl+Shift+R".switch-preset-window-height = {};
+    "Mod+Ctrl+R".reset-window-height = {};
+    "Mod+Minus".set-column-width = "-10%";
+    "Mod+Equal".set-column-width = "+10%";
+    "Mod+Shift+Minus".set-window-height = "-10%";
+    "Mod+Shift+Equal".set-window-height = "+10%";
+    "Mod+M".maximize-window-to-edges = {};
+    "Mod+Ctrl+F".expand-column-to-available-width = {};
+    "Mod+C".center-column = {};
+    "Mod+Ctrl+C".center-visible-columns = {};
+
+    # Column composition
+    "Mod+BracketLeft".consume-or-expel-window-left = {};
+    "Mod+BracketRight".consume-or-expel-window-right = {};
+    "Mod+Comma".consume-window-into-column = {};
+    "Mod+Period".expel-window-from-column = {};
+    "Mod+Tab".toggle-column-tabbed-display = {};
+
+    # Floating
+    "Mod+V".toggle-window-floating = {};
+    "Mod+Shift+V".switch-focus-between-floating-and-tiling = {};
+
+    # Overview
+    "Mod+O".toggle-overview = {};
 
     # Media (via Noctalia IPC)
     "XF86AudioRaiseVolume" = {

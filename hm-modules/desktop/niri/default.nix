@@ -39,16 +39,24 @@ in {
       // Blur tylko za wybranymi oknami (app-id do weryfikacji przez `niri msg pick-window`).
       window-rule {
         match app-id="^kitty$"
-        match app-id="opencode"
+        match app-id=r#"^ai\.opencode\.desktop$"#
+        match app-id=r#"^dev\.noctalia\.Noctalia$"#
         match is-floating=true
         match app-id=r#"^org\.gnome\."#
         exclude app-id=r#"^org\.gnome\.Photos$"#
+        exclude app-id=r#"^org\.gnome\.Loupe$"#
         background-effect { blur true; xray false; }
       }
 
       // Floating: Authenticator (2FA) i pickery plików (okna dialogowe).
       window-rule {
         match app-id="Authenticator"
+        open-floating true
+      }
+
+      // GNOME Calculator zawsze jako floating.
+      window-rule {
+        match app-id=r#"^org\.gnome\.Calculator$"#
         open-floating true
       }
 
