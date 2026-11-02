@@ -10,6 +10,9 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Lutris' FHS env still pulls gtk2, which nixpkgs 26.11 marks as broken.
+  nixpkgs.config.problems.handlers."gtk+".broken = "warn";
+
   programs.steam.enable = true;
 
   environment.systemPackages = with pkgs; [

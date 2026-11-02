@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   # Set your time zone.
   time.timeZone = "Europe/Warsaw";
 
@@ -29,16 +29,24 @@
     recommendedServices.enable = true;
   };
 
-  # Ly TUI display manager
-  services.displayManager.ly = {
+  # Greetd + Noctalia Greeter (Wayland login)
+  services.displayManager.noctalia-greeter = {
     enable = true;
-    x11Support = false;
+    passwordlessSyncUsers = ["kamil"];
+    settings = {
+      keyboard.layout = "pl";
+      cursor.size = 24;
+    };
+    cursorTheme = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Classic";
+    };
   };
 
-  # Configure console keymap
+  # Configure console keymapm
   console.keyMap = "pl2";
 
-  # Keep X11/XWayland apps on the same layout as niri and ly
+  # Keep X11/XWayland apps on the same layout as niri and the greeter
   services.xserver.xkb.layout = "pl";
 
   # File manager: mounting drives, trash and network shares

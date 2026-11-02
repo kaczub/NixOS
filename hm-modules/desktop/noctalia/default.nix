@@ -4,6 +4,7 @@
 
     settings = {
       backdrop.enabled = true;
+      shell.greeter_sync.auto_sync = true;
 
       theme.templates.user = {
         "gtk-blur-3" = {
