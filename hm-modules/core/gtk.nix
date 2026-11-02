@@ -7,8 +7,8 @@
     };
     colorScheme = "dark";
     iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
+      name = "Numix-Circle";
+      package = pkgs.numix-icon-theme-circle;
     };
 
     # Noctalia owns noctalia.css (palette) and noctalia-blur.css (translucency).
@@ -35,7 +35,7 @@
   # a nie tylko z ~/.config/gtk-3.0/settings.ini.
   dconf.enable = true;
   dconf.settings."org/gnome/desktop/interface" = {
-    icon-theme = "Papirus-Dark";
+    icon-theme = "Numix-Circle";
     cursor-theme = "Bibata-Modern-Classic";
     cursor-size = 24;
   };

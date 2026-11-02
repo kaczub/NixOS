@@ -36,7 +36,7 @@
 
       nerd-fonts.jetbrains-mono
       bibata-cursors
-      papirus-icon-theme
+      numix-icon-theme-circle
       opencode-desktop
     ];
   };
