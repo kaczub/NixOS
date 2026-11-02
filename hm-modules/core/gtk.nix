@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  whiteSurIcons = pkgs.whitesur-icon-theme.override {
+    themeVariants = ["grey"];
+    alternativeIcons = true;
+  };
+in {
   gtk = {
     enable = true;
     theme = {
@@ -7,8 +12,8 @@
     };
     colorScheme = "dark";
     iconTheme = {
-      name = "Numix-Circle";
-      package = pkgs.numix-icon-theme-circle;
+      name = "WhiteSur-grey-dark";
+      package = whiteSurIcons;
     };
 
     # Noctalia owns noctalia.css (palette) and noctalia-blur.css (translucency).
@@ -35,7 +40,7 @@
   # a nie tylko z ~/.config/gtk-3.0/settings.ini.
   dconf.enable = true;
   dconf.settings."org/gnome/desktop/interface" = {
-    icon-theme = "Numix-Circle";
+    icon-theme = "WhiteSur-grey-dark";
     cursor-theme = "Bibata-Modern-Classic";
     cursor-size = 24;
   };

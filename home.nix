@@ -25,7 +25,6 @@
 
       # Edytory kodu i IDE
       vscode
-      localsend
       kitty
 
       # Pliki i narzędzia (zamienniki GNOME)
@@ -38,6 +37,10 @@
       bibata-cursors
       numix-icon-theme-circle
       opencode-desktop
+      opencode
+      bitwarden-cli
+      bitwarden-desktop
+      
     ];
   };
 }
