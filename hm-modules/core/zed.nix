@@ -15,7 +15,6 @@
     extensions = ["nix" "lua"];
 
     userSettings = {
-      vim_mode = true;
       theme = "One Dark";
       buffer_font_family = "JetBrainsMono Nerd Font";
       buffer_font_size = 14;
