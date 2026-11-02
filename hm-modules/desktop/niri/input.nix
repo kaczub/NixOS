@@ -1,6 +1,9 @@
 {
   input = {
     keyboard.xkb.layout = "pl";
-    touchpad = { tap = {}; natural-scroll = {}; };
+    touchpad = {
+      tap = {};
+      natural-scroll = {};
+    };
   };
 }

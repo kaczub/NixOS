@@ -22,6 +22,20 @@ in {
         saturation 0.6
       }
 
+      // Rysuj obramowanie jako obrys, nie jako wypełniony prostokąt za oknem.
+      // Bez tego półprzezroczyste okna GTK są zabarwiane kolorem borderu.
+      window-rule {
+        draw-border-with-background false
+      }
+
+      // Electron trzyma własne CSD; obetnij cienie, żeby obramowanie było widoczne
+      // także gdy okno zajmuje całą szerokość ekranu.
+      window-rule {
+        match app-id=r#"^(discord|brave-browser|spotify|code|ai\.opencode\.desktop)$"#
+        draw-border-with-background false
+        clip-to-geometry true
+      }
+
       // Blur tylko za wybranymi oknami (app-id do weryfikacji przez `niri msg pick-window`).
       window-rule {
         match app-id="^kitty$"
@@ -50,6 +64,12 @@ in {
       layer-rule {
         match namespace="^noctalia-"
         background-effect { xray false; }
+      }
+
+      // Blurred wallpaper in the overview instead of the flat backdrop color.
+      layer-rule {
+        match namespace="^noctalia-backdrop"
+        place-within-backdrop true
       }
 
       // Kolory borderów/focus-ringu z aktywnej palety Noctalii.

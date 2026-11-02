@@ -19,7 +19,6 @@
       # Gry i Narzędzia
       lutris
       prismlauncher
-      qbittorrent
 
       # Narzędzia CLI
       fastfetch
@@ -31,8 +30,8 @@
       kitty
 
       # Pliki i narzędzia (zamienniki GNOME)
-      nemo
-      galculator
+      nautilus
+      gnome-calculator
       papers
       loupe
 

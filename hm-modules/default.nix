@@ -5,6 +5,7 @@
     ./core/dirs.nix
     ./core/neovim.nix
     ./core/gtk.nix
+    ./core/env.nix
 
     ./desktop/niri
     ./desktop/noctalia

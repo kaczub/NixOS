@@ -1,10 +1,26 @@
 {pkgs, ...}: {
   gtk = {
     enable = true;
+    theme = {
+      name = "adw-gtk3-dark";
+      package = pkgs.adw-gtk3;
+    };
+    colorScheme = "dark";
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
     };
+
+    # Noctalia owns noctalia.css (palette) and noctalia-blur.css (translucency).
+    # Keeping the imports here means Noctalia's apply.sh leaves gtk.css untouched.
+    gtk3.extraCss = ''
+      @import url("noctalia.css");
+      @import url("noctalia-blur.css");
+    '';
+    gtk4.extraCss = ''
+      @import url("noctalia.css");
+      @import url("noctalia-blur.css");
+    '';
   };
 
   home.pointerCursor = {

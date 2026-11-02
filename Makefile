@@ -1,10 +1,13 @@
-.PHONY: update clean news
+.PHONY: update clean check fmt
 
 update:
 	sudo nixos-rebuild switch --flake .#thinkpad
 
 clean:
-	nix-collect-garbage -d
+	sudo nix-collect-garbage -d
 
-news:
-	home-manager news --flake .
+check:
+	nix flake check --no-build
+
+fmt:
+	nix fmt .

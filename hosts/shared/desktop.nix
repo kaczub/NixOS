@@ -45,6 +45,13 @@
   # Configure console keymap
   console.keyMap = "pl2";
 
+  # Keep X11/XWayland apps on the same layout as niri and the greeter
+  services.xserver.xkb.layout = "pl";
+
+  # File manager: mounting drives, trash and network shares
+  services.udisks2.enable = true;
+  services.gvfs.enable = true;
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 

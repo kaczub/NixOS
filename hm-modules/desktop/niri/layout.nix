@@ -8,9 +8,9 @@
     default-column-width.proportion = 0.5;
 
     preset-column-widths._children = [
-      { proportion = 0.25; }
-      { proportion = 0.5; }
-      { proportion = 0.75; }
+      {proportion = 0.25;}
+      {proportion = 0.5;}
+      {proportion = 0.75;}
     ];
 
     # Border instead of a focus ring: the ring is what made Nautilus look
