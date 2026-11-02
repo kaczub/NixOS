@@ -9,7 +9,7 @@
 
   home.pointerCursor = {
     enable = true;
-    name = "Bibata-Material-Noir-Light";
+    name = "Bibata-Modern-Classic";
     package = pkgs.bibata-cursors;
     size = 24;
     gtk.enable = true;
@@ -20,7 +20,7 @@
   dconf.enable = true;
   dconf.settings."org/gnome/desktop/interface" = {
     icon-theme = "Papirus-Dark";
-    cursor-theme = "Bibata-Material-Noir-Light";
+    cursor-theme = "Bibata-Modern-Classic";
     cursor-size = 24;
   };
 }

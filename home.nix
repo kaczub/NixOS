@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./hm-modules
   ];
@@ -31,7 +28,6 @@
       # Edytory kodu i IDE
       vscode
       localsend
-      kitty
 
       nerd-fonts.jetbrains-mono
       bibata-cursors

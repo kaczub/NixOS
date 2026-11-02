@@ -7,6 +7,7 @@
     ./core/gtk.nix
 
     ./apps/ghostty.nix
+    ./apps/kitty.nix
 
     ./desktop/niri
     ./desktop/noctalia
