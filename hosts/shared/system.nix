@@ -9,9 +9,6 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  services.openssh.enable = true;
-  networking.firewall.allowedTCPPorts = [ 22 ];
-
   # Run prebuilt Linux binaries (VS Code Remote-SSH server, extensions)
   programs.nix-ld.enable = true;
 
