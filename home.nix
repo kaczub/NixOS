@@ -17,7 +17,6 @@
       spotify
 
       # Gry i Narzędzia
-      lutris
       prismlauncher
 
       # Narzędzia CLI

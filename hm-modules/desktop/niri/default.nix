@@ -17,9 +17,9 @@ in {
           spawn-at-startup "noctalia"
       blur {
         passes 3
-        offset 5.0
+        offset 7.0
         noise 0.02
-        saturation 0.6
+        saturation 1.0
       }
 
       // Rysuj obramowanie jako obrys, nie jako wypełniony prostokąt za oknem.

@@ -3,7 +3,11 @@
     enable = true;
 
     settings = {
-      backdrop.enabled = true;
+      backdrop = {
+        enabled = true;
+        blur_intensity = 0.63;
+        tint_intensity = 0.70;
+      };
       shell.greeter_sync.auto_sync = true;
 
       theme.templates.user = {
