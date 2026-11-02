@@ -3,6 +3,9 @@
 update:
 	sudo nixos-rebuild switch --flake .#thinkpad
 
+update-flake:
+	sudo nix flake update
+
 clean:
 	sudo nix-collect-garbage -d
 

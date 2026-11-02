@@ -40,7 +40,6 @@
       opencode
       bitwarden-cli
       bitwarden-desktop
-      
     ];
   };
 }
