@@ -18,7 +18,7 @@
     };
     "F13" = {
       _props = {repeat = false;};
-      switch-layout = "next";
+      spawn = ["noctalia" "msg" "panel-toggle" "wallpaper"];
     };
     "F14" = {
       _props = {repeat = false;};
@@ -33,7 +33,7 @@
     };
     "XF86Display" = {
       _props = {repeat = false;};
-      spawn = ["nwg-displays"];
+      spawn = ["noctalia" "msg" "panel-toggle" "clipboard"];
     };
     "XF86KbdLightOnOff" = {
       _props = {repeat = false;};

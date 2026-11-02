@@ -30,7 +30,6 @@
       # Pliki i narzędzia (zamienniki GNOME)
       nautilus
       gnome-calculator
-      nwg-displays
       papers
       loupe
 

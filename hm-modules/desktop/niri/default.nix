@@ -60,13 +60,6 @@ in {
         open-floating true
       }
 
-      // Displays Settings (F7) jako floating.
-      window-rule {
-        match app-id="nwg-displays"
-        match title="Displays Settings"
-        open-floating true
-      }
-
       window-rule {
         match title="Open File"
         match title="Save File"
