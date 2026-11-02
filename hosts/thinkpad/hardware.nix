@@ -19,6 +19,14 @@
 
   services.fstrim.enable = true;
 
+  # T490: Fn+F11/F12 emit keycodes above 255, which niri cannot bind.
+  # Remap the ThinkPad Extra Buttons scancodes to F13/F14.
+  services.udev.extraHwdb = ''
+    evdev:name:ThinkPad Extra Buttons:dmi:bvn*:bvr*:bd*:svnLENOVO*:pn*
+      KEYBOARD_KEY_45=f14
+      KEYBOARD_KEY_49=f13
+  '';
+
   hardware.bluetooth.enable = true;
 
   services.power-profiles-daemon.enable = true;

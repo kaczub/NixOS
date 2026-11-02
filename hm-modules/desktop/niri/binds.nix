@@ -5,7 +5,13 @@
     "Mod+Space".spawn = ["noctalia" "msg" "panel-toggle" "launcher"];
     "Mod+S".spawn = ["spotify"];
     "Mod+W".spawn = ["brave"];
-    "Mod+E".spawn = ["nemo"];
+    "Mod+E".spawn = ["nautilus"];
+
+    # T490 special keys
+    "XF86Tools".spawn = ["noctalia" "msg" "panel-toggle" "control-center"];
+    "XF86Bluetooth".spawn = ["noctalia" "msg" "panel-toggle" "control-center" "calendar"];
+    "F13".switch-layout = "next";
+    "F14".spawn = ["noctalia" "msg" "session" "lock"];
 
     # Close / quit
     "Mod+Q".close-window = {};
