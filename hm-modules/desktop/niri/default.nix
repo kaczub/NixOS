@@ -25,7 +25,6 @@ in {
       // Blur tylko za wybranymi oknami (app-id do weryfikacji przez `niri msg pick-window`).
       window-rule {
         match app-id="^kitty$"
-        match app-id=r#"^com\.mitchellh\.ghostty$"#
         match app-id="opencode"
         match is-floating=true
         match app-id=r#"^org\.gnome\."#

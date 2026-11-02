@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   # Set your time zone.
   time.timeZone = "Europe/Warsaw";
 
@@ -17,29 +17,29 @@
     LC_TIME = "pl_PL.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.desktopManager.gnome.enable = true;
-  services.displayManager.gdm.enable = true;
-
   # dconf: ikony/kursor/GTK4
   programs.dconf.enable = true;
 
   # Enable niri
-programs.niri.enable = true;
+  programs.niri.enable = true;
 
-  # Enable noctalia 
- programs.noctalia = {
+  # Enable noctalia
+  programs.noctalia = {
     enable = true;
     recommendedServices.enable = true;
   };
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "pl";
-    variant = "";
+  # Greetd + Noctalia greeter (Wayland login)
+  services.displayManager.noctalia-greeter = {
+    enable = true;
+    settings = {
+      keyboard.layout = "pl";
+      cursor.size = 24;
+    };
+    cursorTheme = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Classic";
+    };
   };
 
   # Configure console keymap

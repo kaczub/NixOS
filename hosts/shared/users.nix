@@ -7,23 +7,6 @@
     extraGroups = ["networkmanager" "wheel" "adbusers" "input"];
   };
 
-  environment.gnome.excludePackages = with pkgs; [
-    gnome-tour
-    epiphany
-    gnome-contacts
-    gnome-weather
-    gnome-maps
-    gnome-characters
-    gnome-connections
-    gnome-font-viewer
-    yelp
-    snapshot
-    gnome-music
-    gnome-console
-  ];
-
-  services.xserver.excludePackages = [pkgs.xterm];
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -38,9 +21,5 @@
     # Formatowanie i Language Server dla Nixa
     alejandra
     nixd
-
-    # Rozszerzenia GNOME
-    gnomeExtensions.blur-my-shell
-    gnomeExtensions.clipboard-indicator
   ];
 }

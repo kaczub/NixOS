@@ -30,6 +30,12 @@
       localsend
       kitty
 
+      # Pliki i narzędzia (zamienniki GNOME)
+      nemo
+      galculator
+      papers
+      loupe
+
       nerd-fonts.jetbrains-mono
       bibata-cursors
       papirus-icon-theme

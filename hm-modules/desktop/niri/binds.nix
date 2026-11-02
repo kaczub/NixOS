@@ -5,7 +5,7 @@
     "Mod+Space".spawn = ["noctalia" "msg" "panel-toggle" "launcher"];
     "Mod+S".spawn = ["spotify"];
     "Mod+W".spawn = ["brave"];
-    "Mod+E".spawn = ["nautilus"];
+    "Mod+E".spawn = ["nemo"];
 
     # Close / quit
     "Mod+Q".close-window = {};
