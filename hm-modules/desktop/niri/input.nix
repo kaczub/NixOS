@@ -1,5 +1,6 @@
 {
   input = {
+    focus-follows-mouse._props.max-scroll-amount = "0%";
     keyboard.xkb.layout = "pl,us";
     touchpad = {
       tap = {};
