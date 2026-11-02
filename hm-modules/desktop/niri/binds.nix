@@ -8,10 +8,37 @@
     "Mod+E".spawn = ["nautilus"];
 
     # T490 special keys
-    "XF86Tools".spawn = ["noctalia" "msg" "panel-toggle" "control-center"];
-    "XF86Bluetooth".spawn = ["noctalia" "msg" "panel-toggle" "control-center" "calendar"];
-    "F13".switch-layout = "next";
-    "F14".spawn = ["noctalia" "msg" "session" "lock"];
+    "XF86Tools" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "panel-toggle" "control-center"];
+    };
+    "XF86Bluetooth" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "panel-toggle" "control-center" "calendar"];
+    };
+    "F13" = {
+      _props = {repeat = false;};
+      switch-layout = "next";
+    };
+    "F14" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "session" "lock"];
+    };
+    "XF86AudioMicMute" = {
+      _props = {
+        allow-when-locked = true;
+        repeat = false;
+      };
+      spawn = ["noctalia" "msg" "mic-mute"];
+    };
+    "XF86Display" = {
+      _props = {repeat = false;};
+      spawn = ["nwg-displays"];
+    };
+    "XF86KbdLightOnOff" = {
+      _props = {repeat = false;};
+      spawn-sh = ''led=/sys/class/leds/tpacpi::kbd_backlight; before=$(cat "$led/brightness" 2>/dev/null || echo 0); sleep 0.15; after=$(cat "$led/brightness" 2>/dev/null || echo "$before"); max=$(cat "$led/max_brightness" 2>/dev/null || echo 1); [ "$max" -gt 0 ] 2>/dev/null || max=1; if [ "$after" = "$before" ]; then noctalia msg keyboard-backlight-toggle; else noctalia msg keyboard-backlight-osd $((after * 100 / max)); fi'';
+    };
 
     # Close / quit
     "Mod+Q".close-window = {};
