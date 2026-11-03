@@ -9,6 +9,7 @@
   xdg.configFile."kitty/font.conf".text = ''
     font_family JetBrainsMono Nerd Font
     font_size 11
+    background_opacity 0.85
   '';
 
   # kitty.conf jest zwykłym plikiem (nie symlinkiem HM), więc Noctalia może

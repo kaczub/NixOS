@@ -6,6 +6,7 @@
     gaps = 6;
     center-focused-column = "never";
     default-column-width.proportion = 0.5;
+    background-color = "transparent";
 
     preset-column-widths._children = [
       {proportion = 0.25;}
@@ -25,6 +26,14 @@
       active-color = "#9a5b3f";
       inactive-color = "#4a463c";
       urgent-color = "#a34a3a";
+    };
+
+    # Jak w val-niri: delikatny cień zamiast ciężkich CSD.
+    shadow = {
+      on = {};
+      softness = 40;
+      spread = 4;
+      offset._props = {x = 0; y = 0;};
     };
   };
 }

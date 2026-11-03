@@ -17,10 +17,10 @@ in {
     extraConfig = ''
       spawn-at-startup "noctalia"
       blur {
-        passes 3
-        offset 7.0
-        noise 0.02
-        saturation 1.0
+        passes 4
+        offset 10.0
+        noise 0.015
+        saturation 1.3
       }
 
       // Rysuj obramowanie jako obrys, nie jako wypełniony prostokąt za oknem.
@@ -41,9 +41,18 @@ in {
       // łączymy w jeden regex. `exclude` wyklucza okno z całej reguły.
       // Blur dla wybranych aplikacji (app-id sprawdzisz przez `niri msg pick-window`).
       window-rule {
-        match app-id=r#"^(kitty|ai\.opencode\.desktop|dev\.noctalia\.Noctalia|org\.gnome\..*)$"#
+        match app-id=r#"^(kitty|thunar|xdg-desktop-portal-(gtk|gnome)|ai\.opencode\.desktop|dev\.noctalia\.Noctalia|org\.gnome\..*)$"#
         exclude app-id=r#"^org\.gnome\.(Photos|Loupe)$"#
         background-effect { blur true; xray false; }
+      }
+
+      // Popupy GTK też mają blur i kwadratowe rogi (jak w val-niri).
+      window-rule {
+        match app-id=r#"^(thunar|xdg-desktop-portal-(gtk|gnome)|org\.gnome\.)"#
+        popups {
+          geometry-corner-radius 0
+          background-effect { blur true; xray false; }
+        }
       }
 
       // Blur dla wszystkich okien floating.
