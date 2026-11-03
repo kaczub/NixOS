@@ -12,6 +12,9 @@
   # Sieć.
   networking.networkmanager.enable = true;
 
+  # VPN mesh (konfiguracja przez `sudo tailscale up`).
+  services.tailscale.enable = true;
+
   # Uruchamianie gotowych binarek Linuksa (serwer VS Code Remote-SSH, rozszerzenia).
   programs.nix-ld.enable = true;
 

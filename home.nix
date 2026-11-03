@@ -12,6 +12,7 @@
       # Komunikacja i przeglądarki
       brave
       discord
+      telegram-desktop
 
       # Multimedia
       spotify
@@ -20,12 +21,21 @@
       papers
       loupe
 
+      # Biuro
+      libreoffice
+
       # Gry
       prismlauncher
 
       # Terminal i narzędzia CLI
       kitty
       fastfetch
+      btop
+      ripgrep
+      fd
+      bat
+      eza
+      lazygit
 
       # Urządzenia mobilne
       android-tools
@@ -38,6 +48,7 @@
       # Pliki i narzędzia systemowe
       nautilus
       gnome-calculator
+      file-roller
 
       # Bezpieczeństwo
       bitwarden-cli

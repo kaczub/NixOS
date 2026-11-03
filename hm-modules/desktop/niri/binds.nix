@@ -7,6 +7,68 @@
     "Mod+W".spawn = ["brave"];
     "Mod+E".spawn = ["nautilus"];
 
+    # Noctalia
+    "Mod+P" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "panel-toggle" "session"];
+    };
+    "Mod+Alt+K" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "panel-toggle" "control-center" "calendar"];
+    };
+    "Mod+Alt+L" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "session" "lock"];
+    };
+    "Mod+Shift+A" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "panel-toggle" "control-center" "audio"];
+    };
+    "Mod+Shift+B" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "panel-toggle" "control-center" "bluetooth"];
+    };
+    "Mod+Shift+D" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "theme-mode-toggle"];
+    };
+    "Mod+Shift+M" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "panel-toggle" "control-center" "media"];
+    };
+    "Mod+Shift+N" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "panel-toggle" "control-center" "notifications"];
+    };
+    "Mod+Shift+P" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "panel-toggle" "control-center" "power"];
+    };
+    "Mod+Shift+S" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "settings-toggle"];
+    };
+    "Mod+Shift+V" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "panel-toggle" "clipboard"];
+    };
+    "Mod+Shift+W" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "panel-toggle" "wallpaper"];
+    };
+    "Mod+Shift+Y" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "panel-toggle" "control-center" "weather"];
+    };
+    "Mod+Shift+Print" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "screenshot-region"];
+    };
+    "Mod+Ctrl+Print" = {
+      _props = {repeat = false;};
+      spawn = ["noctalia" "msg" "screenshot-window"];
+    };
+
     # Mikrofon
     "XF86AudioMicMute" = {
       _props = {
@@ -128,7 +190,7 @@
 
     # Okna floating
     "Mod+V".toggle-window-floating = {};
-    "Mod+Shift+V".switch-focus-between-floating-and-tiling = {};
+    "Mod+Alt+V".switch-focus-between-floating-and-tiling = {};
 
     # Przegląd
     "Mod+O".toggle-overview = {};
