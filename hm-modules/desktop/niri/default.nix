@@ -17,9 +17,9 @@ in {
     extraConfig = ''
       spawn-at-startup "noctalia"
       blur {
-        passes 4
-        offset 10.0
-        noise 0.015
+        passes 3
+        offset 3.0
+        noise 0.013
         saturation 1.3
       }
 
@@ -32,7 +32,7 @@ in {
       // Electron trzyma własne CSD; obetnij cienie, żeby obramowanie było widoczne
       // także gdy okno zajmuje całą szerokość ekranu.
       window-rule {
-        match app-id=r#"^(discord|brave-browser|spotify|code|ai\.opencode\.desktop)$"#
+        match app-id=r#"^([Vv]esktop|brave-browser|spotify|code|ai\.opencode\.desktop)$"#
         draw-border-with-background false
         clip-to-geometry true
       }
@@ -43,7 +43,15 @@ in {
       window-rule {
         match app-id=r#"^(kitty|thunar|xdg-desktop-portal-(gtk|gnome)|ai\.opencode\.desktop|dev\.noctalia\.Noctalia|org\.gnome\..*)$"#
         exclude app-id=r#"^org\.gnome\.(Photos|Loupe)$"#
-        background-effect { blur true; xray false; }
+        background-effect { blur true; }
+      }
+
+      // Aplikacje bez własnej przezroczystości: lekka opacity + blur.
+      // Opacity przyciemnia całe okno, więc tylko dla wybranych apek.
+      window-rule {
+        match app-id=r#"^([Vv]esktop|spotify)$"#
+        opacity 0.92;
+        background-effect { blur true; }
       }
 
       // Popupy GTK też mają blur i kwadratowe rogi (jak w val-niri).
@@ -51,7 +59,7 @@ in {
         match app-id=r#"^(thunar|xdg-desktop-portal-(gtk|gnome)|org\.gnome\.)"#
         popups {
           geometry-corner-radius 0
-          background-effect { blur true; xray false; }
+          background-effect { blur true; }
         }
       }
 
@@ -59,7 +67,7 @@ in {
       window-rule {
         match is-floating=true
         exclude app-id=r#"^org\.gnome\.(Photos|Loupe)$"#
-        background-effect { blur true; xray false; }
+        background-effect { blur true; }
       }
 
       // Floating: Authenticator (2FA) i pickery plików (okna dialogowe).

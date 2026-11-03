@@ -33,7 +33,10 @@
       on = {};
       softness = 40;
       spread = 4;
-      offset._props = {x = 0; y = 0;};
+      offset._props = {
+        x = 0;
+        y = 0;
+      };
     };
   };
 }
