@@ -1,7 +1,7 @@
 {
   input = {
     focus-follows-mouse._props.max-scroll-amount = "0%";
-    keyboard.xkb.layout = "pl,us";
+    keyboard.xkb.layout = "pl";
     touchpad = {
       tap = {};
       natural-scroll = {};

@@ -1,30 +1,33 @@
 {pkgs, ...}: {
-  # Bootloader.
+  # Zezwalaj na pakiety z niewolną licencją (Discord, Spotify, Steam itp.).
+  nixpkgs.config.allowUnfree = true;
+
+  # Program rozruchowy.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Use latest kernel.
+  # Najnowsze jądro.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # Enable networking
+  # Sieć.
   networking.networkmanager.enable = true;
 
-  # Run prebuilt Linux binaries (VS Code Remote-SSH server, extensions)
+  # Uruchamianie gotowych binarek Linuksa (serwer VS Code Remote-SSH, rozszerzenia).
   programs.nix-ld.enable = true;
 
-  # Enable fish shell system-wide (required for users.users.kamil.shell)
+  # Fish systemowo — wymagane przez users.users.kamil.shell.
   programs.fish.enable = true;
 
-  # Limit the number of generations to keep
+  # Limit liczby generacji systemu.
   boot.loader.systemd-boot.configurationLimit = 4;
 
-  # Perform garbage collection weekly to maintain low disk usage
+  # Cotygodniowe czyszczenie starych generacji.
   nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 7d";
   };
 
-  # Optimize storage
+  # Hardlinkowanie identycznych plików w store.
   nix.settings.auto-optimise-store = true;
 }

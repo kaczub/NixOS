@@ -16,8 +16,8 @@ in {
       package = whiteSurIcons;
     };
 
-    # Noctalia owns noctalia.css (palette) and noctalia-blur.css (translucency).
-    # Keeping the imports here means Noctalia's apply.sh leaves gtk.css untouched.
+    # Noctalia zarządza noctalia.css (paleta) i noctalia-blur.css (przezroczystość).
+    # Importy tutaj sprawiają, że apply.sh Noctalii nie nadpisuje gtk.css.
     gtk3.extraCss = ''
       @import url("noctalia.css");
       @import url("noctalia-blur.css");

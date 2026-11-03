@@ -21,13 +21,7 @@
     disko,
     ...
   } @ inputs: {
-    formatter =
-      nixpkgs.lib.genAttrs
-      [
-        "x86_64-linux"
-        "aarch64-linux"
-      ]
-      (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
 
     nixosConfigurations = {
       thinkpad = nixpkgs.lib.nixosSystem {

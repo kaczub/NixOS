@@ -1,4 +1,4 @@
-/* GTK4/libadwaita: translucent Noctalia surfaces so niri's background blur is visible. */
+/* GTK4/libadwaita: przezroczyste powierzchnie Noctalii, żeby było widać blur niri. */
 @define-color window_bg_color rgba({{ colors.surface.default.rgb_csv }}, 0.70);
 @define-color view_bg_color rgba({{ colors.surface.default.rgb_csv }}, 0.60);
 @define-color theme_bg_color rgba({{ colors.surface.default.rgb_csv }}, 0.70);

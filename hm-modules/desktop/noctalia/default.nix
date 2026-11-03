@@ -1,4 +1,6 @@
 {...}: {
+  # Bazowa konfiguracja deklaratywna. Zmiany z GUI trafiają do
+  # ~/.local/state/noctalia/settings.toml i mają pierwszeństwo nad tym plikiem.
   programs.noctalia = {
     enable = true;
 
@@ -24,4 +26,9 @@
       };
     };
   };
+
+  # Snapshot ustawień z GUI. Noctalia wczytuje wszystkie pliki *.toml
+  # z ~/.config/noctalia/, a ten plik jest generowany przez
+  # `make noctalia-export`.
+  xdg.configFile."noctalia/gui.toml".source = ./gui.toml;
 }

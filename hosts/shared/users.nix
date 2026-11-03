@@ -1,24 +1,20 @@
 {pkgs, ...}: {
-  # Define a user account.
-  users.users."kamil" = {
+  # Konto użytkownika.
+  users.users.kamil = {
     isNormalUser = true;
     description = "Kamil";
     shell = pkgs.fish;
-    extraGroups = ["networkmanager" "wheel" "adbusers" "input"];
+    extraGroups = ["networkmanager" "wheel" "input"];
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  programs.steam.enable = true;
-
+  # Narzędzia deweloperskie dostępne systemowo.
   environment.systemPackages = with pkgs; [
-    # Narzędzia podstawowe / Budowanie
+    # Podstawowe narzędzia i budowanie
     curl
     wget
     gnumake
 
-    # Formatowanie i Language Server dla Nixa
+    # Formatowanie i serwer języka dla Nixa
     alejandra
     nixd
   ];

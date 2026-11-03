@@ -1,5 +1,5 @@
 {
-  # Val-niri style: no client-side decorations, thin border around every window.
+  # Styl val-niri: bez dekoracji po stronie klienta, cienka ramka wokół okien.
   prefer-no-csd = {};
 
   layout = {
@@ -15,8 +15,8 @@
       {proportion = 0.75;}
     ];
 
-    # Border instead of a focus ring: the ring is what made Nautilus look
-    # like it had a hard black edge.
+    # Ramka zamiast focus-ringu — to on powodował twardą czarną krawędź
+    # w Nautilusie.
     focus-ring.off = {};
 
     border = {

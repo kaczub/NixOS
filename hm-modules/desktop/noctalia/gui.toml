@@ -1,0 +1,213 @@
+[accessibility]
+ui_scale = 1.1500000096857548
+
+[audio]
+sound_volume = 0.99999997764825821
+
+[backdrop]
+blur_intensity = 0.62999998591840267
+enabled = true
+tint_intensity = 0.69999998435378075
+
+[bar.default]
+background_opacity = 0.69999998435378075
+center = [ "clock", "spacer_4", "media" ]
+end = [ "tray", "notifications", "spacer_3", "network", "bluetooth", "spacer_2", "battery", "session" ]
+margin_ends = 0
+position = "bottom"
+radius = 0
+scale = 1.1000000089406967
+shadow = false
+start = [ "workspaces" ]
+
+[calendar]
+enabled = true
+refresh_minutes = 10
+
+[control_center]
+hidden_tabs = [ "screen-time" ]
+
+[desktop_widgets]
+enabled = false
+schema_version = 2
+widget_order = []
+
+    [desktop_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget]
+
+[hot_corners]
+enabled = true
+
+    [hot_corners.top_left]
+    action = "window_switcher"
+
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@HDMI-A-2", "lockscreen-login-box@eDP-1", "lockscreen-login-box@HDMI-2" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@HDMI-2"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 960.0
+    cy = 898.0
+    output = "HDMI-2"
+    placement_height = 1080.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@HDMI-2".settings]
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-2"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 960.0
+    cy = 898.0
+    output = "HDMI-A-2"
+    placement_height = 1080.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-2".settings]
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 960.0
+    cy = 898.0
+    output = "eDP-1"
+    placement_height = 1080.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+[nightlight]
+enabled = true
+temperature_day = 6600
+temperature_night = 3200
+
+[notification]
+background_opacity = 0.69999998435378075
+
+[osd]
+background_opacity = 0.69999998435378075
+
+[plugins]
+enabled = [ "noctalia/bitwarden", "weinguyen/opencode-companion" ]
+
+[shell]
+app_icon_color = "primary"
+corner_radius_scale = 0.0
+font_family = "JetBrainsMono Nerd Font"
+niri_overview_type_to_launch_enabled = true
+polkit_agent = true
+settings_show_advanced = false
+settings_window_translucent = true
+
+    [shell.greeter_sync]
+    auto_sync = true
+
+    [shell.panel]
+    clipboard_placement = "attached"
+    control_center_placement = "floating"
+    open_near_click_control_center = true
+    session_placement = "floating"
+    session_position = "center"
+    transparency_mode = "glass"
+    wallpaper_placement = "floating"
+    wallpaper_position = "center"
+
+[theme]
+builtin = "Ayu"
+community_palette = "ADW"
+mode = "dark"
+source = "wallpaper"
+wallpaper_scheme = "m3-monochrome"
+
+    [theme.templates]
+    builtin_ids = [ "btop", "gtk3", "gtk4", "ghostty", "kitty", "niri" ]
+    community_ids = [ "discord", "libreoffice", "neovim", "zed", "prismlauncher", "steam", "fzf" ]
+
+[widget.audio_visualizer]
+bands = 10
+show_wave = true
+
+[widget.battery]
+display_mode = "none"
+
+[widget.media]
+hide_album_art = true
+hide_artist = true
+hide_when_no_media = true
+max_length = 200
+title_scroll = "always"
+
+[widget.network]
+show_label = false
+
+[widget.spacer_2]
+type = "spacer"
+
+[widget.spacer_3]
+type = "spacer"
+
+[widget.spacer_4]
+type = "spacer"
+
+[widget.tray]
+enabled = false

@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  # Hardware & Wydajność
+  # Sprzęt i wydajność
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
@@ -13,19 +13,11 @@
     ];
   };
   zramSwap.enable = true;
-  services.fprintd.enable = true;
-  services.fprintd.tod.enable = true;
-  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 
   services.fstrim.enable = true;
 
-  # T490: Fn+F11/F12 emit keycodes above 255, which niri cannot bind.
-  # Remap the ThinkPad Extra Buttons scancodes to F13/F14.
-  services.udev.extraHwdb = ''
-    evdev:name:ThinkPad Extra Buttons:dmi:bvn*:bvr*:bd*:svnLENOVO*:pn*
-      KEYBOARD_KEY_45=f14
-      KEYBOARD_KEY_49=f13
-  '';
+  # Aktualizacje firmware przez LVFS.
+  services.fwupd.enable = true;
 
   hardware.bluetooth.enable = true;
 

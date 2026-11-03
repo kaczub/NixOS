@@ -1,29 +1,13 @@
 {
   binds = {
-    # Launch
+    # Uruchamianie
     "Mod+T".spawn = ["kitty"];
     "Mod+Space".spawn = ["noctalia" "msg" "panel-toggle" "launcher"];
     "Mod+S".spawn = ["spotify"];
     "Mod+W".spawn = ["brave"];
     "Mod+E".spawn = ["nautilus"];
 
-    # T490 special keys
-    "XF86Tools" = {
-      _props = {repeat = false;};
-      spawn = ["noctalia" "msg" "panel-toggle" "control-center"];
-    };
-    "XF86Bluetooth" = {
-      _props = {repeat = false;};
-      spawn = ["noctalia" "msg" "panel-toggle" "control-center" "calendar"];
-    };
-    "F13" = {
-      _props = {repeat = false;};
-      spawn = ["noctalia" "msg" "panel-toggle" "wallpaper"];
-    };
-    "F14" = {
-      _props = {repeat = false;};
-      spawn = ["noctalia" "msg" "session" "lock"];
-    };
+    # Mikrofon
     "XF86AudioMicMute" = {
       _props = {
         allow-when-locked = true;
@@ -31,20 +15,12 @@
       };
       spawn = ["noctalia" "msg" "mic-mute"];
     };
-    "XF86Display" = {
-      _props = {repeat = false;};
-      spawn = ["noctalia" "msg" "panel-toggle" "clipboard"];
-    };
-    "XF86KbdLightOnOff" = {
-      _props = {repeat = false;};
-      spawn-sh = ''led=/sys/class/leds/tpacpi::kbd_backlight; before=$(cat "$led/brightness" 2>/dev/null || echo 0); sleep 0.15; after=$(cat "$led/brightness" 2>/dev/null || echo "$before"); max=$(cat "$led/max_brightness" 2>/dev/null || echo 1); [ "$max" -gt 0 ] 2>/dev/null || max=1; if [ "$after" = "$before" ]; then noctalia msg keyboard-backlight-toggle; else noctalia msg keyboard-backlight-osd $((after * 100 / max)); fi'';
-    };
 
-    # Close / quit
+    # Zamykanie / wyjście
     "Mod+Q".close-window = {};
     "Mod+Shift+E".quit = {};
 
-    # Focus: columns (left/right) and windows (up/down)
+    # Fokus: kolumny (lewo/prawo) i okna (góra/dół)
     "Mod+Left".focus-column-left = {};
     "Mod+Right".focus-column-right = {};
     "Mod+Up".focus-window-up = {};
@@ -54,7 +30,7 @@
     "Mod+K".focus-window-up = {};
     "Mod+J".focus-window-down = {};
 
-    # Move: columns and windows
+    # Przenoszenie: kolumny i okna
     "Mod+Ctrl+Left".move-column-left = {};
     "Mod+Ctrl+Right".move-column-right = {};
     "Mod+Ctrl+Up".move-window-up = {};
@@ -64,13 +40,13 @@
     "Mod+Ctrl+K".move-window-up = {};
     "Mod+Ctrl+J".move-window-down = {};
 
-    # First / last column
+    # Pierwsza / ostatnia kolumna
     "Mod+Home".focus-column-first = {};
     "Mod+End".focus-column-last = {};
     "Mod+Ctrl+Home".move-column-to-first = {};
     "Mod+Ctrl+End".move-column-to-last = {};
 
-    # Focus monitor
+    # Fokus monitora
     "Mod+Shift+Left".focus-monitor-left = {};
     "Mod+Shift+Right".focus-monitor-right = {};
     "Mod+Shift+Up".focus-monitor-up = {};
@@ -80,7 +56,7 @@
     "Mod+Shift+K".focus-monitor-up = {};
     "Mod+Shift+J".focus-monitor-down = {};
 
-    # Move column between monitors
+    # Przenoszenie kolumny między monitorami
     "Mod+Shift+Ctrl+Left".move-column-to-monitor-left = {};
     "Mod+Shift+Ctrl+Right".move-column-to-monitor-right = {};
     "Mod+Shift+Ctrl+Up".move-column-to-monitor-up = {};
@@ -90,7 +66,7 @@
     "Mod+Shift+Ctrl+K".move-column-to-monitor-up = {};
     "Mod+Shift+Ctrl+L".move-column-to-monitor-right = {};
 
-    # Workspaces 1-9
+    # Obszary robocze 1-9
     "Mod+1".focus-workspace = 1;
     "Mod+2".focus-workspace = 2;
     "Mod+3".focus-workspace = 3;
@@ -110,7 +86,7 @@
     "Mod+Ctrl+8".move-column-to-workspace = 8;
     "Mod+Ctrl+9".move-column-to-workspace = 9;
 
-    # Workspaces up/down
+    # Obszary robocze góra/dół
     "Mod+U".focus-workspace-down = {};
     "Mod+I".focus-workspace-up = {};
     "Mod+Ctrl+U".move-column-to-workspace-down = {};
@@ -124,12 +100,12 @@
     "Mod+Shift+Page_Down".move-workspace-down = {};
     "Mod+Shift+Page_Up".move-workspace-up = {};
 
-    # Maximize / fullscreen / floating
+    # Maksymalizacja / pełny ekran / floating
     "Mod+F".maximize-column = {};
     "Mod+Shift+F".fullscreen-window = {};
     "Mod+Shift+Space".toggle-window-floating = {};
 
-    # Window sizing
+    # Rozmiar okna
     "Mod+R".switch-preset-column-width = {};
     "Mod+Shift+R".switch-preset-column-width-back = {};
     "Mod+Ctrl+Shift+R".switch-preset-window-height = {};
@@ -143,21 +119,21 @@
     "Mod+C".center-column = {};
     "Mod+Ctrl+C".center-visible-columns = {};
 
-    # Column composition
+    # Składanie kolumn
     "Mod+BracketLeft".consume-or-expel-window-left = {};
     "Mod+BracketRight".consume-or-expel-window-right = {};
     "Mod+Comma".consume-window-into-column = {};
     "Mod+Period".expel-window-from-column = {};
     "Mod+Tab".toggle-column-tabbed-display = {};
 
-    # Floating
+    # Okna floating
     "Mod+V".toggle-window-floating = {};
     "Mod+Shift+V".switch-focus-between-floating-and-tiling = {};
 
-    # Overview
+    # Przegląd
     "Mod+O".toggle-overview = {};
 
-    # Media (via Noctalia IPC)
+    # Multimedia (przez Noctalia IPC)
     "XF86AudioRaiseVolume" = {
       _props = {allow-when-locked = true;};
       spawn = ["noctalia" "msg" "volume-up"];
@@ -179,11 +155,7 @@
       spawn = ["noctalia" "msg" "brightness-down"];
     };
 
-    "XF86AudioPlay".spawn = ["noctalia" "msg" "media" "toggle"];
-    "XF86AudioNext".spawn = ["noctalia" "msg" "media" "next"];
-    "XF86AudioPrev".spawn = ["noctalia" "msg" "media" "previous"];
-
-    # Misc
+    # Różne
     "Mod+Shift+Slash".show-hotkey-overlay = {};
     "Print".screenshot = {};
   };

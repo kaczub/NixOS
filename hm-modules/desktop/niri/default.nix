@@ -3,18 +3,19 @@
   lib,
   ...
 }: let
-  settings =
-    lib.recursiveUpdate
+  settings = lib.foldl' lib.recursiveUpdate {} [
     (import ./input.nix)
-    (lib.recursiveUpdate (import ./layout.nix)
-      (lib.recursiveUpdate (import ./binds.nix) (import ./outputs.nix)));
+    (import ./layout.nix)
+    (import ./binds.nix)
+    (import ./outputs.nix)
+  ];
 in {
   wayland.windowManager.niri = {
     enable = true;
     checkConfig = true;
-    settings = settings;
+    inherit settings;
     extraConfig = ''
-          spawn-at-startup "noctalia"
+      spawn-at-startup "noctalia"
       blur {
         passes 3
         offset 7.0
@@ -36,15 +37,19 @@ in {
         clip-to-geometry true
       }
 
-      // Blur tylko za wybranymi oknami (app-id do weryfikacji przez `niri msg pick-window`).
+      // Kilka osobnych `match` w jednej regule działa jak OR, dlatego app-id
+      // łączymy w jeden regex. `exclude` wyklucza okno z całej reguły.
+      // Blur dla wybranych aplikacji (app-id sprawdzisz przez `niri msg pick-window`).
       window-rule {
-        match app-id="^kitty$"
-        match app-id=r#"^ai\.opencode\.desktop$"#
-        match app-id=r#"^dev\.noctalia\.Noctalia$"#
+        match app-id=r#"^(kitty|ai\.opencode\.desktop|dev\.noctalia\.Noctalia|org\.gnome\..*)$"#
+        exclude app-id=r#"^org\.gnome\.(Photos|Loupe)$"#
+        background-effect { blur true; xray false; }
+      }
+
+      // Blur dla wszystkich okien floating.
+      window-rule {
         match is-floating=true
-        match app-id=r#"^org\.gnome\."#
-        exclude app-id=r#"^org\.gnome\.Photos$"#
-        exclude app-id=r#"^org\.gnome\.Loupe$"#
+        exclude app-id=r#"^org\.gnome\.(Photos|Loupe)$"#
         background-effect { blur true; xray false; }
       }
 
@@ -74,7 +79,7 @@ in {
         background-effect { xray false; }
       }
 
-      // Blurred wallpaper in the overview instead of the flat backdrop color.
+      // Rozmyta tapeta w overview zamiast jednolitego koloru tła.
       layer-rule {
         match namespace="^noctalia-backdrop"
         place-within-backdrop true

@@ -1,13 +1,8 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
-  # Set your time zone.
+{pkgs, ...}: {
+  # Strefa czasowa.
   time.timeZone = "Europe/Warsaw";
 
-  # Select internationalisation properties.
+  # Ustawienia lokalizacji.
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -25,16 +20,16 @@
   # dconf: ikony/kursor/GTK4
   programs.dconf.enable = true;
 
-  # Enable niri
+  # Niri jako kompozytor Wayland.
   programs.niri.enable = true;
 
-  # Enable noctalia
+  # Noctalia jako shell (panel, launcher itp.).
   programs.noctalia = {
     enable = true;
     recommendedServices.enable = true;
   };
 
-  # Greetd + Noctalia Greeter (Wayland login)
+  # Greetd + Noctalia Greeter (logowanie Wayland).
   services.displayManager.noctalia-greeter = {
     enable = true;
     passwordlessSyncUsers = ["kamil"];
@@ -49,59 +44,27 @@
     };
   };
 
-  # Greeter: password-only PAM auth, so a correct password is checked
-  # immediately instead of waiting for pam_fprintd. The `login` service is
-  # left untouched, so the lockscreen keeps fingerprint support.
-  security.pam.services.greetd.rules.auth = lib.mkForce {
-    unix-early = {
-      control = "optional";
-      modulePath = "${config.security.pam.package}/lib/security/pam_unix.so";
-      settings = {
-        likeauth = true;
-        nullok = true;
-      };
-      order = 100;
-    };
-    gnome-keyring = {
-      control = "optional";
-      modulePath = "${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so";
-      order = 200;
-    };
-    unix = {
-      control = "sufficient";
-      modulePath = "${config.security.pam.package}/lib/security/pam_unix.so";
-      settings = {
-        likeauth = true;
-        nullok = true;
-        try_first_pass = true;
-      };
-      order = 300;
-    };
-    deny = {
-      control = "required";
-      modulePath = "${config.security.pam.package}/lib/security/pam_deny.so";
-      order = 400;
-    };
-  };
+  # Layout klawiatury w konsoli — wszędzie używamy `pl`.
+  console.keyMap = "pl";
 
-  # Configure console keymap
-  console.keyMap = "pl2";
-
-  # Keep X11/XWayland apps on the same layout as niri and the greeter
+  # X11/XWayland: ten sam layout co w niri i greeterze.
   services.xserver.xkb.layout = "pl";
 
-  # File manager: mounting drives, trash and network shares
+  # Menedżer plików: montowanie dysków, kosz i udziały sieciowe.
   services.udisks2.enable = true;
   services.gvfs.enable = true;
 
-  # Enable CUPS to print documents.
+  # Drukowanie przez CUPS.
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
+  # Dźwięk przez PipeWire.
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+
+  # Gry.
+  programs.steam.enable = true;
 }
