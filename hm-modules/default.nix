@@ -7,6 +7,7 @@
     ./core/neovim.nix
     ./core/gtk.nix
     ./core/env.nix
+    ./core/fonts.nix
     ./core/zed.nix
 
     ./desktop/niri
