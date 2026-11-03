@@ -1,0 +1,18 @@
+/* GTK3: przezroczyste powierzchnie Noctalii, żeby było widać blur niri. */
+@define-color window_bg_color rgba({{ colors.surface.default.rgb_csv }}, 0.70);
+@define-color view_bg_color rgba({{ colors.surface.default.rgb_csv }}, 0.60);
+@define-color theme_bg_color rgba({{ colors.surface.default.rgb_csv }}, 0.70);
+@define-color theme_base_color rgba({{ colors.surface.default.rgb_csv }}, 0.60);
+@define-color theme_unfocused_bg_color rgba({{ colors.surface.default.rgb_csv }}, 0.70);
+@define-color theme_unfocused_base_color rgba({{ colors.surface.default.rgb_csv }}, 0.60);
+
+@define-color headerbar_bg_color rgba({{ colors.surface_variant.default.rgb_csv }}, 0.55);
+@define-color headerbar_backdrop_color rgba({{ colors.surface.default.rgb_csv }}, 0.55);
+@define-color sidebar_bg_color rgba({{ colors.surface_variant.default.rgb_csv }}, 0.55);
+@define-color sidebar_backdrop_color rgba({{ colors.surface.default.rgb_csv }}, 0.55);
+@define-color secondary_sidebar_bg_color rgba({{ colors.surface.default.rgb_csv }}, 0.60);
+
+@define-color card_bg_color rgba({{ colors.surface_container.default.rgb_csv }}, 0.75);
+@define-color dialog_bg_color rgba({{ colors.surface.default.rgb_csv }}, 0.85);
+@define-color popover_bg_color rgba({{ colors.surface_container.default.rgb_csv }}, 0.94);
+@define-color overview_bg_color rgba({{ colors.surface_variant.default.rgb_csv }}, 0.75);
