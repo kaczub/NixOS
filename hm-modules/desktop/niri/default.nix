@@ -32,7 +32,7 @@ in {
       // Electron trzyma własne CSD; obetnij cienie, żeby obramowanie było widoczne
       // także gdy okno zajmuje całą szerokość ekranu.
       window-rule {
-        match app-id=r#"^([Vv]esktop|brave-browser|spotify|code|ai\.opencode\.desktop)$"#
+        match app-id=r#"^([Vv]esktop|brave-origin|com\.brave\.Origin|spotify|code|ai\.opencode\.desktop)$"#
         draw-border-with-background false
         clip-to-geometry true
       }

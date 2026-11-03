@@ -4,7 +4,7 @@
     "Mod+T".spawn = ["kitty"];
     "Mod+Space".spawn = ["noctalia" "msg" "panel-toggle" "launcher"];
     "Mod+S".spawn = ["spotify"];
-    "Mod+W".spawn = ["brave"];
+    "Mod+W".spawn = ["brave-origin"];
     "Mod+E".spawn = ["nautilus"];
 
     # Noctalia

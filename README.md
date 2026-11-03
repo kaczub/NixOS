@@ -116,7 +116,7 @@ Szczegóły: [Noctalia docs](https://docs.noctalia.dev/noctalia/configuration/).
 | `Mod+T` | terminal (kitty) |
 | `Mod+Space` | launcher Noctalii |
 | `Mod+E` | pliki (Nautilus) |
-| `Mod+W` | Brave |
+| `Mod+W` | Brave Origin |
 | `Mod+S` | Spotify |
 | `Mod+P` | menu sesji / power |
 | `Mod+Alt+K` | kalendarz |

@@ -10,7 +10,7 @@
 
     packages = with pkgs; [
       # Komunikacja i przeglądarki
-      brave
+      brave-origin
       vesktop
       telegram-desktop
 
