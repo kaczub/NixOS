@@ -7,8 +7,9 @@
     ./core/neovim.nix
     ./core/gtk.nix
     ./core/env.nix
-    ./core/fonts.nix
     ./core/zed.nix
+
+    ./apps/kitty.nix
 
     ./desktop/niri
     ./desktop/noctalia
