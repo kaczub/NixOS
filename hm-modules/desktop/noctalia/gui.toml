@@ -180,6 +180,8 @@ source = "wallpaper"
 wallpaper_scheme = "m3-monochrome"
 
     [theme.templates]
+    enable_builtin_templates = true
+    enable_community_templates = true
     builtin_ids = [ "btop", "gtk3", "gtk4", "ghostty", "kitty", "niri" ]
     community_ids = [ "discord", "libreoffice", "neovim", "zed", "prismlauncher", "steam", "fzf" ]
 
