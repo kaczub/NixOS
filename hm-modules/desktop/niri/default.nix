@@ -37,6 +37,13 @@ in {
         clip-to-geometry true
       }
 
+      // Brave Origin otwieraj jako szerokie okno — na pustym workspace
+      // zajmuje miejsce dwóch kolumn.
+      window-rule {
+        match app-id=r#"^(brave-origin|com\.brave\.Origin)$"#
+        open-maximized true
+      }
+
       // Kilka osobnych `match` w jednej regule działa jak OR, dlatego app-id
       // łączymy w jeden regex. `exclude` wyklucza okno z całej reguły.
       // Blur dla wybranych aplikacji (app-id sprawdzisz przez `niri msg pick-window`).
