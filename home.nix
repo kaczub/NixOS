@@ -11,7 +11,7 @@
     packages = with pkgs; [
       # Komunikacja i przeglądarki
       brave
-      discord
+      vesktop
       telegram-desktop
 
       # Multimedia
@@ -36,6 +36,28 @@
       bat
       eza
       lazygit
+
+      # TUI
+      yazi
+      ncspot
+      cava
+      cmatrix
+      pipes
+      glow
+      rainfrog
+
+      # Sieć i media
+      yt-dlp
+      ffmpeg
+
+      # Zależności Yazi: podgląd PDF/video, archiwa, JSON, schowek
+      file
+      chafa
+      jq
+      poppler-utils
+      resvg
+      _7zz
+      wl-clipboard
 
       # Urządzenia mobilne
       android-tools
