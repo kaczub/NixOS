@@ -1,0 +1,24 @@
+{
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "/run/current-system/sw/bin/nixd",
+  "nix.formatterPath": "/run/current-system/sw/bin/alejandra",
+  "[nix]": {
+    "editor.defaultFormatter": "jnoortheen.nix-ide",
+    "editor.formatOnSave": true
+  },
+  "nix.serverSettings": {
+    "nixd": {
+      "formatting": {
+        "command": ["/run/current-system/sw/bin/alejandra"]
+      },
+      "options": {
+        "darwin": {
+          "expr": "(builtins.getFlake \"${workspaceFolder}\").darwinConfigurations.mac-mini.options"
+        },
+        "nixos": {
+          "expr": "(builtins.getFlake \"${workspaceFolder}\").nixosConfigurations.thinkpad.options"
+        }
+      }
+    }
+  }
+}
