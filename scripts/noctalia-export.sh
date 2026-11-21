@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-out="hm-modules/desktop/noctalia/gui.toml"
+out="hm-modules/linux/noctalia/gui.toml"
 config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
 tmpdir="$(mktemp -d)"
 tmpfile="$(mktemp)"
