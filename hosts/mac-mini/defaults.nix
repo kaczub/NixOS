@@ -13,7 +13,6 @@
 
     finder = {
       AppleShowAllExtensions = true;
-      ShowPathbar = true;
       FXPreferredViewStyle = "Nlsv";
       _FXSortFoldersFirst = true;
       FXDefaultSearchScope = "SCcf";
