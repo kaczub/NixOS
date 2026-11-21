@@ -255,10 +255,12 @@ Managed in `hosts/mac-mini/defaults.nix`.
 
 | Setting | Key / effect |
 |---|---|
-| Dock on the left, autohide, fast | `orientation = "left"`, `autohide`, `autohide-time-modifier = 0.2` |
-| Size / magnification | `tilesize = 44`, `largesize = 47`, `magnification = true` |
+| Dock at the bottom, no autohide | `orientation = "bottom"`, `autohide = false` |
+| Size / magnification | `tilesize = 55` (35%), `largesize = 61` (40%), `magnification = true` |
+| Genie minimize effect | `mineffect = "genie"` |
+| Double-click title bar: fill | `AppleActionOnDoubleClick = "Maximize"` |
 | No recent/suggested apps | `show-recents = false` |
-| Top-right hot corner | `wvous-tr-corner = 2` + `wvous-tr-modifier = 0` |
+| Top-left hot corner | `wvous-tl-corner = 2` + `wvous-tl-modifier = 0` |
 | Finder: extensions, folders first | `AppleShowAllExtensions`, `_FXSortFoldersFirst` |
 | Finder: search current folder | `FXDefaultSearchScope = "SCcf"` |
 | Finder: Cmd+Q | `QuitMenuItem = true` |

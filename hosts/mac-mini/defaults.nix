@@ -1,16 +1,14 @@
 {...}: {
   system.defaults = {
     dock = {
-      orientation = "left";
-      autohide = true;
-      autohide-delay = 0.0;
-      autohide-time-modifier = 0.2; # szybkie wysuwanie
+      orientation = "bottom";
+      autohide = false;
       magnification = true;
-      tilesize = 44; # ok. 1/4 suwaka rozmiaru
-      largesize = 47; # ok. 1/4 suwaka powiększenia
+      tilesize = 55; # ok. 35% suwaka rozmiaru
+      largesize = 61; # ok. 40% suwaka powiększenia
       show-recents = false;
-      mineffect = "scale";
-      wvous-tr-corner = 2; # prawy górny róg: Mission Control
+      mineffect = "genie"; # efekt dżina przy pomniejszaniu
+      wvous-tl-corner = 2; # lewy górny róg: Mission Control
     };
 
     finder = {
@@ -54,9 +52,11 @@
       NSGlobalDomain = {
         AppleAccentColor = -1; # Graphite
         NSGlassTintAmount = 0.75; # Liquid Glass ~75%
+        AppleActionOnDoubleClick = "Maximize"; # dwuklik w pasek okna: wypełnienie
       };
       "com.apple.dock" = {
-        "wvous-tr-modifier" = 0; # hot corner bez modyfikatora
+        "wvous-tl-modifier" = 0; # hot corner bez modyfikatora
+        "wvous-tr-corner" = 0; # wyczyść stary hot corner (prawy górny)
       };
     };
   };

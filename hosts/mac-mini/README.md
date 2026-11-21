@@ -250,10 +250,12 @@ Zarządzane w `hosts/mac-mini/defaults.nix`.
 
 | Ustawienie | Klucz / efekt |
 |---|---|
-| Dock po lewej, autohide, szybko | `orientation = "left"`, `autohide`, `autohide-time-modifier = 0.2` |
-| Rozmiar / powiększenie | `tilesize = 44`, `largesize = 47`, `magnification = true` |
+| Dock na dole, bez autohide | `orientation = "bottom"`, `autohide = false` |
+| Rozmiar / powiększenie | `tilesize = 55` (35%), `largesize = 61` (40%), `magnification = true` |
+| Minimalizacja efektem dżina | `mineffect = "genie"` |
+| Dwuklik w pasek: wypełnienie | `AppleActionOnDoubleClick = "Maximize"` |
 | Bez ostatnich/sugerowanych | `show-recents = false` |
-| Hot corner prawy górny | `wvous-tr-corner = 2` + `wvous-tr-modifier = 0` |
+| Hot corner lewy górny | `wvous-tl-corner = 2` + `wvous-tl-modifier = 0` |
 | Finder: rozszerzenia, foldery na górze | `AppleShowAllExtensions`, `_FXSortFoldersFirst` |
 | Finder: szukaj w bieżącym folderze | `FXDefaultSearchScope = "SCcf"` |
 | Finder: Cmd+Q | `QuitMenuItem = true` |
