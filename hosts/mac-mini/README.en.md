@@ -302,7 +302,7 @@ Managed in `hosts/mac-mini/defaults.nix`.
 
 - Fish and plugins: [docs/fish.en.md](../../docs/fish.en.md).
 - Ghostty: SF Mono 13 + JetBrains Nerd Font fallback, fixed dark scheme
-  (#262626 background), frosted glass, padding 12.
+  (#1f2428 background), frosted glass, padding 12.
 - Fastfetch: `hm-modules/darwin/fastfetch.jsonc`, `macos_small` logo.
 
 > `macos-option-as-alt = true` in Ghostty takes Option away for Alt. Polish

@@ -6,7 +6,7 @@
     package = null;
     enableFishIntegration = true;
 
-    settings = {
+      settings = {
       # SF Mono jako podstawowy; Nerd Font jako fallback dla ikon w promptach.
       font-family = [
         "SF Mono"
@@ -24,29 +24,29 @@
       window-padding-balance = true;
 
       # Stały ciemny schemat kolorów.
-      background = "#262626";
-      foreground = "#bcbcbc";
-      selection-background = "#87afd7";
-      selection-foreground = "#262626";
-      cursor-color = "#bcbcbc";
-      cursor-text = "#262626";
+      background = "#1f2428";
+      foreground = "#d1d5da";
+      selection-background = "#244262";
+      selection-foreground = "#d1d5da";
+      cursor-color = "#d1d5da";
+      cursor-text = "#1f2428";
       palette = [
-        "0=#1c1c1c"
-        "1=#af5f5f"
-        "2=#5f875f"
-        "3=#87875f"
-        "4=#5f87af"
-        "5=#5f5f87"
-        "6=#5f8787"
-        "7=#6c6c6c"
-        "8=#444444"
-        "9=#ff8700"
-        "10=#87af87"
-        "11=#ffffaf"
-        "12=#87afd7"
-        "13=#8787af"
-        "14=#5fafaf"
-        "15=#ffffff"
+        "0=#586069"
+        "1=#ea4a5a"
+        "2=#34d058"
+        "3=#ffea7f"
+        "4=#2188ff"
+        "5=#b392f0"
+        "6=#39c5cf"
+        "7=#d1d5da"
+        "8=#959da5"
+        "9=#f97583"
+        "10=#85e89d"
+        "11=#ffea7f"
+        "12=#79b8ff"
+        "13=#b392f0"
+        "14=#56d4dd"
+        "15=#fafbfc"
       ];
 
       # Zachowanie i klawisze w stylu Maca.
