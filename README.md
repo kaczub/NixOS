@@ -1,196 +1,188 @@
-# NixOS — ThinkPad T490
+# NixOS + nix-darwin
 
-Osobista konfiguracja NixOS oparta o **flake**, **Home Managera**, **niri** i **Noctalię**.
-Obecnie jeden host: `thinkpad` (Linux), użytkownik: `kamil`.
-Planowane rozszerzenie: **Mac mini M4 (Darwin)**.
+**Język:** Polski · [English](README.en.md)
+
+> Dwie maszyny, jedna deklaratywna konfiguracja: **ThinkPad T490** z NixOS
+> i **Mac mini M4** z macOS. Wspólny Home Manager, osobne moduły systemowe.
 
 [![NixOS](https://img.shields.io/badge/NixOS-unstable-5277C3?logo=nixos&logoColor=white)](https://nixos.org/)
+[![nix-darwin](https://img.shields.io/badge/nix-darwin-macOS-000000?logo=apple&logoColor=white)](https://github.com/nix-darwin/nix-darwin)
 [![niri](https://img.shields.io/badge/compositor-niri-6f4a8e)](https://github.com/YaLTeR/niri)
 [![Noctalia](https://img.shields.io/badge/shell-Noctalia-7c3aed)](https://noctalia.dev/)
 
-## Stack technologiczny
+## Spis treści
+
+- [Hosty](#hosty)
+- [Stack](#stack)
+- [Jak to działa](#jak-to-działa)
+- [Tapety](#tapety)
+- [Szybki start](#szybki-start)
+- [Dokumentacja](#dokumentacja)
+- [Struktura repo](#struktura-repo)
+- [Zasady](#zasady)
+- [Linki](#linki)
+
+## Hosty
+
+| Host | System | Nix | Środowisko | GUI | Dokumentacja |
+|---|---|---|---|---|---|
+| `thinkpad` | NixOS `nixos-unstable` (`x86_64-linux`) | upstream Nix | Home Manager + niri + Noctalia | nixpkgs | [hosts/thinkpad](hosts/thinkpad/README.md) |
+| `mac-mini` | macOS 27 (`aarch64-darwin`) | Determinate Nix | Home Manager + nix-darwin | Homebrew casks | [hosts/mac-mini](hosts/mac-mini/README.md) |
+
+## Stack
 
 | Warstwa | Technologia |
 |---|---|
-| System | [NixOS](https://nixos.org/) `nixos-unstable` |
+| System | [NixOS](https://nixos.org/) / macOS + [nix-darwin](https://github.com/nix-darwin/nix-darwin) |
 | Zarządzanie | [Nix flakes](https://nix.dev/concepts/flakes) |
 | Środowisko użytkownika | [Home Manager](https://github.com/nix-community/home-manager) |
-| Kompozytor | [niri](https://github.com/YaLTeR/niri) |
-| Shell / UI | [Noctalia](https://noctalia.dev/) |
-| Bootloader | systemd-boot |
-| System plików | btrfs; LUKS przygotowany pod przyszłą reinstalację |
+| Pakiety GUI | nixpkgs (Linux) / [Homebrew casks](https://brew.sh/) (macOS) |
+| Kompozytor | [niri](https://github.com/YaLTeR/niri) (tylko ThinkPad) |
+| Shell / UI | [Noctalia](https://noctalia.dev/) (tylko ThinkPad) |
+| Bootloader | systemd-boot (ThinkPad) |
+| System plików | btrfs; LUKS przygotowany pod reinstalację |
 | Formatowanie | [alejandra](https://github.com/kamadorueda/alejandra) |
-| Planowany host | [nix-darwin](https://github.com/LnL7/nix-darwin) + Home Manager (Mac mini M4) |
 
-## Mapa repozytorium
-
-```text
-.
-├── flake.nix                    # wejścia i definicja hosta
-├── flake.lock
-├── home.nix                     # konfiguracja Home Managera
-├── Makefile                     # update / test / check / fmt / Noctalia
-├── hosts/
-│   ├── shared/
-│   │   ├── system.nix           # boot, sieć, Nix, Tailscale
-│   │   ├── users.nix            # konto użytkownika
-│   │   └── desktop.nix          # niri, Noctalia, greeter, audio, locale
-│   └── thinkpad/
-│       ├── configuration.nix    # punkt wejścia hosta
-│       ├── hardware.nix         # GPU, fwupd, T490
-│       ├── hardware-configuration.nix
-│       ├── disko.nix            # docelowy układ LUKS + btrfs
-│       └── INSTALL.md           # instrukcja reinstalacji z LUKS
-├── hm-modules/
-│   ├── default.nix
-│   ├── core/                    # fish, git, direnv, GTK, Zed, Neovim...
-│   └── desktop/
-│       ├── niri/                # input, layout, outputs, binds
-│       └── noctalia/            # motyw, szablony GTK, snapshot GUI
-└── scripts/
-    └── noctalia-export.sh       # eksport ustawień GUI do repo
-```
-
-## Schemat konfiguracji
+## Jak to działa
 
 ```mermaid
-flowchart TD
-    F[flake.nix] --> H[nixosConfigurations.thinkpad]
-    H --> HC[hosts/thinkpad/configuration.nix]
-    HC --> SH[hosts/shared/*.nix]
-    HC --> HW[hardware*.nix]
-    HC --> D[disko.nix]
+flowchart LR
+    F[flake.nix] --> T[nixosConfigurations.thinkpad]
+    F --> M[darwinConfigurations.mac-mini]
 
-    H --> HM[home.nix]
-    HM --> CORE[hm-modules/core]
-    HM --> DESK[hm-modules/desktop]
-    DESK --> NIRI[niri]
-    DESK --> NOCT[Noctalia]
+    T --> TC[hosts/thinkpad/configuration.nix]
+    T --> TH[hosts/thinkpad/home.nix]
+    TC --> SH[hosts/shared/*.nix]
 
-    F -. planowane .-> MAC[darwinConfigurations.mac-mini<br/>Mac mini M4]
+    M --> MC[hosts/mac-mini/configuration.nix]
+    M --> MH[hosts/mac-mini/home.nix]
+
+    TH --> BASE[home.nix]
+    MH --> BASE
+    BASE --> HS[hm-modules/shared]
+    TH --> HL[hm-modules/linux]
+    MH --> HD[hm-modules/darwin]
 ```
+
+`home.nix` to wspólna baza Home Managera. Wszystko, co działa na obu systemach,
+żyje w `hm-modules/shared`; rzeczy tylko linuksowe w `hm-modules/linux`,
+a tylko macOS-owe w `hm-modules/darwin`. Dzięki temu `nix flake check` nie
+próbuje zbudować niri na Darwinie ani dconf na Macu.
+
+## Tapety
+
+Oba hosty korzystają z repo
+[revaljonathan/wallpapers](https://github.com/revaljonathan/wallpapers) jako
+flake input `wallpapers` (`flake = false`). Obrazy są linkowane pojedynczo do
+`~/Pictures/Wallpapers` — nie kopiujemy ~800 MB do katalogu domowego.
+
+```console
+nix flake update wallpapers   # aktualizacja tapet
+```
+
+Pierwsze `nix flake lock` pobiera ok. 800 MB. Katalogi użytkownika są po
+angielsku: `~/Downloads`, `~/Documents`, `~/Pictures`, `~/Videos`, `~/Music`.
+
+> Repo nie zawiera pliku LICENSE — używaj tapet prywatnie i sprawdź prawa
+> przed publikacją.
 
 ## Szybki start
 
-```console
-make update    # nixos-rebuild switch
-make test      # nixos-rebuild test, bez zmiany generacji
-make check     # nix flake check --no-build
-make fmt       # alejandra
-make clean     # GC systemu i użytkownika
-```
+| Cel | Linux | macOS |
+|---|---|---|
+| Przełącz system | `make update` | `make mac` |
+| Zbuduj bez aktywacji | `make test` | `make mac-build` |
+| Rollback | — | `make mac-rollback` |
+| Sprawdź flake | `make check` | `make check-all` |
+| Formatowanie | `make fmt` | `make fmt` |
 
-Host można podmienić przez `HOST`:
-
-```console
-make update HOST=thinkpad
-```
-
-## Noctalia — trzy warstwy configu
-
-| Plik | Rola |
-|---|---|
-| `programs.noctalia.settings` → `~/.config/noctalia/config.toml` | bazowa konfiguracja z Nixa, m.in. szablony GTK |
-| `hm-modules/desktop/noctalia/gui.toml` → `~/.config/noctalia/gui.toml` | snapshot ustawień z GUI, wersjonowany w repo |
-| `~/.local/state/noctalia/settings.toml` | bieżące nadpisania zapisywane przez GUI; **ma pierwszeństwo** |
-
-Po zmianach w GUI aktualizujesz snapshot:
+Po zmianie `inputs` w `flake.nix` odśwież lockfile:
 
 ```console
-make noctalia-export
-git diff hm-modules/desktop/noctalia/gui.toml
+nix flake lock
 ```
 
-Snapshot generuje [`scripts/noctalia-export.sh`](scripts/noctalia-export.sh), uruchamiany przez `make noctalia-export`.
+Pełne instrukcje instalacji:
 
-Szczegóły: [Noctalia docs](https://docs.noctalia.dev/noctalia/configuration/).
+- **ThinkPad:** [hosts/thinkpad/README.md](hosts/thinkpad/README.md)
+- **Mac mini:** [hosts/mac-mini/README.md](hosts/mac-mini/README.md)
 
-## Skróty klawiszowe
+## Dokumentacja
 
-`Mod` = Super. Pełna lista: [`hm-modules/desktop/niri/binds.nix`](hm-modules/desktop/niri/binds.nix).
-
-### Uruchamianie i Noctalia
-
-| Skrót | Akcja |
+| Dokument | Zawartość |
 |---|---|
-| `Mod+T` | terminal (kitty) |
-| `Mod+Space` | launcher Noctalii |
-| `Mod+E` | pliki (Nautilus) |
-| `Mod+W` | Brave Origin |
-| `Mod+S` | Spotify |
-| `Mod+P` | menu sesji / power |
-| `Mod+Alt+K` | kalendarz |
-| `Mod+Alt+L` | lockscreen |
-| `Mod+Shift+A` | audio |
-| `Mod+Shift+B` | Bluetooth |
-| `Mod+Shift+D` | dark / light |
-| `Mod+Shift+M` | media |
-| `Mod+Shift+N` | powiadomienia |
-| `Mod+Shift+P` | power / bateria |
-| `Mod+Shift+S` | ustawienia Noctalii |
-| `Mod+Shift+V` | schowek |
-| `Mod+Shift+W` | tapety |
-| `Mod+Shift+Y` | pogoda |
-| `Mod+Shift+Print` | screenshot regionu |
-| `Mod+Ctrl+Print` | screenshot okna |
+| [hosts/thinkpad/README.md](hosts/thinkpad/README.md) | NixOS, niri, Noctalia, skróty, sprzęt, utrzymanie |
+| [hosts/thinkpad/INSTALL.md](hosts/thinkpad/INSTALL.md) | Reinstalacja ThinkPada z LUKS i disko |
+| [hosts/mac-mini/README.md](hosts/mac-mini/README.md) | macOS od zera, casks, defaults, uprawnienia, troubleshooting |
+| [docs/architecture.md](docs/architecture.md) | Flake, podział Home Managera, dodawanie hosta |
+| [docs/fish.md](docs/fish.md) | Fish, pluginy, fzf, zoxide, fisher |
+| [docs/glossary.md](docs/glossary.md) | Słowniczek pojęć: flake, cask, TCC, SIP itd. |
 
-### Okna
+## Struktura repo
 
-| Skrót | Akcja |
-|---|---|
-| `Mod+Q` | zamknij okno |
-| `Mod+Shift+E` | wyjdź z niri |
-| `Mod+Left/Right/Up/Down` | fokus |
-| `Mod+H/J/K/L` | fokus (Vim) |
-| `Mod+Ctrl+Left/Right/Up/Down` | przenieś okno / kolumnę |
-| `Mod+Shift+Left/Right/Up/Down` | fokus monitora |
-| `Mod+Shift+Ctrl+...` | przenieś kolumnę na monitor |
-| `Mod+1…9` | obszar roboczy |
-| `Mod+Ctrl+1…9` | przenieś kolumnę na obszar |
-| `Mod+U` / `Mod+I` | obszar w dół / w górę |
-| `Mod+Page_Down` / `Mod+Page_Up` | obszar w dół / w górę |
-| `Mod+F` | maksymalizacja kolumny |
-| `Mod+Shift+F` | pełny ekran |
-| `Mod+V` | toggle floating |
-| `Mod+Shift+Space` | toggle floating (alias) |
-| `Mod+Alt+V` | fokus floating ↔ tiling |
-| `Mod+R` | zmiana szerokości kolumny |
-| `Mod+Minus` / `Mod+Equal` | szerokość −10% / +10% |
-| `Mod+Shift+Minus` / `Mod+Shift+Equal` | wysokość −10% / +10% |
-| `Mod+C` | wyśrodkuj kolumnę |
-| `Mod+Tab` | tryb tabbed |
-| `Mod+O` | overview |
-| `Mod+Shift+Slash` | podgląd skrótów |
-| `Print` | screenshot niri |
+<details>
+<summary>Pokaż drzewo katalogów</summary>
 
-### Media
+```text
+.
+├── README.md
+├── README.en.md
+├── flake.nix
+├── flake.lock
+├── home.nix                     # wspólna baza Home Managera
+├── Makefile
+├── docs/
+│   ├── architecture.md / .en.md
+│   ├── fish.md / .en.md
+│   └── glossary.md / .en.md
+├── hosts/
+│   ├── shared/                  # tylko NixOS
+│   │   ├── system.nix
+│   │   ├── users.nix
+│   │   └── desktop.nix
+│   ├── thinkpad/
+│   │   ├── README.md / .en.md
+│   │   ├── INSTALL.md / .en.md
+│   │   ├── configuration.nix
+│   │   ├── home.nix
+│   │   ├── hardware.nix
+│   │   ├── hardware-configuration.nix
+│   │   └── disko.nix
+│   └── mac-mini/
+│       ├── README.md / .en.md
+│       ├── configuration.nix
+│       ├── home.nix
+│       ├── homebrew.nix
+│       └── defaults.nix
+├── hm-modules/
+│   ├── shared/                  # fish, git, direnv, neovim, Zed, CLI, tapety
+│   ├── linux/                   # gtk/dconf, XDG, niri, Noctalia
+│   └── darwin/                  # PATH fisha, Ghostty, fastfetch
+└── scripts/
+    └── noctalia-export.sh
+```
 
-| Skrót | Akcja |
-|---|---|
-| `XF86AudioMicMute` | mute mikrofonu |
-| `XF86AudioMute` | mute |
-| `XF86AudioRaiseVolume` / `LowerVolume` | głośność |
-| `XF86MonBrightnessUp` / `Down` | jasność |
+</details>
 
-## Sprzęt i reinstalacja
+## Zasady
 
-- `hardware.nix`: GPU Intela, fwupd, fstrim, zram, Bluetooth, UPower, power-profiles-daemon.
-- `disko.nix` opisuje docelowy układ: **1G ESP + LUKS + btrfs** z `home` i `nix`.
-- Obecny system korzysta z istniejącego, niezaszyfrowanego btrfs; LUKS jest przygotowany na przyszłą reinstalację.
-- Pełna procedura: [`hosts/thinkpad/INSTALL.md`](hosts/thinkpad/INSTALL.md).
-- Fingerprint i `fprintd` nie są używane.
-
-## Roadmap / TODO
-
-- [ ] Dodać hosta **Darwin**: Mac mini M4 — `hosts/darwin/` i `darwinConfigurations.mac-mini` przez [nix-darwin](https://github.com/LnL7/nix-darwin).
-- [ ] Wydzielić wspólne moduły Home Managera (fish, git, direnv, Zed, Neovim, CLI) od części Linux-only (niri, Noctalia, greeter, GTK).
-- [ ] Sprawdzić, które pakiety i usługi z `hosts/shared` mają sens na macOS.
-- [ ] Dodać instrukcję instalacji dla macOS do README.
+- **Jedno źródło prawdy:** konfiguracja żyje w repo, nie w UI. Ręczna zmiana
+  suwaka w System Settings zostanie nadpisana przy następnym `darwin-rebuild`
+  (dla kluczy zarządzanych przez Nix).
+- **CLI z Nixa, GUI z casks:** na macOS narzędzia terminalowe instalujemy
+  z nixpkgs, aplikacje okienkowe przez Homebrew.
+- **Wspólne osobno:** `hm-modules/shared` nie może importować rzeczy
+  linuksowych ani macOS-owych.
+- **Manualne wyjątki są opisane:** Apple Watch unlock, układ Control Center,
+  App Store — w [hosts/mac-mini/README.md](hosts/mac-mini/README.md).
+- **Bez sekretów:** repo nie zawiera kluczy ani tokenów.
 
 ## Linki
 
 - [NixOS options](https://search.nixos.org/options)
 - [Home Manager options](https://home-manager-options.extranix.com/)
+- [nix-darwin options](https://nix-darwin.github.io/nix-darwin/manual/)
+- [Determinate Nix](https://docs.determinate.systems/determinate-nix/)
 - [niri wiki](https://yalter.github.io/niri/)
 - [Noctalia docs](https://docs.noctalia.dev/)
 - [disko](https://github.com/nix-community/disko)

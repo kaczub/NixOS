@@ -1,5 +1,7 @@
 # Reinstalacja ThinkPada z LUKS
 
+[← ThinkPad](README.md) · **Polski** · [English](INSTALL.en.md)
+
 > **Uwaga:** `disko` w trybie `destroy,format,mount` nieodwracalnie usuwa dane
 > z `/dev/nvme0n1`. Zrób backup przed rozpoczęciem, a repozytorium wypchnij do
 > zdalnego repo albo trzymaj na USB — reinstalacja usunie też `/home`.
@@ -84,7 +86,7 @@ Po instalacji zrestartuj i przy pierwszym bootcie podaj hasło do LUKS.
 
 ## 6. Po pierwszym uruchomieniu
 
-Sklonuj repozytorium na nowy system (jeśli nie ma go już w `/home/kamil/nixos`)
+Sklonuj repozytorium na nowy system (jeśli nie ma go już w `~/nixos`)
 i odtwórz `hardware-configuration.nix` z działającego, zaszyfrowanego systemu:
 
 ```console
