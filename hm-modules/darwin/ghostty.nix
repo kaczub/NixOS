@@ -23,8 +23,31 @@
       window-padding-y = 12;
       window-padding-balance = true;
 
-      # Motyw podąża za jasnym/ciemnym motywem systemu.
-      theme = "light:Catppuccin Latte,dark:Catppuccin Mocha";
+      # Stały ciemny schemat kolorów.
+      background = "#262626";
+      foreground = "#bcbcbc";
+      selection-background = "#87afd7";
+      selection-foreground = "#262626";
+      cursor-color = "#bcbcbc";
+      cursor-text = "#262626";
+      palette = [
+        "0=#1c1c1c"
+        "1=#af5f5f"
+        "2=#5f875f"
+        "3=#87875f"
+        "4=#5f87af"
+        "5=#5f5f87"
+        "6=#5f8787"
+        "7=#6c6c6c"
+        "8=#444444"
+        "9=#ff8700"
+        "10=#87af87"
+        "11=#ffffaf"
+        "12=#87afd7"
+        "13=#8787af"
+        "14=#5fafaf"
+        "15=#ffffff"
+      ];
 
       # Zachowanie i klawisze w stylu Maca.
       macos-option-as-alt = true;

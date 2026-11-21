@@ -298,8 +298,8 @@ Zarządzane w `hosts/mac-mini/defaults.nix`.
 ## Fish, Ghostty, fastfetch
 
 - Fish i pluginy: [docs/fish.md](../../docs/fish.md).
-- Ghostty: SF Mono 13 + JetBrains Nerd Font fallback, Catppuccin Latte/Mocha,
-  frosted glass, padding 12.
+- Ghostty: SF Mono 13 + JetBrains Nerd Font fallback, stały ciemny schemat
+  (#262626 tło), frosted glass, padding 12.
 - Fastfetch: `hm-modules/darwin/fastfetch.jsonc`, logo `macos_small`.
 
 > `macos-option-as-alt = true` w Ghostty zabiera Option do Alt. Polskie znaki
