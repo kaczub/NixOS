@@ -83,13 +83,7 @@ Important niri files:
 
 ## Wallpapers
 
-Wallpapers are shared with the Mac: the `wallpapers` flake input from
-[revaljonathan/wallpapers](https://github.com/revaljonathan/wallpapers),
-linked into `~/Pictures/Wallpapers` (individual files, no copy).
-
-```console
-nix flake update wallpapers
-```
+[revaljonathan/wallpapers](https://github.com/revaljonathan/wallpapers)
 
 > User directories are now in English: `~/Downloads`, `~/Documents`,
 > `~/Pictures`, `~/Videos`, `~/Music`. The old Polish directories are not

@@ -6,6 +6,5 @@
     ./neovim.nix
     ./zed.nix
     ./packages.nix
-    ./wallpapers.nix
   ];
 }

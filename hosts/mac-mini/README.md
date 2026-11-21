@@ -174,7 +174,6 @@ defaults read -g NSGlassTintAmount
 | `hm-modules/darwin/ghostty.nix` | konfiguracja Ghostty |
 | `hm-modules/darwin/fastfetch.nix` | symlink do configu fastfetch |
 | `hm-modules/darwin/fastfetch.jsonc` | logo `macos_small`, moduły OS/CPU/RAM/disk |
-| `hm-modules/shared/wallpapers.nix` | tapety z repo `revaljonathan/wallpapers` |
 | `home.nix` (root) | wspólna baza HM: username, stateVersion, shared |
 
 ## Homebrew: casks, brews i cleanup
@@ -294,15 +293,7 @@ Zarządzane w `hosts/mac-mini/defaults.nix`.
 
 ## Tapety
 
-Tapety pochodzą z repo
-[revaljonathan/wallpapers](https://github.com/revaljonathan/wallpapers) przez
-flake input `wallpapers`. Są linkowane pojedynczo do
-`~/Pictures/Wallpapers`, więc wybierak tapet w System Settings widzi zwykłe
-pliki, a ~800 MB nie jest kopiowane do home.
-
-```console
-nix flake update wallpapers
-```
+[revaljonathan/wallpapers](https://github.com/revaljonathan/wallpapers)
 
 ## Fish, Ghostty, fastfetch
 

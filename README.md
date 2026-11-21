@@ -70,20 +70,7 @@ próbuje zbudować niri na Darwinie ani dconf na Macu.
 
 ## Tapety
 
-Oba hosty korzystają z repo
-[revaljonathan/wallpapers](https://github.com/revaljonathan/wallpapers) jako
-flake input `wallpapers` (`flake = false`). Obrazy są linkowane pojedynczo do
-`~/Pictures/Wallpapers` — nie kopiujemy ~800 MB do katalogu domowego.
-
-```console
-nix flake update wallpapers   # aktualizacja tapet
-```
-
-Pierwsze `nix flake lock` pobiera ok. 800 MB. Katalogi użytkownika są po
-angielsku: `~/Downloads`, `~/Documents`, `~/Pictures`, `~/Videos`, `~/Music`.
-
-> Repo nie zawiera pliku LICENSE — używaj tapet prywatnie i sprawdź prawa
-> przed publikacją.
+[revaljonathan/wallpapers](https://github.com/revaljonathan/wallpapers)
 
 ## Szybki start
 
@@ -154,7 +141,7 @@ Pełne instrukcje instalacji:
 │       ├── homebrew.nix
 │       └── defaults.nix
 ├── hm-modules/
-│   ├── shared/                  # fish, git, direnv, neovim, Zed, CLI, tapety
+│   ├── shared/                  # fish, git, direnv, neovim, Zed, CLI
 │   ├── linux/                   # gtk/dconf, XDG, niri, Noctalia
 │   └── darwin/                  # PATH fisha, Ghostty, fastfetch
 └── scripts/

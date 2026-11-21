@@ -26,7 +26,6 @@ Jak flake, Home Manager i moduły hostów składają się w całość.
 | `disko` | partycjonowanie ThinkPada przy reinstalacji |
 | `nix-darwin` (`master`) | moduły systemowe macOS |
 | `determinate` | integracja Determinate Nix z nix-darwin |
-| `wallpapers` | tapety z GitHub (`flake = false`), linkowane do `~/Pictures/Wallpapers` |
 
 | Output | Host |
 |---|---|

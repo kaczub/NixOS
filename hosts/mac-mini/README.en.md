@@ -102,8 +102,6 @@ to `flake.lock`:
 nix flake lock
 ```
 
-The first lock also downloads the `wallpapers` input (~800 MB).
-
 ### 6. First switch
 
 ```console
@@ -178,7 +176,6 @@ defaults read -g NSGlassTintAmount
 | `hm-modules/darwin/ghostty.nix` | Ghostty configuration |
 | `hm-modules/darwin/fastfetch.nix` | symlink to the fastfetch config |
 | `hm-modules/darwin/fastfetch.jsonc` | `macos_small` logo, OS/CPU/RAM/disk modules |
-| `hm-modules/shared/wallpapers.nix` | wallpapers from `revaljonathan/wallpapers` |
 | `home.nix` (root) | shared HM base: username, stateVersion, shared |
 
 ## Homebrew: casks, brews and cleanup
@@ -299,15 +296,7 @@ Managed in `hosts/mac-mini/defaults.nix`.
 
 ## Wallpapers
 
-Wallpapers come from
-[revaljonathan/wallpapers](https://github.com/revaljonathan/wallpapers) through
-the `wallpapers` flake input. They are linked individually into
-`~/Pictures/Wallpapers`, so the System Settings wallpaper picker sees regular
-files and ~800 MB is not copied into your home directory.
-
-```console
-nix flake update wallpapers
-```
+[revaljonathan/wallpapers](https://github.com/revaljonathan/wallpapers)
 
 ## Fish, Ghostty, fastfetch
 

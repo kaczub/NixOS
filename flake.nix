@@ -20,11 +20,6 @@
     };
 
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
-
-    wallpapers = {
-      url = "github:revaljonathan/wallpapers";
-      flake = false;
-    };
   };
 
   outputs = {

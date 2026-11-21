@@ -93,13 +93,7 @@ Ważne pliki niri:
 
 ## Tapety
 
-Tapety są wspólne z Maciem: flake input `wallpapers` z repo
-[revaljonathan/wallpapers](https://github.com/revaljonathan/wallpapers),
-linkowane do `~/Pictures/Wallpapers` (pojedyncze pliki, bez kopiowania).
-
-```console
-nix flake update wallpapers
-```
+[revaljonathan/wallpapers](https://github.com/revaljonathan/wallpapers)
 
 > Katalogi użytkownika są teraz po angielsku: `~/Downloads`, `~/Documents`,
 > `~/Pictures`, `~/Videos`, `~/Music`. Stare polskie katalogi nie są

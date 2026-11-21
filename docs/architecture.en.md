@@ -26,7 +26,6 @@ How the flake, Home Manager and host modules fit together.
 | `disko` | ThinkPad partitioning during reinstall |
 | `nix-darwin` (`master`) | macOS system modules |
 | `determinate` | Determinate Nix integration with nix-darwin |
-| `wallpapers` | wallpapers from GitHub (`flake = false`), linked into `~/Pictures/Wallpapers` |
 
 | Output | Host |
 |---|---|
@@ -49,7 +48,6 @@ flowchart TD
     SH --> GIT[git / direnv]
     SH --> EDIT[neovim / Zed]
     SH --> CLI[CLI packages]
-    SH --> WALL[wallpapers]
 
     LX --> NIRI[niri]
     LX --> NOCT[Noctalia]

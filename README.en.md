@@ -72,21 +72,7 @@ or dconf on macOS.
 
 ## Wallpapers
 
-Both hosts use the
 [revaljonathan/wallpapers](https://github.com/revaljonathan/wallpapers)
-repository as the `wallpapers` flake input (`flake = false`). Images are
-linked individually into `~/Pictures/Wallpapers`; about 800 MB is not copied
-into your home directory.
-
-```console
-nix flake update wallpapers   # refresh wallpapers
-```
-
-The first `nix flake lock` downloads roughly 800 MB. User directories are in
-English: `~/Downloads`, `~/Documents`, `~/Pictures`, `~/Videos`, `~/Music`.
-
-> The repository has no LICENSE file — use the wallpapers privately and check
-> the rights before republishing.
 
 ## Quick start
 
@@ -159,7 +145,7 @@ Polish versions: [README.md](README.md), [docs](docs/), [hosts](hosts/).
 │       ├── homebrew.nix
 │       └── defaults.nix
 ├── hm-modules/
-│   ├── shared/                  # fish, git, direnv, neovim, Zed, CLI, wallpapers
+│   ├── shared/                  # fish, git, direnv, neovim, Zed, CLI
 │   ├── linux/                   # gtk/dconf, XDG, niri, Noctalia
 │   └── darwin/                  # fish PATH, Ghostty, fastfetch
 └── scripts/

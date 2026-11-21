@@ -299,24 +299,7 @@
         "disko": "disko",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
-        "nixpkgs": "nixpkgs_3",
-        "wallpapers": "wallpapers"
-      }
-    },
-    "wallpapers": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1789308998,
-        "narHash": "sha256-01aFrQI7aej7rFqaWNAqYVzcX5E3nnorV8a/+ksYgAM=",
-        "owner": "revaljonathan",
-        "repo": "wallpapers",
-        "rev": "fc2660677ffdae2ac5086ca4004f2ecb776b7a71",
-        "type": "github"
-      },
-      "original": {
-        "owner": "revaljonathan",
-        "repo": "wallpapers",
-        "type": "github"
+        "nixpkgs": "nixpkgs_3"
       }
     }
   },
