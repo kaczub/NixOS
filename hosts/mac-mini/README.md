@@ -11,6 +11,7 @@ Manager. Ten dokument opisuje **instalację od zera** i utrzymanie maszyny.
 - [Instalacja od zera](#instalacja-od-zera)
 - [Co jest zarządzane](#co-jest-zarządzane)
 - [Homebrew: casks, brews i cleanup](#homebrew-casks-brews-i-cleanup)
+- [Ręczna instalacja aplikacji](#ręczna-instalacja-aplikacji)
 - [macOS defaults](#macos-defaults)
 - [Tapety](#tapety)
 - [Fish, Ghostty, fastfetch](#fish-ghostty-fastfetch)
@@ -143,8 +144,7 @@ Przy pierwszym `darwin-rebuild` mogą pojawić się dialogi TCC. W razie potrzeb
 | Kolejność i rozmiary Control Center | System Settings → Menu Bar / Control Center |
 | „Show When Active” dla Focus/Mirroring/Display/Sound/Now Playing | System Settings → Menu Bar |
 | Timer w menu barze | System Settings → Menu Bar (jeśli dostępny) |
-| App Store: Amphetamine, uBlock Origin Lite | App Store |
-| Nicotine+, DisableCtrlClick, Python 3.14 | ręcznie |
+| Aplikacje poza Nixem | [Ręczna instalacja aplikacji](#ręczna-instalacja-aplikacji) |
 | FileVault | System Settings → Privacy & Security |
 
 Apple Watch unlock wymaga tego samego Apple Account, 2FA, Wi-Fi/BT i kodu na
@@ -227,6 +227,22 @@ listy** (albo na czystej maszynie), bo:
 - wyłapuje stare casks i tapy,
 - wyłapuje zależności osierocone po pakietach spoza Brewfile,
 - przy błędzie **przerywa cały switch**, więc inne zmiany też się nie zastosują.
+
+## Ręczna instalacja aplikacji
+
+Tych aplikacji nie ma w Nixie ani w casks — instalujesz je sam:
+
+| Aplikacja | Skąd |
+|---|---|
+| Adobe Lightroom | Adobe Creative Cloud |
+| Microsoft Office LTSC (Word, Excel, PowerPoint; Access tylko w Windows VM) | Microsoft 365 admin center / VLSC |
+| Amphetamine | App Store |
+| uBlock Origin Lite | App Store |
+| Nicotine+ | ręcznie |
+| DisableCtrlClick | ręcznie |
+| Python 3.14 | python.org |
+
+App Store wymaga Apple ID, Office — ważnej umowy VL, Lightroom — konta Adobe.
 
 ## macOS defaults
 

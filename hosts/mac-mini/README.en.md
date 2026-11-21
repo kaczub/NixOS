@@ -12,6 +12,7 @@ maintenance.
 - [Fresh install](#fresh-install)
 - [What is managed](#what-is-managed)
 - [Homebrew: casks, brews and cleanup](#homebrew-casks-brews-and-cleanup)
+- [Manual app installation](#manual-app-installation)
 - [macOS defaults](#macos-defaults)
 - [Wallpapers](#wallpapers)
 - [Fish, Ghostty, fastfetch](#fish-ghostty-fastfetch)
@@ -147,8 +148,7 @@ The first `darwin-rebuild` may show TCC dialogs. If needed:
 | Control Center order and sizes | System Settings → Menu Bar / Control Center |
 | “Show When Active” for Focus/Mirroring/Display/Sound/Now Playing | System Settings → Menu Bar |
 | Menu bar timer | System Settings → Menu Bar (if available) |
-| App Store: Amphetamine, uBlock Origin Lite | App Store |
-| Nicotine+, DisableCtrlClick, Python 3.14 | manual |
+| Apps outside Nix | [Manual app installation](#manual-app-installation) |
 | FileVault | System Settings → Privacy & Security |
 
 Apple Watch unlock requires the same Apple Account, 2FA, Wi-Fi/BT and a watch
@@ -231,6 +231,23 @@ stable** (or on a clean machine), because it:
 - catches stale casks and taps,
 - catches dependencies orphaned by packages outside the Brewfile,
 - on failure **aborts the whole switch**, so other changes do not apply either.
+
+## Manual app installation
+
+These apps are not in Nix or casks — install them yourself:
+
+| App | Source |
+|---|---|
+| Adobe Lightroom | Adobe Creative Cloud |
+| Microsoft Office LTSC (Word, Excel, PowerPoint; Access only in a Windows VM) | Microsoft 365 admin center / VLSC |
+| Amphetamine | App Store |
+| uBlock Origin Lite | App Store |
+| Nicotine+ | manual |
+| DisableCtrlClick | manual |
+| Python 3.14 | python.org |
+
+App Store requires an Apple ID, Office requires a valid VL agreement, and
+Lightroom requires an Adobe account.
 
 ## macOS defaults
 
