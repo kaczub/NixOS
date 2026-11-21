@@ -6,7 +6,6 @@
 > i **Mac mini M4** z macOS. Wspólny Home Manager, osobne moduły systemowe.
 
 [![NixOS](https://img.shields.io/badge/NixOS-unstable-5277C3?logo=nixos&logoColor=white)](https://nixos.org/)
-[![nix-darwin](https://img.shields.io/badge/nix-darwin-macOS-000000?logo=apple&logoColor=white)](https://github.com/nix-darwin/nix-darwin)
 [![niri](https://img.shields.io/badge/compositor-niri-6f4a8e)](https://github.com/YaLTeR/niri)
 [![Noctalia](https://img.shields.io/badge/shell-Noctalia-7c3aed)](https://noctalia.dev/)
 
