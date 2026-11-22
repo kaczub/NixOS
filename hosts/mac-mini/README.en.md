@@ -127,7 +127,7 @@ chsh -s /run/current-system/sw/bin/fish
 ### 8. Log out and back in
 
 This finalizes settings that processes read at startup: dark mode, accent
-color, Liquid Glass, mouse acceleration, and parts of Finder/Control Center.
+color, Liquid Glass, and parts of Finder/Control Center.
 
 ### 9. macOS permissions
 
@@ -261,13 +261,12 @@ Managed in `hosts/mac-mini/defaults.nix`.
 | Finder: extensions, folders first | `AppleShowAllExtensions`, `_FXSortFoldersFirst` |
 | Finder: search current folder | `FXDefaultSearchScope = "SCcf"` |
 | Finder: Cmd+Q | `QuitMenuItem = true` |
-| Desktop without icons | `CreateDesktop = false` + `WindowManager.StandardHideDesktopIcons = true` |
+| Desktop icons hidden, revealed on click | `WindowManager.StandardHideDesktopIcons = true` + `EnableStandardClickToShowDesktop = true` |
 | Dark mode | `AppleInterfaceStyle = "Dark"` |
 | Graphite accent | `AppleAccentColor = -1` |
 | Liquid Glass ~75% | `NSGlassTintAmount = 0.75` |
 | Key repeat | `KeyRepeat = 2`, `InitialKeyRepeat = 15` |
 | No text autocorrection | `NSAutomatic* = false` (6 keys) |
-| Mouse without acceleration | `.GlobalPreferences."com.apple.mouse.scaling" = -1.0` |
 | Screenshots to clipboard | `screencapture.target = "clipboard"` |
 | Caps Lock → Escape | `system.keyboard` |
 | Gatekeeper “anywhere” | activation: `spctl --global-disable` |
@@ -287,7 +286,7 @@ Managed in `hosts/mac-mini/defaults.nix`.
 
 - Dock is restarted by `darwin-rebuild` — changes are visible immediately.
 - Finder: `killall Finder`.
-- Dark mode, accent, Liquid Glass, mouse acceleration — log out.
+- Dark mode, accent, Liquid Glass — log out.
 - Manual slider changes are overwritten by the next switch for keys managed by
   Nix.
 
@@ -367,7 +366,7 @@ Check `/etc/shells` and run
 
 **Defaults do not apply**
 Dock restarts automatically; Finder needs `killall Finder`; dark mode, accent,
-Liquid Glass and mouse acceleration need a logout.
+and Liquid Glass need a logout.
 
 ## Configuration check
 

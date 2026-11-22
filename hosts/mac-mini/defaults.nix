@@ -17,7 +17,8 @@
       _FXSortFoldersFirst = true;
       FXDefaultSearchScope = "SCcf";
       QuitMenuItem = true;
-      CreateDesktop = false;
+      # Zostaje dla zgodności; ukrywaniem na macOS 27 steruje WindowManager.
+      CreateDesktop = true;
     };
 
     NSGlobalDomain = {
@@ -37,11 +38,10 @@
       NSAutomaticInlinePredictionEnabled = false;
     };
 
-    ".GlobalPreferences"."com.apple.mouse.scaling" = -1.0; # brak akceleracji myszy
-
-    # macOS 27: nowoczesny klucz "Hide items on desktop".
-    # finder.CreateDesktop zostaje jako zgodność ze starszymi wersjami.
+    # Ikony schowane na co dzień, ale kliknięcie w pulpit je odsłania.
+    # Bez finder.CreateDesktop = false, które ukrywa je także przy odsłanianiu.
     WindowManager.StandardHideDesktopIcons = true;
+    WindowManager.EnableStandardClickToShowDesktop = true;
 
     screencapture.target = "clipboard";
 

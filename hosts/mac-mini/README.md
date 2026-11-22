@@ -125,7 +125,7 @@ chsh -s /run/current-system/sw/bin/fish
 ### 8. Wyloguj się i zaloguj ponownie
 
 To domyka ustawienia, które procesy czytają przy starcie: dark mode, akcent,
-Liquid Glass, akceleracja myszy, część Finder/Control Center.
+Liquid Glass i część Finder/Control Center.
 
 ### 9. Uprawnienia macOS
 
@@ -258,13 +258,12 @@ Zarządzane w `hosts/mac-mini/defaults.nix`.
 | Finder: rozszerzenia, foldery na górze | `AppleShowAllExtensions`, `_FXSortFoldersFirst` |
 | Finder: szukaj w bieżącym folderze | `FXDefaultSearchScope = "SCcf"` |
 | Finder: Cmd+Q | `QuitMenuItem = true` |
-| Pulpit bez ikon | `CreateDesktop = false` + `WindowManager.StandardHideDesktopIcons = true` |
+| Pulpit: ikony schowane, kliknięcie odsłania | `WindowManager.StandardHideDesktopIcons = true` + `EnableStandardClickToShowDesktop = true` |
 | Dark mode | `AppleInterfaceStyle = "Dark"` |
 | Graphite accent | `AppleAccentColor = -1` |
 | Liquid Glass ~75% | `NSGlassTintAmount = 0.75` |
 | Key repeat | `KeyRepeat = 2`, `InitialKeyRepeat = 15` |
 | Bez autokorekty tekstu | `NSAutomatic* = false` (6 kluczy) |
-| Mysz bez akceleracji | `.GlobalPreferences."com.apple.mouse.scaling" = -1.0` |
 | Screenshoty do schowka | `screencapture.target = "clipboard"` |
 | Caps Lock → Escape | `system.keyboard` |
 | Gatekeeper „wszystkie” | activation: `spctl --global-disable` |
@@ -284,7 +283,7 @@ Zarządzane w `hosts/mac-mini/defaults.nix`.
 
 - Dock jest restartowany przez `darwin-rebuild` — zmiany widoczne od razu.
 - Finder: `killall Finder`.
-- Dark mode, akcent, Liquid Glass, akceleracja myszy — najlepiej wylogować się.
+- Dark mode, akcent, Liquid Glass — najlepiej wylogować się.
 - Ręczna zmiana suwaka w UI zostanie nadpisana przy następnym switchu dla
   kluczy zarządzanych przez Nix.
 
@@ -362,8 +361,8 @@ Sprawdź `/etc/shells` i wykonaj `chsh -s /run/current-system/sw/bin/fish`.
 `environment.shells` w `configuration.nix` dodaje tam fisha.
 
 **Defaults nie działają**
-Dock restartuje się sam; Finder wymaga `killall Finder`; dark mode, akcent,
-Liquid Glass i mysz — wylogowania.
+Dock restartuje się sam; Finder wymaga `killall Finder`; dark mode, akcent
+i Liquid Glass — wylogowania.
 
 ## Sprawdzenie konfiguracji
 
