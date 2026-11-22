@@ -263,7 +263,6 @@ Managed in `hosts/mac-mini/defaults.nix`.
 | Finder: extensions, folders first | `AppleShowAllExtensions`, `_FXSortFoldersFirst` |
 | Finder: search current folder | `FXDefaultSearchScope = "SCcf"` |
 | Finder: Cmd+Q | `QuitMenuItem = true` |
-| Desktop icons hidden, revealed on click | `WindowManager.StandardHideDesktopIcons = true` + `EnableStandardClickToShowDesktop = true` |
 | Dark mode | `AppleInterfaceStyle = "Dark"` |
 | Graphite accent | `AppleAccentColor = -1` |
 | Liquid Glass ~75% | `NSGlassTintAmount = 0.75` |
@@ -275,6 +274,9 @@ Managed in `hosts/mac-mini/defaults.nix`.
 
 ### What requires manual work
 
+- **Desktop icons** — visible by default; if they were hidden:
+  `defaults write com.apple.WindowManager StandardHideDesktopIcons -bool false`
+  (then `killall Finder`).
 - **Apple Watch unlock** — pairing, not `defaults`.
 - **Control Center** — order, sizes and some “Show When Active” values live in
   macOS 27 binary blobs (`BentoBoxCustomizationState`, `bentoboxes.*.plist`).

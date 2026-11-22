@@ -260,7 +260,6 @@ Zarządzane w `hosts/mac-mini/defaults.nix`.
 | Finder: rozszerzenia, foldery na górze | `AppleShowAllExtensions`, `_FXSortFoldersFirst` |
 | Finder: szukaj w bieżącym folderze | `FXDefaultSearchScope = "SCcf"` |
 | Finder: Cmd+Q | `QuitMenuItem = true` |
-| Pulpit: ikony schowane, kliknięcie odsłania | `WindowManager.StandardHideDesktopIcons = true` + `EnableStandardClickToShowDesktop = true` |
 | Dark mode | `AppleInterfaceStyle = "Dark"` |
 | Graphite accent | `AppleAccentColor = -1` |
 | Liquid Glass ~75% | `NSGlassTintAmount = 0.75` |
@@ -272,6 +271,9 @@ Zarządzane w `hosts/mac-mini/defaults.nix`.
 
 ### Co wymaga ręki
 
+- **Ikony na pulpicie** — domyślnie widoczne; jeśli były ukryte:
+  `defaults write com.apple.WindowManager StandardHideDesktopIcons -bool false`
+  (potem `killall Finder`).
 - **Apple Watch unlock** — parowanie, nie `defaults`.
 - **Control Center** — kolejność, rozmiary i część „Show When Active” są
   w binarnych blobach macOS 27 (`BentoBoxCustomizationState`,

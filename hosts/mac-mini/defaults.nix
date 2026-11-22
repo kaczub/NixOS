@@ -38,9 +38,8 @@
       NSAutomaticInlinePredictionEnabled = false;
     };
 
-    # Ikony schowane na co dzień, ale kliknięcie w pulpit je odsłania.
-    # Bez finder.CreateDesktop = false, które ukrywa je także przy odsłanianiu.
-    WindowManager.StandardHideDesktopIcons = true;
+    # Klik w tapetę odsłania pulpit. Ikony są widoczne domyślnie —
+    # jeśli były ukryte, patrz README (jednorazowe `defaults write`).
     WindowManager.EnableStandardClickToShowDesktop = true;
 
     screencapture.target = "clipboard";
