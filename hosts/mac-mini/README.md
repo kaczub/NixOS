@@ -5,6 +5,8 @@
 Mac mini M4 (Apple Silicon), macOS 27, Determinate Nix + nix-darwin + Home
 Manager. Ten dokument opisuje **instalację od zera** i utrzymanie maszyny.
 
+![Mac mini M4 — pulpit z fastfetch i nix-darwin](../../docs/images/mac-mini.jpg)
+
 ## Spis treści
 
 - [Przegląd](#przegląd)

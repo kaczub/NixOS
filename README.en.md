@@ -10,6 +10,8 @@
 [![niri](https://img.shields.io/badge/compositor-niri-6f4a8e)](https://github.com/YaLTeR/niri)
 [![Noctalia](https://img.shields.io/badge/shell-Noctalia-7c3aed)](https://noctalia.dev/)
 
+![Mac mini M4 running macOS 27 with nix-darwin](docs/images/mac-mini.jpg)
+
 ## Table of contents
 
 - [Hosts](#hosts)

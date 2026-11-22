@@ -6,6 +6,8 @@ Mac mini M4 (Apple Silicon), macOS 27, Determinate Nix + nix-darwin + Home
 Manager. This document describes a **fresh install** and day-to-day
 maintenance.
 
+![Mac mini M4 desktop with fastfetch and nix-darwin](../../docs/images/mac-mini.jpg)
+
 ## Table of contents
 
 - [Overview](#overview)
